@@ -38,49 +38,49 @@ class LoginCodeModel {
   }
 }
 
-class RegisterRequestModel {
-  String? email;
-  String? password;
-  String? name;
-  String? civilNumber;
+// class RegisterRequestModel {
+//   String? email;
+//   String? password;
+//   String? name;
+//   String? civilNumber;
 
-  RegisterRequestModel({
-    this.email,
-    this.password,
-    this.civilNumber,
-    this.name,
-  });
+//   RegisterRequestModel({
+//     this.email,
+//     this.password,
+//     this.civilNumber,
+//     this.name,
+//   });
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> map = {
-      "email-register": email!.trim(),
-      "password-register": password!.trim(),
-      "name-register": name!.trim(),
-      "account-type-register": civilNumber!.trim(),
-    };
+//   Map<String, dynamic> toJson() {
+//     Map<String, dynamic> map = {
+//       "email": email!.trim(),
+//       "password": password!.trim(),
+//       "name": name!.trim(),
+//       "psot": civilNumber!.trim(),
+//     };
 
-    return map;
-  }
-}
+//     return map;
+//   }
+// }
 
 class RegisterResponseModel {
   String? msg;
-  String? name;
   String? user;
+  String? name;
   String? token;
 
   RegisterResponseModel({
     this.msg,
-    this.name,
     this.user,
+    this.name,
     this.token,
   });
 
   factory RegisterResponseModel.fromJson(Map<String, dynamic> json) {
     return RegisterResponseModel(
       msg: json['msg'],
-      name: json['name'],
       user: json['user'],
+      name: json['name'],
       token: json['token'],
     );
   }

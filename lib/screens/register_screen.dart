@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:loginapp/models/models.dart';
+import 'package:loginapp/screens/home_screen.dart';
 import 'package:loginapp/services/api_services.dart';
 import 'package:loginapp/widgets/email_validator.dart';
 import 'package:loginapp/widgets/text_form.dart';
 import '../constants/constants.dart';
 
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+  final String phoneNumber;
+  final String code;
+  const RegisterScreen({
+    super.key,
+    required this.phoneNumber,
+    required this.code,
+  });
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -14,13 +21,19 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
-  RegisterRequestModel registerRequestModel = RegisterRequestModel();
 
   ApiServices apiServices = ApiServices();
 
   bool hidePassword1 = true;
   bool hidePassword2 = true;
   bool isApiCallProcess = false;
+
+//api info
+  String? name;
+  String? civilNumber;
+  String? email;
+  String? password;
+
   String? passVerif;
 
   @override
@@ -58,7 +71,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     // name
                     customTextFormField(
                       onChanged: (value) {
-                        registerRequestModel.name = value.toString();
+                        name = value.toString();
+                        //print(name);
                       },
                       validator: (value) {
                         if (value.toString().isEmpty) {
@@ -72,10 +86,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     const SizedBox(height: 10),
 
-                    //number
+                    //civilNumber
                     customTextFormField(
                       onChanged: (value) {
-                        registerRequestModel.civilNumber = value.toString();
+                        civilNumber = value.toString();
+                        //print(civilNumber);
                       },
                       validator: (value) {
                         if (value.toString().isEmpty) {
@@ -92,7 +107,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     //email
                     customTextFormField(
                       onChanged: (value) {
-                        registerRequestModel.email = value.toString();
+                        email = value.toString();
+                        // print(email);
                       },
                       validator: (value) {
                         if (value.toString().isEmpty) {
@@ -114,7 +130,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     //password
                     customTextFormField(
                       onChanged: (value) {
-                        registerRequestModel.password = value.toString();
+                        password = value.toString();
+                        //print(password);
                         passVerif = value.toString();
                       },
                       validator: (value) {
@@ -187,6 +204,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           if (validateAndSave()) {
                             setState(() {
                               isApiCallProcess = true;
+                            });
+                            apiServices
+                                .register(
+                              phone: widget.phoneNumber,
+                              yourCode: widget.code,
+                              civilNumber: civilNumber!,
+                              email: email!,
+                              name: name!,
+                              password: password!,
+                            )
+                                .then((value) {
+                              setState(() {
+                                isApiCallProcess = false;
+                              });
+
+                              if (value.msg == "ok") {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => HomeScreen(
+                                      name: value.name!,
+                                    ),
+                                  ),
+                                );
+                              }
                             });
                           }
                         },

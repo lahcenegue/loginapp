@@ -44,16 +44,20 @@ class ApiServices {
   }
 
   //Register
-  Future<RegisterResponseModel> register(
-      RegisterRequestModel registerRequestModel) async {
+  Future<RegisterResponseModel> register({
+    required String phone,
+    required String yourCode,
+    required String name,
+    required String civilNumber,
+    required String email,
+    required String password,
+  }) async {
     RegisterResponseModel responseModel = RegisterResponseModel();
 
     try {
-      var url = Uri.parse(Constants.url);
-      http.Response response = await http.post(
-        url,
-        body: convert.jsonEncode(registerRequestModel),
-      );
+      var url = Uri.parse(
+          "${Constants.url}/api/login/kdjvuig11221/$phone/$yourCode/reg?name=$name&psot=$civilNumber&email=$email&password=$password");
+      http.Response response = await http.get(url);
 
       if (response.statusCode == 200) {
         var body = convert.json.decode(response.body);

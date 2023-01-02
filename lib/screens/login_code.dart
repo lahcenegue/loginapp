@@ -112,8 +112,10 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        const RegisterScreen()),
+                                    builder: (context) => RegisterScreen(
+                                          phoneNumber: widget.phoneNumber,
+                                          code: yourCode!,
+                                        )),
                               );
                             } else if (value.user == "old") {
                               Navigator.pushReplacement(

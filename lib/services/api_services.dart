@@ -42,4 +42,29 @@ class ApiServices {
     }
     return LoginCodeModel();
   }
+
+  //Register
+  Future<RegisterResponseModel> register(
+      RegisterRequestModel registerRequestModel) async {
+    RegisterResponseModel responseModel = RegisterResponseModel();
+
+    try {
+      var url = Uri.parse(Constants.url);
+      http.Response response = await http.post(
+        url,
+        body: convert.jsonEncode(registerRequestModel),
+      );
+
+      if (response.statusCode == 200) {
+        var body = convert.json.decode(response.body);
+
+        responseModel = RegisterResponseModel.fromJson(body);
+
+        return responseModel;
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+    return responseModel;
+  }
 }

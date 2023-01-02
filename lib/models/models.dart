@@ -37,3 +37,28 @@ class LoginCodeModel {
     );
   }
 }
+
+class RegisterRequestModel {
+  String? email;
+  String? password;
+  String? name;
+  String? civilNumber;
+
+  RegisterRequestModel({
+    this.email,
+    this.password,
+    this.civilNumber,
+    this.name,
+  });
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> map = {
+      "email-register": email!.trim(),
+      "password-register": password!.trim(),
+      "name-register": name!.trim(),
+      "account-type-register": civilNumber!.trim(),
+    };
+
+    return map;
+  }
+}

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:loginapp/models/models.dart';
+import 'package:loginapp/widgets/email_validator.dart';
 import 'package:loginapp/widgets/text_form.dart';
 import '../constants/constants.dart';
 
@@ -10,15 +12,12 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  String? selectedItem;
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
+  RegisterRequestModel registerRequestModel = RegisterRequestModel();
+
   bool hidePassword1 = true;
   bool hidePassword2 = true;
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  bool isApiCallProcess = false;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +53,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     // name
                     customTextFormField(
-                      onChanged: (value) {},
+                      onChanged: (value) {
+                        registerRequestModel.name = value.toString();
+                      },
                       validator: (value) {
                         if (value.toString().isEmpty) {
                           return 'أدخل الاسم';
@@ -69,17 +70,36 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                     //number
                     customTextFormField(
-                      onChanged: (value) {},
-                      validator: (value) {},
+                      onChanged: (value) {
+                        registerRequestModel.civilNumber = value.toString();
+                      },
+                      validator: (value) {
+                        if (value.toString().isEmpty) {
+                          return 'أدخل الرقم المدني';
+                        }
+                        return null;
+                      },
                       keyboardType: TextInputType.number,
                       prefixIcon: Icons.info_rounded,
                       hintText: 'الرقم المدني',
                     ),
                     const SizedBox(height: 10),
-                    //number
+
+                    //email
                     customTextFormField(
-                      onChanged: (value) {},
-                      validator: (value) {},
+                      onChanged: (value) {
+                        registerRequestModel.email = value.toString();
+                      },
+                      validator: (value) {
+                        if (value.toString().isEmpty) {
+                          return 'أرجو التحقق من عنوان البريد الالكتروني';
+                        }
+                        if (value!.isNotEmpty &&
+                            !value.toString().isValidEmail()) {
+                          return 'أرجو التحقق من عنوان البريد الالكتروني';
+                        }
+                        return null;
+                      },
                       keyboardType: TextInputType.emailAddress,
                       prefixIcon: Icons.mail,
                       hintText: 'الايميل',
@@ -159,20 +179,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ],
                 ),
               ),
-              // Visibility(
-              //   visible: isApiCallProcess ? true : false,
-              //   child: Stack(
-              //     children: [
-              //       ModalBarrier(
-              //         color: Colors.white.withOpacity(0.6),
-              //         dismissible: true,
-              //       ),
-              //       const Center(
-              //         child: CircularProgressIndicator(),
-              //       )
-              //     ],
-              //   ),
-              // ),
+              Visibility(
+                visible: isApiCallProcess ? true : false,
+                child: Stack(
+                  children: [
+                    ModalBarrier(
+                      color: Colors.white.withOpacity(0.6),
+                      dismissible: true,
+                    ),
+                    const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  ],
+                ),
+              ),
             ],
           ),
         ),

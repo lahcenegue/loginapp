@@ -14,3 +14,20 @@ class LoginMobileModel {
     );
   }
 }
+
+class LoginCodeModel {
+  String? msg;
+  String? user;
+
+  LoginCodeModel({
+    this.msg,
+    this.user,
+  });
+
+  factory LoginCodeModel.fromJson(Map<String, dynamic> json) {
+    return LoginCodeModel(
+      msg: json['msg'],
+      user: json['user'],
+    );
+  }
+}

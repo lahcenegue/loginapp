@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loginapp/screens/register_screen.dart';
 import 'package:loginapp/services/api_services.dart';
 import 'package:loginapp/widgets/text_form.dart';
 import '../constants/constants.dart';
@@ -76,9 +77,9 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
                       },
                       validator: (value) {
                         if (value.toString().isEmpty) {
-                          return 'ادخل رقم الهاتف';
-                        } else if (value.toString().length != 8) {
-                          return 'يجب ان يكون طول الرقم 8 ارقام';
+                          return 'ادخل الكود الخاص بك';
+                        } else if (value.toString().length != 4) {
+                          return 'يجب ان يكون طول الرقم 4 ارقام';
                         }
                         return null;
                       },
@@ -98,23 +99,26 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(50))),
                         onPressed: () {
-                          // if (validateAndSave()) {
-                          //   setState(() {
-                          //     isApiCallProcess = true;
-                          //   });
-                          //   apiServices.login(mobileNumber!).then((value) {
-                          //     setState(() {
-                          //       isApiCallProcess = false;
-                          //     });
-                          //     if (value.msg == "ok") {
-                          //       // Navigator.pushReplacement(
-                          //       //           context,
-                          //       //           MaterialPageRoute(
-                          //       //               builder: (context) => ),
-                          //       //         );
-                          //     }
-                          //   });
-                          // }
+                          if (validateAndSave()) {
+                            setState(() {
+                              isApiCallProcess = true;
+                            });
+                            apiServices
+                                .loginCode(widget.phoneNumber, yourCode)
+                                .then((value) {
+                              setState(() {
+                                isApiCallProcess = false;
+                              });
+                              if (value.user == "new") {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const RegisterScreen()),
+                                );
+                              }
+                            });
+                          }
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,

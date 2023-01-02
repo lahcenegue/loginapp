@@ -98,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             setState(() {
                               isApiCallProcess = true;
                             });
-                            apiServices.login(phoneNumber!).then((value) {
+                            apiServices.loginMobile(phoneNumber!).then((value) {
                               setState(() {
                                 isApiCallProcess = false;
                               });

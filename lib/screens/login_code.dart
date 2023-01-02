@@ -18,7 +18,8 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   ApiServices apiServices = ApiServices();
 
-  String? mobileNumber;
+  String? yourCode;
+
   bool isApiCallProcess = false;
 
   @override
@@ -62,7 +63,7 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
                     ),
                     const SizedBox(height: 10),
                     const Text(
-                      'الدخول الى حسابك',
+                      'ادخل الكود الخاص بك',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 22,
@@ -71,7 +72,7 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
                     const SizedBox(height: 10),
                     customTextFormField(
                       onChanged: (value) {
-                        mobileNumber = value.toString();
+                        yourCode = value.toString();
                       },
                       validator: (value) {
                         if (value.toString().isEmpty) {
@@ -97,23 +98,23 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(50))),
                         onPressed: () {
-                          if (validateAndSave()) {
-                            setState(() {
-                              isApiCallProcess = true;
-                            });
-                            apiServices.login(mobileNumber!).then((value) {
-                              setState(() {
-                                isApiCallProcess = false;
-                              });
-                              if (value.msg == "ok") {
-                                // Navigator.pushReplacement(
-                                //           context,
-                                //           MaterialPageRoute(
-                                //               builder: (context) => ),
-                                //         );
-                              }
-                            });
-                          }
+                          // if (validateAndSave()) {
+                          //   setState(() {
+                          //     isApiCallProcess = true;
+                          //   });
+                          //   apiServices.login(mobileNumber!).then((value) {
+                          //     setState(() {
+                          //       isApiCallProcess = false;
+                          //     });
+                          //     if (value.msg == "ok") {
+                          //       // Navigator.pushReplacement(
+                          //       //           context,
+                          //       //           MaterialPageRoute(
+                          //       //               builder: (context) => ),
+                          //       //         );
+                          //     }
+                          //   });
+                          // }
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,

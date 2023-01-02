@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loginapp/screens/login_code.dart';
 import 'package:loginapp/services/api_services.dart';
 import 'package:loginapp/widgets/text_form.dart';
 import '../constants/constants.dart';
@@ -14,7 +15,7 @@ class _LoginScreenState extends State<LoginScreen> {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   ApiServices apiServices = ApiServices();
 
-  String? mobileNumber;
+  String? phoneNumber;
   bool isApiCallProcess = false;
 
   @override
@@ -67,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(height: 10),
                     customTextFormField(
                       onChanged: (value) {
-                        mobileNumber = value.toString();
+                        phoneNumber = value.toString();
                       },
                       validator: (value) {
                         if (value.toString().isEmpty) {
@@ -97,16 +98,18 @@ class _LoginScreenState extends State<LoginScreen> {
                             setState(() {
                               isApiCallProcess = true;
                             });
-                            apiServices.login(mobileNumber!).then((value) {
+                            apiServices.login(phoneNumber!).then((value) {
                               setState(() {
                                 isApiCallProcess = false;
                               });
                               if (value.msg == "ok") {
-                                // Navigator.pushReplacement(
-                                //           context,
-                                //           MaterialPageRoute(
-                                //               builder: (context) => ),
-                                //         );
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginCodeScreen(
+                                            phoneNumber: phoneNumber!,
+                                          )),
+                                );
                               }
                             });
                           }

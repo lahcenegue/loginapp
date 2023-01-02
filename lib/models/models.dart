@@ -62,3 +62,26 @@ class RegisterRequestModel {
     return map;
   }
 }
+
+class RegisterResponseModel {
+  String? msg;
+  String? name;
+  String? user;
+  String? token;
+
+  RegisterResponseModel({
+    this.msg,
+    this.name,
+    this.user,
+    this.token,
+  });
+
+  factory RegisterResponseModel.fromJson(Map<String, dynamic> json) {
+    return RegisterResponseModel(
+      msg: json['msg'],
+      name: json['name'],
+      user: json['user'],
+      token: json['token'],
+    );
+  }
+}

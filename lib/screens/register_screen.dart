@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loginapp/models/models.dart';
+import 'package:loginapp/services/api_services.dart';
 import 'package:loginapp/widgets/email_validator.dart';
 import 'package:loginapp/widgets/text_form.dart';
 import '../constants/constants.dart';
@@ -15,9 +16,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   RegisterRequestModel registerRequestModel = RegisterRequestModel();
 
+  ApiServices apiServices = ApiServices();
+
   bool hidePassword1 = true;
   bool hidePassword2 = true;
   bool isApiCallProcess = false;
+  String? passVerif;
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +113,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                     //password
                     customTextFormField(
-                      onChanged: (value) {},
+                      onChanged: (value) {
+                        registerRequestModel.password = value.toString();
+                        passVerif = value.toString();
+                      },
                       validator: (value) {
                         if (value.toString().isEmpty) {
                           return 'أرجوا ادخال كلمة المرور';
@@ -137,9 +144,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
 
                     const SizedBox(height: 10),
+
                     //password 2
                     customTextFormField(
-                      validator: (value) {},
+                      validator: (value) {
+                        if (value.toString().isEmpty) {
+                          return 'أرجوا ادخال كلمة المرور';
+                        }
+                        if (value.toString().isNotEmpty &&
+                            value.toString() != passVerif) {
+                          return 'أرجوا ادخال نفس كلمة المرور';
+                        }
+                        return null;
+                      },
                       keyboardType: TextInputType.visiblePassword,
                       obscureText: hidePassword2,
                       prefixIcon: Icons.lock,
@@ -166,7 +183,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             fixedSize: const Size(300, 40),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(50))),
-                        onPressed: () {},
+                        onPressed: () {
+                          if (validateAndSave()) {
+                            setState(() {
+                              isApiCallProcess = true;
+                            });
+                          }
+                        },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: const [

@@ -28,130 +28,135 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: Scaffold(
           body: Stack(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 50,
-                  right: 50,
-                ),
-                child: Form(
-                  key: globalKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'عمل حساب جديد',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      // name
-                      customTextFormField(
-                        onChanged: (value) {},
-                        validator: (value) {
-                          if (value.toString().isEmpty) {
-                            return 'أدخل الاسم';
-                          }
-                          return null;
-                        },
-                        keyboardType: TextInputType.text,
-                        prefixIcon: Icons.person,
-                        hintText: 'الاسم',
-                      ),
-                      const SizedBox(height: 10),
-
-                      //number
-                      customTextFormField(
-                        onChanged: (value) {},
-                        validator: (value) {},
-                        keyboardType: TextInputType.number,
-                        prefixIcon: Icons.info_rounded,
-                        hintText: 'الرقم المدني',
-                      ),
-                      const SizedBox(height: 10),
-                      //number
-                      customTextFormField(
-                        onChanged: (value) {},
-                        validator: (value) {},
-                        keyboardType: TextInputType.emailAddress,
-                        prefixIcon: Icons.mail,
-                        hintText: 'الايميل',
-                      ),
-
-                      const SizedBox(height: 10),
-
-                      //password
-                      customTextFormField(
-                        onChanged: (value) {},
-                        validator: (value) {
-                          if (value.toString().isEmpty) {
-                            return 'أرجوا ادخال كلمة المرور';
-                          } else if (value.toString().length < 8) {
-                            return 'كلمة المرور تحتوي على اقل من 8 احرف';
-                          }
-
-                          return null;
-                        },
-                        keyboardType: TextInputType.visiblePassword,
-                        obscureText: hidePassword1,
-                        prefixIcon: Icons.lock,
-                        suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                hidePassword1 = !hidePassword1;
-                              });
-                            },
-                            icon: Icon(
-                              hidePassword1
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                            )),
-                        hintText: 'كلمة المرور',
-                      ),
-
-                      const SizedBox(height: 10),
-                      //password 2
-                      customTextFormField(
-                        validator: (value) {},
-                        keyboardType: TextInputType.visiblePassword,
-                        obscureText: hidePassword2,
-                        prefixIcon: Icons.lock,
-                        suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                hidePassword2 = !hidePassword2;
-                              });
-                            },
-                            icon: Icon(
-                              hidePassword2
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                            )),
-                        hintText: 'تأكيد كلمة المرور',
-                      ),
-
-                      const SizedBox(height: 20),
-                      SizedBox(
-                        height: 50,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Constants.buttonColor,
-                              fixedSize: const Size(300, 40),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50))),
-                          onPressed: () {},
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: const [
-                              Icon(Icons.login),
-                              Text('تسجيل حساب جديد'),
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
+              Form(
+                key: globalKey,
+                child: ListView(
+                  padding: const EdgeInsets.only(
+                    left: 50,
+                    right: 50,
                   ),
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Constants.kMainColor,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Image.asset(Constants.logo),
+                    ),
+                    const Text(
+                      'عمل حساب جديد',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    // name
+                    customTextFormField(
+                      onChanged: (value) {},
+                      validator: (value) {
+                        if (value.toString().isEmpty) {
+                          return 'أدخل الاسم';
+                        }
+                        return null;
+                      },
+                      keyboardType: TextInputType.text,
+                      prefixIcon: Icons.person,
+                      hintText: 'الاسم',
+                    ),
+                    const SizedBox(height: 10),
+
+                    //number
+                    customTextFormField(
+                      onChanged: (value) {},
+                      validator: (value) {},
+                      keyboardType: TextInputType.number,
+                      prefixIcon: Icons.info_rounded,
+                      hintText: 'الرقم المدني',
+                    ),
+                    const SizedBox(height: 10),
+                    //number
+                    customTextFormField(
+                      onChanged: (value) {},
+                      validator: (value) {},
+                      keyboardType: TextInputType.emailAddress,
+                      prefixIcon: Icons.mail,
+                      hintText: 'الايميل',
+                    ),
+
+                    const SizedBox(height: 10),
+
+                    //password
+                    customTextFormField(
+                      onChanged: (value) {},
+                      validator: (value) {
+                        if (value.toString().isEmpty) {
+                          return 'أرجوا ادخال كلمة المرور';
+                        } else if (value.toString().length < 8) {
+                          return 'كلمة المرور تحتوي على اقل من 8 احرف';
+                        }
+
+                        return null;
+                      },
+                      keyboardType: TextInputType.visiblePassword,
+                      obscureText: hidePassword1,
+                      prefixIcon: Icons.lock,
+                      suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              hidePassword1 = !hidePassword1;
+                            });
+                          },
+                          icon: Icon(
+                            hidePassword1
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                          )),
+                      hintText: 'كلمة المرور',
+                    ),
+
+                    const SizedBox(height: 10),
+                    //password 2
+                    customTextFormField(
+                      validator: (value) {},
+                      keyboardType: TextInputType.visiblePassword,
+                      obscureText: hidePassword2,
+                      prefixIcon: Icons.lock,
+                      suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              hidePassword2 = !hidePassword2;
+                            });
+                          },
+                          icon: Icon(
+                            hidePassword2
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                          )),
+                      hintText: 'تأكيد كلمة المرور',
+                    ),
+
+                    const SizedBox(height: 20),
+                    SizedBox(
+                      height: 50,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Constants.kMainColor,
+                            fixedSize: const Size(300, 40),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50))),
+                        onPressed: () {},
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: const [
+                            Icon(Icons.login),
+                            Text('تسجيل حساب جديد'),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
                 ),
               ),
               // Visibility(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loginapp/screens/home_screen.dart';
 import 'package:loginapp/screens/register_screen.dart';
 import 'package:loginapp/services/api_services.dart';
 import 'package:loginapp/widgets/text_form.dart';
@@ -36,101 +37,106 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
         child: Scaffold(
             body: Stack(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 50,
-                right: 50,
-              ),
-              child: Form(
-                key: globalKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: Constants.kMainColor,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Image.asset(Constants.logo),
-                    ),
-                    const Text(
-                      'مرحبا',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      'ادخل الكود الخاص بك',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 22,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    customTextFormField(
-                      onChanged: (value) {
-                        yourCode = value.toString();
-                      },
-                      validator: (value) {
-                        if (value.toString().isEmpty) {
-                          return 'ادخل الكود الخاص بك';
-                        } else if (value.toString().length != 4) {
-                          return 'يجب ان يكون طول الرقم 4 ارقام';
-                        }
-                        return null;
-                      },
-                      hintText: 'رقم الهاتف',
-                      keyboardType: TextInputType.phone,
-                      prefixIcon: Icons.phone,
-                    ),
-                    const SizedBox(height: 10),
-
-                    // login button
-                    SizedBox(
-                      height: 50,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Constants.kMainColor,
-                            fixedSize: const Size(300, 40),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50))),
-                        onPressed: () {
-                          if (validateAndSave()) {
-                            setState(() {
-                              isApiCallProcess = true;
-                            });
-                            apiServices
-                                .loginCode(widget.phoneNumber, yourCode)
-                                .then((value) {
-                              setState(() {
-                                isApiCallProcess = false;
-                              });
-                              if (value.user == "new") {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const RegisterScreen()),
-                                );
-                              }
-                            });
-                          }
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: const [
-                            Icon(Icons.login),
-                            Text('تسجيل الدخول'),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
+            Form(
+              key: globalKey,
+              child: ListView(
+                padding: const EdgeInsets.only(
+                  left: 50,
+                  right: 50,
                 ),
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Constants.kMainColor,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Image.asset(Constants.logo),
+                  ),
+                  const Text(
+                    'مرحبا',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    'ادخل الكود الخاص بك',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 22,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  customTextFormField(
+                    onChanged: (value) {
+                      yourCode = value.toString();
+                    },
+                    validator: (value) {
+                      if (value.toString().isEmpty) {
+                        return 'ادخل الكود الخاص بك';
+                      } else if (value.toString().length != 4) {
+                        return 'يجب ان يكون طول الرقم 4 ارقام';
+                      }
+                      return null;
+                    },
+                    hintText: 'رقم الهاتف',
+                    keyboardType: TextInputType.phone,
+                    prefixIcon: Icons.phone,
+                  ),
+                  const SizedBox(height: 10),
+
+                  // login button
+                  SizedBox(
+                    height: 50,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Constants.kMainColor,
+                          fixedSize: const Size(300, 40),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50))),
+                      onPressed: () {
+                        if (validateAndSave()) {
+                          setState(() {
+                            isApiCallProcess = true;
+                          });
+                          apiServices
+                              .loginCode(widget.phoneNumber, yourCode)
+                              .then((value) {
+                            setState(() {
+                              isApiCallProcess = false;
+                            });
+                            if (value.user == "new") {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const RegisterScreen()),
+                              );
+                            } else if (value.user == "old") {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomeScreen(
+                                          name: value.name!,
+                                        )),
+                              );
+                            }
+                          });
+                        }
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: const [
+                          Icon(Icons.login),
+                          Text('تسجيل الدخول'),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
             Visibility(

@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           appBarTheme: AppBarTheme(
             centerTitle: true,
-            color: Constants.buttonColor,
+            color: Constants.kMainColor,
           )),
       home: const LoginScreen(),
     );

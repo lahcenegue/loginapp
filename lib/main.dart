@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'constants/constants.dart';
 import 'screens/login_mobile/login_mobile_screen.dart';
 import 'widgets/one_signal_controller.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,6 +15,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    initializeDateFormatting('ar');
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       locale: const Locale('ar', ''),

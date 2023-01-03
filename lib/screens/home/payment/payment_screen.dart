@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loginapp/screens/home/home_view_model.dart';
+import 'package:intl/intl.dart' as intl;
 
 class PaymentScreen extends StatefulWidget {
   final String token;
@@ -11,11 +12,13 @@ class PaymentScreen extends StatefulWidget {
 
 class _PaymentScreenState extends State<PaymentScreen> {
   HomeViewModel hvm = HomeViewModel();
+  intl.DateFormat? dateFormat;
 
   @override
   void initState() {
     super.initState();
     hvm.fetchPaymentList(token: widget.token);
+    dateFormat = intl.DateFormat('EEEE yyyy/MM/dd hh:mm a', "ar");
   }
 
   @override
@@ -70,7 +73,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           children: [
                             const Text('التاريخ'),
                             const SizedBox(width: 20),
-                            Text(hvm.listPayment![index].dateend),
+                            Text(dateFormat!.format(
+                                DateTime.fromMicrosecondsSinceEpoch(
+                                    int.parse(hvm.listPayment![index].dateend) *
+                                        1000000))),
                           ],
                         ),
                       ],

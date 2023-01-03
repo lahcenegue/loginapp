@@ -120,6 +120,7 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
                               MaterialPageRoute(
                                   builder: (context) => HomeScreen(
                                         name: value.name!,
+                                        token: value.token!,
                                       )),
                             );
                           }

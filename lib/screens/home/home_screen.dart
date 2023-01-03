@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:loginapp/constants/constants.dart';
+import 'package:loginapp/screens/home/payment/payment_screen.dart';
 import 'package:loginapp/widgets/costum_container.dart';
 
 class HomeScreen extends StatelessWidget {
   final String name;
+  final String token;
 
-  const HomeScreen({super.key, required this.name});
+  const HomeScreen({
+    super.key,
+    required this.name,
+    required this.token,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +65,14 @@ class HomeScreen extends StatelessWidget {
                         title: 'إظافة',
                       ),
                       customContainer(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    PaymentScreen(token: token),
+                              ));
+                        },
                         icon: Icons.payment_outlined,
                         title: 'عمليات الدفع',
                       ),

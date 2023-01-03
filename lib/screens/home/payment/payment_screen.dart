@@ -23,24 +23,62 @@ class _PaymentScreenState extends State<PaymentScreen> {
     hvm.addListener(() {
       setState(() {});
     });
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('عمليات الدفع'),
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('عمليات الدفع'),
+        ),
+        body: hvm.listPayment == null
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : ListView.separated(
+                physics: const ScrollPhysics(),
+                itemCount: hvm.listPayment!.length,
+                separatorBuilder: (buildContext, index) {
+                  return const SizedBox(height: 10);
+                },
+                itemBuilder: (buildContext, index) {
+                  return Card(
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(Icons.payment),
+                            const SizedBox(width: 20),
+                            Text(hvm.listPayment![index].name),
+                            const Expanded(child: SizedBox()),
+                            Text(hvm.listPayment![index].amount),
+                            const Text('د.ك'),
+                            const SizedBox(width: 5),
+                            Icon(hvm.listPayment![index].paymentdate != "0"
+                                ? Icons.check_circle_outlined
+                                : Icons.error_outline),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        const Text('التعليق'),
+                        Row(
+                          children: [
+                            const Text('الهاتف'),
+                            const SizedBox(width: 20),
+                            Text(hvm.listPayment![index].mobile),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            const Text('التاريخ'),
+                            const SizedBox(width: 20),
+                            Text(hvm.listPayment![index].dateend),
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
       ),
-      body: hvm.listPayment == null
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : ListView.separated(
-              physics: const ScrollPhysics(),
-              itemCount: hvm.listPayment!.length,
-              itemBuilder: (buildContext, index) {
-                return Card();
-              },
-              separatorBuilder: (buildContext, index) {
-                return const SizedBox(height: 10);
-              },
-            ),
     );
   }
 }

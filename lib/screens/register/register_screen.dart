@@ -218,6 +218,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 MaterialPageRoute(
                                   builder: (context) => HomeScreen(
                                     name: value.name!,
+                                    token: value.token!,
                                   ),
                                 ),
                               );

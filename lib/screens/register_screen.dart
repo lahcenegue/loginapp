@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:loginapp/models/models.dart';
 import 'package:loginapp/screens/home_screen.dart';
 import 'package:loginapp/services/api_services.dart';
+import 'package:loginapp/widgets/constum_button.dart';
 import 'package:loginapp/widgets/email_validator.dart';
 import 'package:loginapp/widgets/text_form.dart';
 import '../constants/constants.dart';
@@ -52,6 +52,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     right: 50,
                   ),
                   children: [
+                    const SizedBox(height: 80),
                     Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
@@ -60,6 +61,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       child: Image.asset(Constants.logo),
                     ),
+                    const SizedBox(height: 20),
                     const Text(
                       'عمل حساب جديد',
                       textAlign: TextAlign.center,
@@ -68,6 +70,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+
+                    const SizedBox(height: 20),
                     // name
                     customTextFormField(
                       onChanged: (value) {
@@ -192,55 +196,42 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
 
                     const SizedBox(height: 20),
-                    SizedBox(
-                      height: 50,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Constants.kMainColor,
-                            fixedSize: const Size(300, 40),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50))),
-                        onPressed: () {
-                          if (validateAndSave()) {
+                    customButton(
+                      onPressed: () {
+                        if (validateAndSave()) {
+                          setState(() {
+                            isApiCallProcess = true;
+                          });
+                          apiServices
+                              .register(
+                            phone: widget.phoneNumber,
+                            yourCode: widget.code,
+                            civilNumber: civilNumber!,
+                            email: email!,
+                            name: name!,
+                            password: password!,
+                          )
+                              .then((value) {
                             setState(() {
-                              isApiCallProcess = true;
+                              isApiCallProcess = false;
                             });
-                            apiServices
-                                .register(
-                              phone: widget.phoneNumber,
-                              yourCode: widget.code,
-                              civilNumber: civilNumber!,
-                              email: email!,
-                              name: name!,
-                              password: password!,
-                            )
-                                .then((value) {
-                              setState(() {
-                                isApiCallProcess = false;
-                              });
 
-                              if (value.msg == "ok") {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => HomeScreen(
-                                      name: value.name!,
-                                    ),
+                            if (value.msg == "ok") {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => HomeScreen(
+                                    name: value.name!,
                                   ),
-                                );
-                              }
-                            });
-                          }
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: const [
-                            Icon(Icons.login),
-                            Text('تسجيل حساب جديد'),
-                          ],
-                        ),
-                      ),
-                    )
+                                ),
+                              );
+                            }
+                          });
+                        }
+                      },
+                      icon: Icons.login,
+                      title: 'تسجيل حساب جديد',
+                    ),
                   ],
                 ),
               ),

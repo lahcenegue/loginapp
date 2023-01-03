@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loginapp/screens/login_code.dart';
 import 'package:loginapp/services/api_services.dart';
+import 'package:loginapp/widgets/constum_button.dart';
 import 'package:loginapp/widgets/text_form.dart';
 import '../constants/constants.dart';
 
@@ -34,11 +35,9 @@ class _LoginScreenState extends State<LoginScreen> {
             Form(
               key: globalKey,
               child: ListView(
-                padding: const EdgeInsets.only(
-                  left: 50,
-                  right: 50,
-                ),
+                padding: const EdgeInsets.only(left: 50, right: 50),
                 children: [
+                  const SizedBox(height: 120),
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
@@ -47,6 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     child: Image.asset(Constants.logo),
                   ),
+                  const SizedBox(height: 30),
                   const Text(
                     'مرحبا',
                     textAlign: TextAlign.center,
@@ -55,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 10),
+
                   const Text(
                     'الدخول الى حسابك',
                     textAlign: TextAlign.center,
@@ -63,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontSize: 22,
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 30),
                   customTextFormField(
                     onChanged: (value) {
                       phoneNumber = value.toString();
@@ -80,47 +80,35 @@ class _LoginScreenState extends State<LoginScreen> {
                     keyboardType: TextInputType.phone,
                     prefixIcon: Icons.phone,
                   ),
-                  const SizedBox(height: 10),
 
+                  const SizedBox(height: 20),
                   // login button
-                  SizedBox(
-                    height: 50,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Constants.kMainColor,
-                          fixedSize: const Size(300, 40),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50))),
-                      onPressed: () {
-                        if (validateAndSave()) {
+                  customButton(
+                    onPressed: () {
+                      if (validateAndSave()) {
+                        setState(() {
+                          isApiCallProcess = true;
+                        });
+                        apiServices.loginMobile(phoneNumber!).then((value) {
                           setState(() {
-                            isApiCallProcess = true;
+                            isApiCallProcess = false;
                           });
-                          apiServices.loginMobile(phoneNumber!).then((value) {
-                            setState(() {
-                              isApiCallProcess = false;
-                            });
-                            if (value.msg == "ok") {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LoginCodeScreen(
-                                          phoneNumber: phoneNumber!,
-                                        )),
-                              );
-                            }
-                          });
-                        }
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: const [
-                          Icon(Icons.login),
-                          Text('تسجيل الدخول'),
-                        ],
-                      ),
-                    ),
-                  )
+                          if (value.msg == "ok") {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LoginCodeScreen(
+                                  phoneNumber: phoneNumber!,
+                                ),
+                              ),
+                            );
+                          }
+                        });
+                      }
+                    },
+                    icon: Icons.login,
+                    title: 'تسجيل الدخول',
+                  ),
                 ],
               ),
             ),

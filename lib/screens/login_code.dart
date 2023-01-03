@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:loginapp/screens/home_screen.dart';
 import 'package:loginapp/screens/register_screen.dart';
 import 'package:loginapp/services/api_services.dart';
+import 'package:loginapp/widgets/constum_button.dart';
 import 'package:loginapp/widgets/text_form.dart';
 import '../constants/constants.dart';
 
@@ -45,6 +46,7 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
                   right: 50,
                 ),
                 children: [
+                  const SizedBox(height: 120),
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
@@ -53,6 +55,9 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
                     ),
                     child: Image.asset(Constants.logo),
                   ),
+
+                  const SizedBox(height: 30),
+
                   const Text(
                     'مرحبا',
                     textAlign: TextAlign.center,
@@ -61,7 +66,7 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 10),
+
                   const Text(
                     'ادخل الكود الخاص بك',
                     textAlign: TextAlign.center,
@@ -69,7 +74,8 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
                       fontSize: 22,
                     ),
                   ),
-                  const SizedBox(height: 10),
+
+                  const SizedBox(height: 30),
                   customTextFormField(
                     onChanged: (value) {
                       yourCode = value.toString();
@@ -82,62 +88,49 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
                       }
                       return null;
                     },
-                    hintText: 'رقم الهاتف',
+                    hintText: 'الكود',
                     keyboardType: TextInputType.phone,
                     prefixIcon: Icons.phone,
                   ),
-                  const SizedBox(height: 10),
 
+                  const SizedBox(height: 20),
                   // login button
-                  SizedBox(
-                    height: 50,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Constants.kMainColor,
-                          fixedSize: const Size(300, 40),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50))),
-                      onPressed: () {
-                        if (validateAndSave()) {
+                  customButton(
+                    onPressed: () {
+                      if (validateAndSave()) {
+                        setState(() {
+                          isApiCallProcess = true;
+                        });
+                        apiServices
+                            .loginCode(widget.phoneNumber, yourCode)
+                            .then((value) {
                           setState(() {
-                            isApiCallProcess = true;
+                            isApiCallProcess = false;
                           });
-                          apiServices
-                              .loginCode(widget.phoneNumber, yourCode)
-                              .then((value) {
-                            setState(() {
-                              isApiCallProcess = false;
-                            });
-                            if (value.user == "new") {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => RegisterScreen(
-                                          phoneNumber: widget.phoneNumber,
-                                          code: yourCode!,
-                                        )),
-                              );
-                            } else if (value.user == "old") {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => HomeScreen(
-                                          name: value.name!,
-                                        )),
-                              );
-                            }
-                          });
-                        }
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: const [
-                          Icon(Icons.login),
-                          Text('تسجيل الدخول'),
-                        ],
-                      ),
-                    ),
-                  )
+                          if (value.user == "new") {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RegisterScreen(
+                                        phoneNumber: widget.phoneNumber,
+                                        code: yourCode!,
+                                      )),
+                            );
+                          } else if (value.user == "old") {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomeScreen(
+                                        name: value.name!,
+                                      )),
+                            );
+                          }
+                        });
+                      }
+                    },
+                    icon: Icons.login,
+                    title: 'تسجيل الدخول',
+                  ),
                 ],
               ),
             ),

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:loginapp/widgets/one_signal_controller.dart';
 import 'constants/constants.dart';
-import 'screens/login_screen.dart';
+import 'screens/login_mobile/login_mobile_screen.dart';
 
 void main() {
   runApp(const MyApp());
+  OneSignalControler();
 }
 
 class MyApp extends StatelessWidget {
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
             centerTitle: true,
             color: Constants.kMainColor,
           )),
-      home: const LoginScreen(),
+      home: const LoginMobileScreen(),
     );
   }
 }

@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:loginapp/screens/login_code.dart';
-import 'package:loginapp/services/api_services.dart';
+import 'package:loginapp/screens/login_code/login_code.dart';
+import 'package:loginapp/screens/login_mobile/api_login_mobile.dart';
 import 'package:loginapp/widgets/constum_button.dart';
 import 'package:loginapp/widgets/text_form.dart';
-import '../constants/constants.dart';
+import '../../constants/constants.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class LoginMobileScreen extends StatefulWidget {
+  const LoginMobileScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<LoginMobileScreen> createState() => _LoginMobileScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginMobileScreenState extends State<LoginMobileScreen> {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
-  ApiServices apiServices = ApiServices();
+  //ApiServices apiServices = ApiServices();
 
   String? phoneNumber;
   bool isApiCallProcess = false;
@@ -89,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         setState(() {
                           isApiCallProcess = true;
                         });
-                        apiServices.loginMobile(phoneNumber!).then((value) {
+                        apiLoginMobile(phoneNumber!).then((value) {
                           setState(() {
                             isApiCallProcess = false;
                           });

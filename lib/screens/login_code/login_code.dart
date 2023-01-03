@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:loginapp/screens/home_screen.dart';
-import 'package:loginapp/screens/register_screen.dart';
-import 'package:loginapp/services/api_services.dart';
+import 'package:loginapp/screens/home/home_screen.dart';
+import 'package:loginapp/screens/login_code/api_login_code.dart';
+import 'package:loginapp/screens/register/register_screen.dart';
 import 'package:loginapp/widgets/constum_button.dart';
 import 'package:loginapp/widgets/text_form.dart';
-import '../constants/constants.dart';
+import '../../constants/constants.dart';
 
 class LoginCodeScreen extends StatefulWidget {
   final String phoneNumber;
@@ -19,7 +19,6 @@ class LoginCodeScreen extends StatefulWidget {
 
 class _LoginCodeScreenState extends State<LoginCodeScreen> {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
-  ApiServices apiServices = ApiServices();
 
   String? yourCode;
 
@@ -101,8 +100,7 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
                         setState(() {
                           isApiCallProcess = true;
                         });
-                        apiServices
-                            .loginCode(widget.phoneNumber, yourCode)
+                        apiLoginCode(widget.phoneNumber, yourCode)
                             .then((value) {
                           setState(() {
                             isApiCallProcess = false;

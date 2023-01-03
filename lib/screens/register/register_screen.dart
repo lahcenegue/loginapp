@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:loginapp/screens/home_screen.dart';
-import 'package:loginapp/services/api_services.dart';
+import 'package:loginapp/screens/home/home_screen.dart';
+import 'package:loginapp/screens/register/api_register.dart';
 import 'package:loginapp/widgets/constum_button.dart';
 import 'package:loginapp/widgets/email_validator.dart';
 import 'package:loginapp/widgets/text_form.dart';
-import '../constants/constants.dart';
+import '../../constants/constants.dart';
 
 class RegisterScreen extends StatefulWidget {
   final String phoneNumber;
@@ -21,8 +21,6 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
-
-  ApiServices apiServices = ApiServices();
 
   bool hidePassword1 = true;
   bool hidePassword2 = true;
@@ -202,16 +200,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           setState(() {
                             isApiCallProcess = true;
                           });
-                          apiServices
-                              .register(
+                          apiRegister(
                             phone: widget.phoneNumber,
                             yourCode: widget.code,
                             civilNumber: civilNumber!,
                             email: email!,
                             name: name!,
                             password: password!,
-                          )
-                              .then((value) {
+                          ).then((value) {
                             setState(() {
                               isApiCallProcess = false;
                             });

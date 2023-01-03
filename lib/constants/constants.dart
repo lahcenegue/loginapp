@@ -10,12 +10,7 @@ class Constants {
 
   //colors'
   static Color kMainColor = const Color(0xff39b3e6);
-  static Color appbarColor = Colors.red;
-  static Color buttonColor = Colors.red;
-  static Color linkColor = Colors.blue;
-  static Color titleColor = Colors.red;
-  static Color subTitleColor = Colors.red;
-  static Color textColor = Colors.red;
-  static Color twittColor = Colors.white;
-  static Color backgroundColor = Colors.grey;
+  static Color textColor = const Color(0xfffafafa);
+  static Color boxColor = const Color(0xfffafafa);
+  static Color boxShadow = const Color(0xff2c2c2b);
 }

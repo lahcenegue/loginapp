@@ -16,7 +16,7 @@ Future<RegisterResponseModel> apiRegister({
 
   try {
     var url = Uri.parse(
-        "${Constants.url}/api/login/dfkdfhkhk/$phone/$yourCode/reg?name=$name&psot=$civilNumber&email=$email&password=$password");
+        "${Constants.url}/api/login/${OneSignalControler.osUserID}/$phone/$yourCode/reg?name=$name&psot=$civilNumber&email=$email&password=$password");
     http.Response response = await http.get(url);
 
     if (response.statusCode == 200) {

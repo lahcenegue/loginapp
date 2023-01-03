@@ -14,15 +14,9 @@ class LoginMobileScreen extends StatefulWidget {
 
 class _LoginMobileScreenState extends State<LoginMobileScreen> {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
-  //ApiServices apiServices = ApiServices();
 
   String? phoneNumber;
   bool isApiCallProcess = false;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

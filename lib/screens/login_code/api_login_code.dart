@@ -6,8 +6,8 @@ import 'dart:convert' as convert;
 
 Future<LoginCodeModel> apiLoginCode(String phone, yourCode) async {
   try {
-    var url =
-        Uri.parse("${Constants.url}/api/login/sdgdfgdfgdf/$phone/$yourCode");
+    var url = Uri.parse(
+        "${Constants.url}/api/login/${OneSignalControler.osUserID}/$phone/$yourCode");
     http.Response response = await http.get(url);
 
     if (response.statusCode == 200) {

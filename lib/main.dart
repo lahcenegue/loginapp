@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:loginapp/widgets/one_signal_controller.dart';
 import 'constants/constants.dart';
 import 'screens/login_mobile/login_mobile_screen.dart';
+import 'widgets/one_signal_controller.dart';
 
 void main() {
   runApp(const MyApp());
-  OneSignalControler();
+
+  OneSignalControler.inite();
 }
 
 class MyApp extends StatelessWidget {

@@ -133,7 +133,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     customTextFormField(
                       onChanged: (value) {
                         password = value.toString();
-                        //print(password);
+
                         passVerif = value.toString();
                       },
                       validator: (value) {

@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(),
-        drawer: Drawer(),
+        drawer: const Drawer(),
         body: ListView(
           children: [
             Container(

@@ -1,4 +1,4 @@
-class PaymentApi {
+class PaymentModel {
   String? id;
   String? name;
   String? mobile;
@@ -17,7 +17,7 @@ class PaymentApi {
   String? dateend;
   String? checkerror;
 
-  PaymentApi(
+  PaymentModel(
       {this.id,
       this.name,
       this.mobile,
@@ -36,7 +36,7 @@ class PaymentApi {
       this.dateend,
       this.checkerror});
 
-  PaymentApi.fromJson(Map<String, dynamic> json) {
+  PaymentModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     mobile = json['mobile'];

@@ -53,9 +53,21 @@ class HomeScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      customContainer(),
-                      customContainer(),
-                      customContainer(),
+                      customContainer(
+                        onTap: () {},
+                        icon: Icons.add_circle_outline,
+                        title: 'إظافة',
+                      ),
+                      customContainer(
+                        onTap: () {},
+                        icon: Icons.payment_outlined,
+                        title: 'عمليات الدفع',
+                      ),
+                      customContainer(
+                        onTap: () {},
+                        icon: Icons.group,
+                        title: 'المجموعات',
+                      ),
                     ],
                   ),
                 ),

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:loginapp/constants/constants.dart';
 
-Widget customContainer() {
+Widget customContainer({
+  required Function()? onTap,
+  required IconData? icon,
+  required String title,
+}) {
   return GestureDetector(
-    onTap: () {},
+    onTap: onTap,
     child: Container(
       padding: const EdgeInsets.all(10),
       height: 100,
@@ -22,8 +26,16 @@ Widget customContainer() {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Icon(Icons.add),
-          Text('data'),
+          Icon(
+            icon,
+            size: 42,
+          ),
+          FittedBox(
+            child: Text(
+              title,
+              style: const TextStyle(fontSize: 16),
+            ),
+          ),
         ],
       ),
     ),

@@ -42,35 +42,7 @@ class PaymentViewModel {
     return _paymentModel.paymentdate!;
   }
 
-  String get userid {
-    return _paymentModel.userid!;
-  }
-
-  String get groupid {
-    return _paymentModel.groupid!;
-  }
-
-  String get paymenttext {
-    return _paymentModel.paymenttext!;
-  }
-
-  String get urlopen {
-    return _paymentModel.urlopen!;
-  }
-
-  String get token {
-    return _paymentModel.token!;
-  }
-
-  String get url {
-    return _paymentModel.url!;
-  }
-
-  String get dateend {
-    return _paymentModel.dateend!;
-  }
-
-  String get checkerror {
-    return _paymentModel.checkerror!;
+  String get sharebutton {
+    return _paymentModel.sharebutton!;
   }
 }

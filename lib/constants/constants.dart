@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Constants {
   //Links
-  static String url = 'https://www.paykw.net';
+  static String url = 'https://www.paykw.net/test';
   static String onSignalID = '748d0bb2-8752-450a-ac1f-609c403e6282';
 
   //images

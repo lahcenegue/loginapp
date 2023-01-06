@@ -42,7 +42,7 @@ class PaymentViewModel {
     return _paymentModel.paymentdate!;
   }
 
-  String get sharebutton {
+  int get sharebutton {
     return _paymentModel.sharebutton!;
   }
 }

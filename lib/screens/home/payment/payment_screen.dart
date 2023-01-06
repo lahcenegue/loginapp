@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:loginapp/constants/constants.dart';
 import 'package:loginapp/screens/home/home_view_model.dart';
 import 'package:intl/intl.dart' as intl;
+import 'package:loginapp/screens/home/payment/payment_view_model.dart';
 import 'package:loginapp/widgets/text_row.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -14,13 +15,21 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
+  final scrollController = ScrollController();
   HomeViewModel hvm = HomeViewModel();
   intl.DateFormat? dateFormat;
+
+  int page = 1;
+  List<PaymentViewModel>? paymentList;
 
   @override
   void initState() {
     super.initState();
-    hvm.fetchPaymentList(token: widget.token);
+    scrollController.addListener(_scrollListener);
+    hvm.fetchPaymentList(
+      token: widget.token,
+      page: page,
+    );
     dateFormat = intl.DateFormat('EEEE yyyy/MM/dd hh:mm a', "ar_DZ");
   }
 
@@ -29,41 +38,44 @@ class _PaymentScreenState extends State<PaymentScreen> {
     hvm.addListener(() {
       setState(() {});
     });
+    paymentList = hvm.listPayment;
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('عمليات الدفع'),
         ),
-        body: hvm.listPayment == null
+        body: paymentList == null
             ? const Center(
                 child: CircularProgressIndicator(),
               )
             : ListView.separated(
+                padding: const EdgeInsets.all(15),
+                controller: scrollController,
                 physics: const ScrollPhysics(),
                 itemCount: hvm.listPayment!.length,
                 separatorBuilder: (buildContext, index) {
-                  return const SizedBox(height: 10);
+                  return const SizedBox(height: 20);
                 },
                 itemBuilder: (buildContext, index) {
+                  final payment = paymentList![index];
                   return Container(
                     padding: const EdgeInsets.all(10),
-                    margin: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       color: Constants.boxColor,
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                          color: _colorPiker(hvm.listPayment![index].show1)),
+                      border: Border.all(color: _colorPiker(payment.show1)),
                       boxShadow: [
                         BoxShadow(
                           color: Constants.boxShadow,
-                          offset: const Offset(4, 5),
-                          blurRadius: 4,
+                          offset: const Offset(3, 3),
+                          blurRadius: 5,
                         ),
                       ],
                     ),
                     child: Column(
                       children: [
+                        Text(index.toString()),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -74,7 +86,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             SizedBox(
                                 width: MediaQuery.of(context).size.width * .05),
                             Text(
-                              hvm.listPayment![index].name,
+                              payment.name,
                               style: TextStyle(
                                 fontSize: 18,
                                 color: Constants.kMainColor,
@@ -82,38 +94,34 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             ),
                             const Expanded(child: SizedBox()),
                             Text(
-                              '${hvm.listPayment![index].amount}د.ك',
+                              '${payment.amount}د.ك',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18,
-                                color:
-                                    _colorPiker(hvm.listPayment![index].show1),
+                                color: _colorPiker(payment.show1),
                               ),
                             ),
                             const SizedBox(width: 5),
-                            _iconPiker(hvm.listPayment![index].show1),
+                            _iconPiker(payment.show1),
                           ],
                         ),
                         const SizedBox(height: 20),
                         TextRow(
                           text1: 'التعليق',
-                          text2: hvm.listPayment![index].comment,
+                          text2: payment.comment,
                         ),
                         TextRow(
                           text1: 'الهاتف',
-                          text2: hvm.listPayment![index].mobile,
+                          text2: payment.mobile,
                         ),
                         TextRow(
                           text1: 'بتاريخ',
                           text2: dateFormat!.format(
-                              DateTime.fromMicrosecondsSinceEpoch(int.parse(
-                                      hvm.listPayment![index].paymentdate) *
-                                  1000000)),
+                              DateTime.fromMicrosecondsSinceEpoch(
+                                  int.parse(payment.date1) * 1000000)),
                         ),
                         Visibility(
-                            visible: hvm.listPayment![index].show1 == '4'
-                                ? true
-                                : false,
+                            visible: payment.sharebutton == 1 ? false : true,
                             child: Column(
                               children: [
                                 const Divider(
@@ -124,12 +132,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                     onPressed: () {
                                       Share.share(
                                         """
-مرحبا:${hvm.listPayment![index].name}
-يمكنك دفع المبلغ :${hvm.listPayment![index].amount}
-عبر:${Constants.url}/pay/${hvm.listPayment![index].md5id}
+مرحبا:${payment.name}
+يمكنك دفع المبلغ :${payment.amount}
+عبر:${Constants.url}/pay/${payment.md5id}
                 """,
-                                        subject:
-                                            "${hvm.listPayment![index].name}مشاركه عنوان ",
+                                        subject: "${payment.name}مشاركه عنوان ",
                                       );
                                     },
                                     icon: const Icon(Icons.share)),
@@ -142,6 +149,23 @@ class _PaymentScreenState extends State<PaymentScreen> {
               ),
       ),
     );
+  }
+
+  void _scrollListener() {
+    if (scrollController.position.pixels ==
+        scrollController.position.maxScrollExtent) {
+      page += 1;
+
+      hvm.fetchPaymentList(
+        token: widget.token,
+        page: page,
+      );
+      paymentList = paymentList! + hvm.listPayment!;
+      setState(() {});
+      print('call');
+    } else {
+      print('not call');
+    }
   }
 }
 

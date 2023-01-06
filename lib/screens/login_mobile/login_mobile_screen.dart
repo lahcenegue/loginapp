@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:loginapp/screens/login_code/login_code.dart';
+import 'package:loginapp/screens/login_code/login_code_screen.dart';
 import 'package:loginapp/screens/login_mobile/api_login_mobile.dart';
 import 'package:loginapp/widgets/constum_button.dart';
 import 'package:loginapp/widgets/text_form.dart';

@@ -8,7 +8,7 @@ class PaymentModel {
   String? show1;
   String? date1;
   String? paymentdate;
-  String? sharebutton;
+  int? sharebutton;
 
   PaymentModel({
     this.id,
@@ -33,5 +33,6 @@ class PaymentModel {
     show1 = json['show1'];
     date1 = json['date1'];
     paymentdate = json['paymentdate'];
+    sharebutton = json['sharebutton'];
   }
 }

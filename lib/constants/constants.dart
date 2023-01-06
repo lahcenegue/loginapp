@@ -12,5 +12,5 @@ class Constants {
   static Color kMainColor = const Color(0xff39b3e6);
   static Color textColor = const Color(0xfffafafa);
   static Color boxColor = const Color(0xfffafafa);
-  static Color boxShadow = const Color(0xff2c2c2b);
+  static Color boxShadow = const Color(0xff878787);
 }

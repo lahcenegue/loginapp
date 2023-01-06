@@ -4,6 +4,7 @@ import 'package:loginapp/screens/login_code/api_login_code.dart';
 import 'package:loginapp/screens/register/register_screen.dart';
 import 'package:loginapp/widgets/constum_button.dart';
 import 'package:loginapp/widgets/text_form.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants/constants.dart';
 
 class LoginCodeScreen extends StatefulWidget {
@@ -19,6 +20,7 @@ class LoginCodeScreen extends StatefulWidget {
 
 class _LoginCodeScreenState extends State<LoginCodeScreen> {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
+  late SharedPreferences prefs;
 
   String? yourCode;
 
@@ -27,6 +29,11 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
   @override
   void initState() {
     super.initState();
+  }
+
+  saveToSharedPreferences() async {
+    prefs = await SharedPreferences.getInstance();
+    prefs.setString("phone", widget.phoneNumber);
   }
 
   @override

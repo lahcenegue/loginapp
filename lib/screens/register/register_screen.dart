@@ -4,6 +4,7 @@ import 'package:loginapp/screens/register/api_register.dart';
 import 'package:loginapp/widgets/constum_button.dart';
 import 'package:loginapp/widgets/email_validator.dart';
 import 'package:loginapp/widgets/text_form.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants/constants.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -21,6 +22,12 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
+
+  saveToken(String token) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('token', token);
+    print("token succes");
+  }
 
   bool hidePassword1 = true;
   bool hidePassword2 = true;
@@ -207,7 +214,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             email: email!,
                             name: name!,
                             password: password!,
-                          ).then((value) {
+                          ).then((value) async {
                             setState(() {
                               isApiCallProcess = false;
                             });
@@ -222,6 +229,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   ),
                                 ),
                               );
+                              saveToken(value.token!);
                             }
                           });
                         }

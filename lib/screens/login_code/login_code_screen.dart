@@ -20,20 +20,26 @@ class LoginCodeScreen extends StatefulWidget {
 
 class _LoginCodeScreenState extends State<LoginCodeScreen> {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
-  late SharedPreferences prefs;
 
   String? yourCode;
 
   bool isApiCallProcess = false;
 
+  savePhone(String phone) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('phone', phone);
+    print("phone succes");
+  }
+
+  saveToken(String token) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('token', token);
+    print("token succes");
+  }
+
   @override
   void initState() {
     super.initState();
-  }
-
-  saveToSharedPreferences() async {
-    prefs = await SharedPreferences.getInstance();
-    prefs.setString("phone", widget.phoneNumber);
   }
 
   @override
@@ -108,10 +114,11 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
                           isApiCallProcess = true;
                         });
                         apiLoginCode(widget.phoneNumber, yourCode)
-                            .then((value) {
+                            .then((value) async {
                           setState(() {
                             isApiCallProcess = false;
                           });
+                          savePhone(widget.phoneNumber);
                           if (value.user == "new") {
                             Navigator.pushReplacement(
                               context,
@@ -130,6 +137,7 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
                                         token: value.token!,
                                       )),
                             );
+                            saveToken(value.token!);
                           }
                         });
                       }

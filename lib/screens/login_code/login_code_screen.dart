@@ -37,6 +37,12 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
     print("token succes");
   }
 
+  saveName(String name) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('name', name);
+    print("name succes");
+  }
+
   @override
   void initState() {
     super.initState();
@@ -138,6 +144,7 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
                                       )),
                             );
                             saveToken(value.token!);
+                            saveName(value.name!);
                           }
                         });
                       }

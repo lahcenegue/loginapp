@@ -29,6 +29,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     print("token succes");
   }
 
+  saveName(String name) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('name', name);
+    print("name succes");
+  }
+
   bool hidePassword1 = true;
   bool hidePassword2 = true;
   bool isApiCallProcess = false;
@@ -230,6 +236,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                               );
                               saveToken(value.token!);
+                              saveName(value.name!);
                             }
                           });
                         }

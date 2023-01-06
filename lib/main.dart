@@ -1,11 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:loginapp/screens/home/home_screen.dart';
 import 'constants/constants.dart';
 import 'screens/login_mobile/login_mobile_screen.dart';
 import 'widgets/one_signal_controller.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+String? phone;
+String? token;
+String? name;
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  phone = prefs.getString("phone");
+  token = prefs.getString("token");
+  name = prefs.getString("name");
+
   runApp(const MyApp());
 
   OneSignalControler.inite();
@@ -26,7 +37,15 @@ class MyApp extends StatelessWidget {
             centerTitle: true,
             color: Constants.kMainColor,
           )),
-      home: const LoginMobileScreen(),
+      home: phone == null && token == null
+          ? const LoginMobileScreen()
+          : HomeScreen(name: name!, token: token!),
     );
   }
 }
+
+
+
+// phone == null && token == null
+//           ? const LoginMobileScreen()
+//           : HomeScreen(name: name!, token: token!),

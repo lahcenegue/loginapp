@@ -15,22 +15,38 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
-  final scrollController = ScrollController();
+  final controller = ScrollController();
+
   HomeViewModel hvm = HomeViewModel();
   intl.DateFormat? dateFormat;
 
-  int page = 1;
-  List<PaymentViewModel>? paymentList;
+  List items = [];
 
   @override
   void initState() {
     super.initState();
-    scrollController.addListener(_scrollListener);
     hvm.fetchPaymentList(
       token: widget.token,
-      page: page,
     );
     dateFormat = intl.DateFormat('EEEE yyyy/MM/dd hh:mm a', "ar_DZ");
+
+    controller.addListener(() {
+      if (controller.position.maxScrollExtent == controller.offset) {
+        fetch();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  Future fetch() async {
+    hvm.fetchPaymentList(
+      token: widget.token,
+    );
   }
 
   @override
@@ -38,134 +54,129 @@ class _PaymentScreenState extends State<PaymentScreen> {
     hvm.addListener(() {
       setState(() {});
     });
-    paymentList = hvm.listPayment;
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('عمليات الدفع'),
         ),
-        body: paymentList == null
+        body: hvm.listPayment == null
             ? const Center(
                 child: CircularProgressIndicator(),
               )
             : ListView.separated(
-                padding: const EdgeInsets.all(15),
-                controller: scrollController,
+                controller: controller,
                 physics: const ScrollPhysics(),
-                itemCount: hvm.listPayment!.length,
+                shrinkWrap: true,
+                padding: const EdgeInsets.all(15),
+                itemCount: hvm.listPayment!.length + 1,
                 separatorBuilder: (buildContext, index) {
                   return const SizedBox(height: 20);
                 },
                 itemBuilder: (buildContext, index) {
-                  final payment = paymentList![index];
-                  return Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Constants.boxColor,
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: _colorPiker(payment.show1)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Constants.boxShadow,
-                          offset: const Offset(3, 3),
-                          blurRadius: 5,
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        Text(index.toString()),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                                width:
-                                    MediaQuery.of(context).size.width * .035),
-                            const Icon(Icons.payment),
-                            SizedBox(
-                                width: MediaQuery.of(context).size.width * .05),
-                            Text(
-                              payment.name,
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Constants.kMainColor,
-                              ),
-                            ),
-                            const Expanded(child: SizedBox()),
-                            Text(
-                              '${payment.amount}د.ك',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                                color: _colorPiker(payment.show1),
-                              ),
-                            ),
-                            const SizedBox(width: 5),
-                            _iconPiker(payment.show1),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        TextRow(
-                          text1: 'التعليق',
-                          text2: payment.comment,
-                        ),
-                        TextRow(
-                          text1: 'الهاتف',
-                          text2: payment.mobile,
-                        ),
-                        TextRow(
-                          text1: 'بتاريخ',
-                          text2: dateFormat!.format(
-                              DateTime.fromMicrosecondsSinceEpoch(
-                                  int.parse(payment.date1) * 1000000)),
-                        ),
-                        Visibility(
-                            visible: payment.sharebutton == 1 ? false : true,
-                            child: Column(
-                              children: [
-                                const Divider(
-                                  endIndent: 40,
-                                  indent: 40,
+                  if (index < hvm.listPayment!.length) {
+                    final payment = hvm.listPayment![index];
+                    return Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Constants.boxColor,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: _colorPiker(payment.show1)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Constants.boxShadow,
+                            offset: const Offset(3, 3),
+                            blurRadius: 5,
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          Text(index.toString()),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * .035),
+                              const Icon(Icons.payment),
+                              SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * .05),
+                              Text(
+                                payment.name,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Constants.kMainColor,
                                 ),
-                                IconButton(
-                                    onPressed: () {
-                                      Share.share(
-                                        """
-مرحبا:${payment.name}
-يمكنك دفع المبلغ :${payment.amount}
-عبر:${Constants.url}/pay/${payment.md5id}
-                """,
-                                        subject: "${payment.name}مشاركه عنوان ",
-                                      );
-                                    },
-                                    icon: const Icon(Icons.share)),
-                              ],
-                            ))
-                      ],
-                    ),
-                  );
+                              ),
+                              const Expanded(child: SizedBox()),
+                              Text(
+                                '${payment.amount}د.ك',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  color: _colorPiker(payment.show1),
+                                ),
+                              ),
+                              const SizedBox(width: 5),
+                              _iconPiker(payment.show1),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+                          TextRow(
+                            text1: 'التعليق',
+                            text2: payment.comment,
+                          ),
+                          TextRow(
+                            text1: 'الهاتف',
+                            text2: payment.mobile,
+                          ),
+                          TextRow(
+                            text1: 'بتاريخ',
+                            text2: dateFormat!.format(
+                                DateTime.fromMicrosecondsSinceEpoch(
+                                    int.parse(payment.date1) * 1000000)),
+                          ),
+                          Visibility(
+                              visible: payment.sharebutton == 1 ? false : true,
+                              child: Column(
+                                children: [
+                                  const Divider(
+                                    endIndent: 40,
+                                    indent: 40,
+                                  ),
+                                  IconButton(
+                                      onPressed: () {
+                                        Share.share(
+                                          """
+        مرحبا:${payment.name}
+        يمكنك دفع المبلغ :${payment.amount}
+        عبر:${Constants.url}/pay/${payment.md5id}
+            """,
+                                          subject:
+                                              "${payment.name}مشاركه عنوان ",
+                                        );
+                                      },
+                                      icon: const Icon(Icons.share)),
+                                ],
+                              ))
+                        ],
+                      ),
+                    );
+                  } else {
+                    return const Padding(
+                      padding: EdgeInsets.only(bottom: 30),
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  }
                 },
               ),
       ),
     );
-  }
-
-  void _scrollListener() {
-    if (scrollController.position.pixels ==
-        scrollController.position.maxScrollExtent) {
-      page += 1;
-
-      hvm.fetchPaymentList(
-        token: widget.token,
-        page: page,
-      );
-      paymentList = paymentList! + hvm.listPayment!;
-      setState(() {});
-      print('call');
-    } else {
-      print('not call');
-    }
   }
 }
 

@@ -43,9 +43,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
-
-// phone == null && token == null
-//           ? const LoginMobileScreen()
-//           : HomeScreen(name: name!, token: token!),

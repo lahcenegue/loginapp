@@ -4,11 +4,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
 class PaymentApi {
-  Future<List<PaymentModel>> loadData(
-      {required String token, required int page}) async {
+  Future<List<PaymentModel>> loadData({required String token}) async {
     try {
-      var url =
-          Uri.parse("${Constants.url}/payment/api/all/$page?token=$token");
+      var url = Uri.parse("${Constants.url}/payment/api/all?token=$token");
       http.Response response = await http.get(url);
 
       if (response.statusCode == 200) {

@@ -20,7 +20,18 @@ class HomeScreen extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.share),
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.notifications),
+            ),
+          ],
+        ),
         drawer: const Drawer(),
         body: SizedBox(
           height: screenHeight,

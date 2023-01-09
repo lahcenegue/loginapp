@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:loginapp/constants/constants.dart';
 import 'package:loginapp/screens/home/home_view_model.dart';
 import 'package:intl/intl.dart' as intl;
-import 'package:loginapp/screens/home/payment/payment_view_model.dart';
 import 'package:loginapp/widgets/text_row.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -20,7 +19,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
   HomeViewModel hvm = HomeViewModel();
   intl.DateFormat? dateFormat;
 
-  List items = [];
+  List? listPayment;
+  bool isLoad = false;
 
   @override
   void initState() {
@@ -31,9 +31,16 @@ class _PaymentScreenState extends State<PaymentScreen> {
     dateFormat = intl.DateFormat('EEEE yyyy/MM/dd hh:mm a', "ar_DZ");
 
     controller.addListener(() {
-      if (controller.position.maxScrollExtent == controller.offset) {
-        fetch();
-      }
+      // if (controller.position.maxScrollExtent == controller.offset) {
+      //   hvm.fetchPaymentList(
+      //     token: widget.token,
+      //   );
+      //   setState(() {
+      //     isLoad = true;
+      //     listPayment = hvm.newListPayment;
+      //   });
+      //   print('test load');
+      // }
     });
   }
 
@@ -41,12 +48,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
   void dispose() {
     controller.dispose();
     super.dispose();
-  }
-
-  Future fetch() async {
-    hvm.fetchPaymentList(
-      token: widget.token,
-    );
   }
 
   @override
@@ -70,13 +71,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 physics: const ScrollPhysics(),
                 shrinkWrap: true,
                 padding: const EdgeInsets.all(15),
-                itemCount: hvm.listPayment!.length + 1,
+                itemCount:
+                    isLoad ? listPayment!.length : hvm.listPayment!.length + 1,
                 separatorBuilder: (buildContext, index) {
                   return const SizedBox(height: 20);
                 },
                 itemBuilder: (buildContext, index) {
                   if (index < hvm.listPayment!.length) {
-                    final payment = hvm.listPayment![index];
+                    final payment =
+                        isLoad ? listPayment![index] : hvm.listPayment![index];
                     return Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(

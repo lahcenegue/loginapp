@@ -6,20 +6,24 @@ Widget customButton({
   required IconData? icon,
   required String? title,
 }) {
-  return SizedBox(
-    height: 50,
+  return Container(
+    padding: const EdgeInsets.only(top: 40),
     child: ElevatedButton(
       style: ElevatedButton.styleFrom(
           backgroundColor: Constants.kMainColor,
-          fixedSize: const Size(300, 40),
+          fixedSize: const Size(300, 50),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
       onPressed: onPressed,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(icon),
-          Text(title!),
+          const SizedBox(width: 20),
+          Text(
+            title!,
+            style: const TextStyle(fontSize: 24),
+          ),
         ],
       ),
     ),

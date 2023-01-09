@@ -34,7 +34,59 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
-        drawer: const Drawer(),
+        drawer: Drawer(
+          child: ListView(
+            children: [
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Constants.kMainColor,
+                ),
+                child: Row(
+                  children: const [
+                    CircleAvatar(),
+                    Text('name'),
+                  ],
+                ),
+              ),
+              ListTile(
+                leading: const Icon(Icons.account_balance_wallet),
+                trailing: const Icon(Icons.arrow_forward_ios),
+                title: const Text("كشف الحساب"),
+                onTap: () {},
+              ),
+              ListTile(
+                leading: const Icon(Icons.contact_mail),
+                trailing: const Icon(Icons.arrow_forward_ios),
+                title: const Text("اتصل بنا"),
+                onTap: () {},
+              ),
+              ListTile(
+                leading: const Icon(Icons.contact_support_rounded),
+                trailing: const Icon(Icons.arrow_forward_ios),
+                title: const Text("الدعم الفني"),
+                onTap: () {},
+              ),
+              ListTile(
+                leading: const Icon(Icons.share),
+                trailing: const Icon(Icons.arrow_forward_ios),
+                title: const Text("مشاركة التطبيق"),
+                onTap: () {},
+              ),
+              ListTile(
+                leading: const Icon(Icons.update),
+                trailing: const Icon(Icons.arrow_forward_ios),
+                title: const Text("تحديث البيانات"),
+                onTap: () {},
+              ),
+              ListTile(
+                leading: const Icon(Icons.logout),
+                trailing: const Icon(Icons.arrow_forward_ios),
+                title: const Text("تسجيل الخروج"),
+                onTap: () {},
+              ),
+            ],
+          ),
+        ),
         body: SizedBox(
           height: screenHeight,
           width: screenWidth,

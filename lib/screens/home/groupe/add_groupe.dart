@@ -35,7 +35,7 @@ class AddGroupeScreen extends StatelessWidget {
             customTextFormField(
               hintText: 'أقل مبلغ',
               keyboardType: TextInputType.number,
-              prefixIcon: Icons.phone,
+              prefixIcon: Icons.monetization_on,
               validator: (String) {
                 return null;
               },

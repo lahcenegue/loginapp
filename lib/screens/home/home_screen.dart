@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loginapp/constants/constants.dart';
 import 'package:loginapp/screens/home/add/add_screen.dart';
+import 'package:loginapp/screens/home/groupe/groupe_screen.dart';
 import 'package:loginapp/screens/home/payment/payment_screen.dart';
 import 'package:loginapp/widgets/costum_container.dart';
 
@@ -95,7 +96,13 @@ class HomeScreen extends StatelessWidget {
                         title: 'عمليات الدفع',
                       ),
                       customContainer(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const GroupeScreen(),
+                              ));
+                        },
                         icon: Icons.group,
                         title: 'المجموعات',
                       ),

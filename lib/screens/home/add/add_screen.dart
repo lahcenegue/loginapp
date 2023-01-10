@@ -1,9 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:loginapp/screens/home/add/add_api.dart';
+import 'package:loginapp/screens/home/add/add_model.dart';
 import 'package:loginapp/widgets/constum_button.dart';
 import 'package:loginapp/widgets/text_form.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class AddScreen extends StatelessWidget {
+class AddScreen extends StatefulWidget {
   const AddScreen({super.key});
+
+  @override
+  State<AddScreen> createState() => _AddScreenState();
+}
+
+class _AddScreenState extends State<AddScreen> {
+  GlobalKey<FormState> globalKey = GlobalKey<FormState>();
+  late AddRequestModel addRequestModel;
+
+  bool isApiCallProcess = false;
+  String? token;
+
+  getToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('token');
+  }
+
+  @override
+  void initState() {
+    addRequestModel = AddRequestModel();
+    getToken();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,49 +39,115 @@ class AddScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text('إضافة'),
         ),
-        body: ListView(
-          padding: const EdgeInsets.all(20),
+        body: Stack(
           children: [
-            customTextFormField(
-              hintText: 'الاسم',
-              keyboardType: TextInputType.text,
-              prefixIcon: Icons.person,
-              validator: (String) {
-                return null;
-              },
+            Form(
+              key: globalKey,
+              child: ListView(
+                padding: const EdgeInsets.all(20),
+                children: [
+                  customTextFormField(
+                    hintText: 'الاسم',
+                    keyboardType: TextInputType.text,
+                    prefixIcon: Icons.person,
+                    validator: (value) {
+                      return null;
+                    },
+                    onChanged: (value) {
+                      addRequestModel.name = value.toString();
+                    },
+                  ),
+                  customTextFormField(
+                    hintText: 'المبلغ',
+                    keyboardType: TextInputType.number,
+                    prefixIcon: Icons.monetization_on,
+                    validator: (value) {
+                      return null;
+                    },
+                    onChanged: (value) {
+                      addRequestModel.amount = double.parse(value.toString());
+                    },
+                  ),
+                  customTextFormField(
+                    hintText: 'رقم الهاتف',
+                    keyboardType: TextInputType.phone,
+                    prefixIcon: Icons.phone,
+                    validator: (value) {
+                      return null;
+                    },
+                    onChanged: (value) {
+                      addRequestModel.phone = int.parse(value.toString());
+                    },
+                  ),
+                  customTextFormField(
+                    hintText: 'الهدف',
+                    keyboardType: TextInputType.text,
+                    prefixIcon: Icons.subject,
+                    validator: (value) {
+                      return null;
+                    },
+                    onChanged: (value) {
+                      addRequestModel.comment = value.toString();
+                    },
+                  ),
+                  customButton(
+                    title: 'إضافة',
+                    icon: Icons.add,
+                    onPressed: () async {
+                      addRequestModel.token = token;
+                      print(addRequestModel.token);
+                      print(addRequestModel.name);
+                      print(addRequestModel.amount);
+                      print(addRequestModel.comment);
+                      print(addRequestModel.phone);
+
+                      if (validateAndSave()) {
+                        setState(() {
+                          isApiCallProcess = true;
+                        });
+                        await apiAdd(addRequestModel).then((value) async {
+                          setState(() {
+                            isApiCallProcess = false;
+                          });
+                          if (value.msg == 'ok') {
+                            Navigator.pop(context);
+                            //share
+
+                            print('share');
+                          }
+                        });
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
-            customTextFormField(
-              hintText: 'المبلغ',
-              keyboardType: TextInputType.number,
-              prefixIcon: Icons.monetization_on,
-              validator: (String) {
-                return null;
-              },
-            ),
-            customTextFormField(
-              hintText: 'رقم الهاتف',
-              keyboardType: TextInputType.phone,
-              prefixIcon: Icons.phone,
-              validator: (String) {
-                return null;
-              },
-            ),
-            customTextFormField(
-              hintText: 'الهدف',
-              keyboardType: TextInputType.text,
-              prefixIcon: Icons.subject,
-              validator: (String) {
-                return null;
-              },
-            ),
-            customButton(
-              title: 'إضافة',
-              icon: Icons.add,
-              onPressed: () {},
+            Visibility(
+              visible: isApiCallProcess ? true : false,
+              child: Stack(
+                children: [
+                  ModalBarrier(
+                    color: Colors.white.withOpacity(0.6),
+                    dismissible: true,
+                  ),
+                  const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                ],
+              ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  bool validateAndSave() {
+    final FormState? form = globalKey.currentState;
+    if (form!.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
   }
 }

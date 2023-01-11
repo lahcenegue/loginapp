@@ -4,6 +4,7 @@ import 'package:loginapp/screens/home/add/add_screen.dart';
 import 'package:loginapp/screens/home/groupe/groupe_screen.dart';
 import 'package:loginapp/screens/home/notification/notification_screen.dart';
 import 'package:loginapp/screens/home/payment/payment_screen.dart';
+import 'package:loginapp/widgets/constum_button.dart';
 import 'package:loginapp/widgets/costum_container.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -81,6 +82,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: customButton(
+                  title: "الرئيسية",
+                  icon: Icons.home,
+                  topPadding: 10,
+                  onPressed: () {},
+                ),
+              ),
+              const SizedBox(height: 10),
+              const Divider(
+                indent: 20,
+                endIndent: 20,
+              ),
+              const SizedBox(height: 10),
               ListTile(
                 leading: const Icon(Icons.account_balance_wallet),
                 trailing: const Icon(Icons.arrow_forward_ios),
@@ -111,6 +127,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 title: const Text("تحديث البيانات"),
                 onTap: () {},
               ),
+              const SizedBox(height: 10),
+              const Divider(
+                indent: 20,
+                endIndent: 20,
+              ),
+              const SizedBox(height: 10),
               ListTile(
                 leading: const Icon(Icons.logout),
                 trailing: const Icon(Icons.arrow_forward_ios),

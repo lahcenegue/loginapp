@@ -51,6 +51,7 @@ class AddGroupeScreen extends StatelessWidget {
             customButton(
               title: 'إضافة مجموعة',
               icon: Icons.add,
+              topPadding: 40,
               onPressed: () {},
             ),
           ],

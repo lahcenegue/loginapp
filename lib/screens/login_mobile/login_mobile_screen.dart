@@ -78,6 +78,9 @@ class _LoginMobileScreenState extends State<LoginMobileScreen> {
                   const SizedBox(height: 20),
                   // login button
                   customButton(
+                    title: 'تسجيل الدخول',
+                    icon: Icons.login,
+                    topPadding: 40,
                     onPressed: () {
                       if (validateAndSave()) {
                         setState(() {
@@ -100,8 +103,6 @@ class _LoginMobileScreenState extends State<LoginMobileScreen> {
                         });
                       }
                     },
-                    icon: Icons.login,
-                    title: 'تسجيل الدخول',
                   ),
                 ],
               ),

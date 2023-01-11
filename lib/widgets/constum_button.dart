@@ -5,9 +5,10 @@ Widget customButton({
   required Function()? onPressed,
   required IconData? icon,
   required String? title,
+  required double? topPadding,
 }) {
   return Container(
-    padding: const EdgeInsets.only(top: 40),
+    padding: EdgeInsets.only(top: topPadding!),
     child: ElevatedButton(
       style: ElevatedButton.styleFrom(
           backgroundColor: Constants.kMainColor,

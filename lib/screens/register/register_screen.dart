@@ -211,6 +211,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                     const SizedBox(height: 20),
                     customButton(
+                      title: 'تسجيل حساب جديد',
+                      icon: Icons.login,
+                      topPadding: 40,
                       onPressed: () {
                         if (validateAndSave()) {
                           setState(() {
@@ -238,8 +241,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           });
                         }
                       },
-                      icon: Icons.login,
-                      title: 'تسجيل حساب جديد',
                     ),
                   ],
                 ),

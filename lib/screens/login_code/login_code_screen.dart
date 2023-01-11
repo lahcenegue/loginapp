@@ -114,6 +114,9 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
                   const SizedBox(height: 20),
                   // login button
                   customButton(
+                    title: 'تسجيل الدخول',
+                    icon: Icons.login,
+                    topPadding: 40,
                     onPressed: () {
                       if (validateAndSave()) {
                         setState(() {
@@ -146,8 +149,6 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
                         });
                       }
                     },
-                    icon: Icons.login,
-                    title: 'تسجيل الدخول',
                   ),
                 ],
               ),

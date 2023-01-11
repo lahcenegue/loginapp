@@ -5,6 +5,7 @@ import 'package:loginapp/main.dart';
 import 'package:loginapp/screens/home/add/add_screen.dart';
 import 'package:loginapp/screens/home/contact/contact_screen.dart';
 import 'package:loginapp/screens/home/groupe/groupe_screen.dart';
+import 'package:loginapp/screens/home/main/update/update_info/update_info_screen.dart';
 import 'package:loginapp/screens/home/notification/notification_screen.dart';
 import 'package:loginapp/screens/home/payment/payment_screen.dart';
 import 'package:loginapp/screens/login_mobile/login_mobile_screen.dart';
@@ -213,7 +214,53 @@ class _MainScreenState extends State<MainScreen> {
                         fontSize: 20,
                       ),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Directionality(
+                            textDirection: TextDirection.rtl,
+                            child: AlertDialog(
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(32.0))),
+                              actionsPadding: const EdgeInsets.only(
+                                  bottom: 30.0, left: 10, right: 10),
+                              title: const Text(
+                                'تحديث البيانات',
+                                textAlign: TextAlign.center,
+                              ),
+                              content: Text(
+                                'مرحبا $name',
+                                textAlign: TextAlign.center,
+                              ),
+                              actions: [
+                                customButton(
+                                  icon: Icons.portrait_sharp,
+                                  title: 'تعديل الملف الشخصي',
+                                  topPadding: 1,
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const UpdateInfoScreen(),
+                                      ),
+                                    );
+                                  },
+                                ),
+                                customButton(
+                                  icon: Icons.password,
+                                  title: 'تعديل كلمة المرور',
+                                  topPadding: 20,
+                                  onPressed: () {},
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
                   ),
                   const SizedBox(height: 10),
                   const Divider(
@@ -321,7 +368,7 @@ class _MainScreenState extends State<MainScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(height: screenHeight * 0.1),
+                        SizedBox(height: screenHeight * 0.08),
                         Text(
                           "رصيد الحساب",
                           style: TextStyle(

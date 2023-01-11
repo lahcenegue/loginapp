@@ -20,7 +20,7 @@ class AddGroupeScreen extends StatelessWidget {
               hintText: 'الاسم',
               keyboardType: TextInputType.text,
               prefixIcon: Icons.person,
-              validator: (String) {
+              validator: (value) {
                 return null;
               },
             ),
@@ -28,7 +28,7 @@ class AddGroupeScreen extends StatelessWidget {
               hintText: 'المبلغ الكلي',
               keyboardType: TextInputType.number,
               prefixIcon: Icons.monetization_on,
-              validator: (String) {
+              validator: (value) {
                 return null;
               },
             ),
@@ -36,7 +36,7 @@ class AddGroupeScreen extends StatelessWidget {
               hintText: 'أقل مبلغ',
               keyboardType: TextInputType.number,
               prefixIcon: Icons.monetization_on,
-              validator: (String) {
+              validator: (value) {
                 return null;
               },
             ),
@@ -44,7 +44,7 @@ class AddGroupeScreen extends StatelessWidget {
               hintText: 'الهدف',
               keyboardType: TextInputType.text,
               prefixIcon: Icons.subject,
-              validator: (String) {
+              validator: (value) {
                 return null;
               },
             ),

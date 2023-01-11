@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:loginapp/screens/home/home_screen.dart';
+import 'package:loginapp/screens/home/main/main_screen.dart';
 import 'package:loginapp/screens/login_code/api_login_code.dart';
 import 'package:loginapp/screens/register/register_screen.dart';
 import 'package:loginapp/widgets/constum_button.dart';
@@ -141,7 +141,7 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const HomeScreen()),
+                                  builder: (context) => const MainScreen()),
                             );
                             saveToken(value.token!);
                             saveName(value.name!);

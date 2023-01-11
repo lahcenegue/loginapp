@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:loginapp/constants/constants.dart';
 import 'package:loginapp/screens/home/add/add_api.dart';
 import 'package:loginapp/screens/home/add/add_model.dart';
-import 'package:loginapp/screens/home/home_screen.dart';
+import 'package:loginapp/screens/home/main/main_screen.dart';
 import 'package:loginapp/widgets/constum_button.dart';
 import 'package:loginapp/widgets/text_form.dart';
 import 'package:share_plus/share_plus.dart';

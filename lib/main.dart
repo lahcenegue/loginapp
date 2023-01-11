@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:loginapp/screens/home/home_screen.dart';
+import 'package:loginapp/screens/home/main/main_screen.dart';
 import 'constants/constants.dart';
 import 'screens/login_mobile/login_mobile_screen.dart';
 import 'widgets/one_signal_controller.dart';
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
           )),
       home: phone == null || token == null
           ? const LoginMobileScreen()
-          : const HomeScreen(),
+          : const MainScreen(),
     );
   }
 }

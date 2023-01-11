@@ -11,16 +11,16 @@ import 'package:loginapp/widgets/costum_container.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({
+class MainScreen extends StatefulWidget {
+  const MainScreen({
     super.key,
   });
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<MainScreen> createState() => _MainScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _MainScreenState extends State<MainScreen> {
   String? name;
 
   getSharedValue() async {
@@ -140,12 +140,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 10),
                 ListTile(
                   leading: const Icon(Icons.account_balance_wallet),
-                  title: const Text("كشف الحساب"),
+                  title: const Text(
+                    "كشف الحساب",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
                   onTap: () {},
                 ),
                 ListTile(
                   leading: const Icon(Icons.contact_mail),
-                  title: const Text("اتصل بنا"),
+                  title: const Text(
+                    "اتصل بنا",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
                   onTap: () {
                     Navigator.push(
                       context,
@@ -157,12 +169,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 ListTile(
                   leading: const Icon(Icons.contact_support_rounded),
-                  title: const Text("الدعم الفني"),
+                  title: const Text(
+                    "الدعم الفني",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
                   onTap: () {},
                 ),
                 ListTile(
                   leading: const Icon(Icons.share),
-                  title: const Text("مشاركة التطبيق"),
+                  title: const Text(
+                    "مشاركة التطبيق",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
                   onTap: () {
                     Navigator.pop(context);
                     Share.share(
@@ -176,7 +200,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 ListTile(
                   leading: const Icon(Icons.update),
-                  title: const Text("تحديث البيانات"),
+                  title: const Text(
+                    "تحديث البيانات",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
                   onTap: () {},
                 ),
                 const SizedBox(height: 10),
@@ -188,7 +218,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 10),
                 ListTile(
                   leading: const Icon(Icons.logout),
-                  title: const Text("تسجيل الخروج"),
+                  title: const Text(
+                    "تسجيل الخروج",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
                   onTap: () async {
                     Navigator.push(
                       context,

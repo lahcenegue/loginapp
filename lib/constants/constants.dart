@@ -5,6 +5,8 @@ class Constants {
   static String url = 'https://www.paykw.net/test';
   static String onSignalID = '748d0bb2-8752-450a-ac1f-609c403e6282';
 
+  static String downloadLinkApp = "https://onelink.to/4g9dxa";
+
   //images
   static String logo = "assets/images/logo.png";
 

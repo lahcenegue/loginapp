@@ -38,7 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     getSharedValue();
-
     super.initState();
   }
 
@@ -128,7 +127,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 leading: const Icon(Icons.share),
                 trailing: const Icon(Icons.arrow_forward_ios),
                 title: const Text("مشاركة التطبيق"),
-                onTap: () {},
+                onTap: () {
+                  Navigator.pop(context);
+                  Share.share(
+                    """
+                  حمل تطبيق بوابة الدفع: ${Constants.downloadLinkApp}
+                  """,
+                    subject: "تحميل التطبيق",
+                  );
+                },
               ),
               ListTile(
                 leading: const Icon(Icons.update),

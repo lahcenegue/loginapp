@@ -4,10 +4,10 @@ import 'package:loginapp/screens/home/home_view_model.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:loginapp/widgets/text_row.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PaymentScreen extends StatefulWidget {
-  final String token;
-  const PaymentScreen({super.key, required this.token});
+  const PaymentScreen({super.key});
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
@@ -21,12 +21,19 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   List? listPayment;
   bool isLoad = false;
+  String? token;
+
+  getSharedValue() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('token');
+  }
 
   @override
   void initState() {
     super.initState();
+    getSharedValue();
     hvm.fetchPaymentList(
-      token: widget.token,
+      token: token!,
     );
     dateFormat = intl.DateFormat('EEEE yyyy/MM/dd hh:mm a', "ar_DZ");
 

@@ -229,10 +229,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => HomeScreen(
-                                    name: value.name!,
-                                    token: value.token!,
-                                  ),
+                                  builder: (context) => const HomeScreen(),
                                 ),
                               );
                               saveToken(value.token!);

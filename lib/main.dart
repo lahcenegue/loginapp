@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
           )),
       home: phone == null && token == null
           ? const LoginMobileScreen()
-          : HomeScreen(name: name!, token: token!),
+          : const HomeScreen(),
     );
   }
 }

@@ -138,10 +138,7 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => HomeScreen(
-                                        name: value.name!,
-                                        token: value.token!,
-                                      )),
+                                  builder: (context) => const HomeScreen()),
                             );
                             saveToken(value.token!);
                             saveName(value.name!);

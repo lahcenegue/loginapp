@@ -2,28 +2,28 @@ import 'package:http/http.dart' as http;
 import 'package:loginapp/constants/constants.dart';
 import 'dart:convert' as convert;
 
-import 'package:loginapp/screens/home/main/update/update_info/update_info_model.dart';
+import 'package:loginapp/screens/home/main/update/update_password/update_pass_model.dart';
 
-Future<UpdateInfoResponseModel> apiUpdateInfo(
+Future<UpdatePassResponseModel> apiUpdatePass(
     {required String token,
-    required UpdateInfoRequestModel updateInfoRequestModel}) async {
+    required UpdatePassRequestModel updatePassRequestModel}) async {
   try {
     var url = Uri.parse("${Constants.url}/api/profile?token=$token");
     http.Response response = await http.post(
       url,
-      body: updateInfoRequestModel.toJson(),
+      body: updatePassRequestModel.toJson(),
     );
 
     if (response.statusCode == 200) {
       var body = convert.jsonDecode(response.body);
 
-      UpdateInfoResponseModel updateInfoResponseModel =
-          UpdateInfoResponseModel.fromJson(body);
+      UpdatePassResponseModel updatePassResponseModel =
+          UpdatePassResponseModel.fromJson(body);
 
-      return updateInfoResponseModel;
+      return updatePassResponseModel;
     }
   } catch (e) {
     throw Exception(e);
   }
-  return UpdateInfoResponseModel();
+  return UpdatePassResponseModel();
 }

@@ -4,6 +4,7 @@ import 'package:loginapp/screens/home/add/add_screen.dart';
 import 'package:loginapp/screens/home/groupe/groupe_screen.dart';
 import 'package:loginapp/screens/home/notification/notification_screen.dart';
 import 'package:loginapp/screens/home/payment/payment_screen.dart';
+import 'package:loginapp/screens/login_mobile/login_mobile_screen.dart';
 import 'package:loginapp/widgets/constum_button.dart';
 import 'package:loginapp/widgets/costum_container.dart';
 import 'package:share_plus/share_plus.dart';
@@ -26,6 +27,12 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       name = prefs.getString('name');
     });
+  }
+
+  deletePrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('token');
+    prefs.remove('name');
   }
 
   @override
@@ -88,7 +95,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   title: "الرئيسية",
                   icon: Icons.home,
                   topPadding: 10,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
               ),
               const SizedBox(height: 10),
@@ -137,7 +146,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 leading: const Icon(Icons.logout),
                 trailing: const Icon(Icons.arrow_forward_ios),
                 title: const Text("تسجيل الخروج"),
-                onTap: () {},
+                onTap: () async {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LoginMobileScreen(),
+                    ),
+                  );
+                  await deletePrefs();
+                },
               ),
             ],
           ),

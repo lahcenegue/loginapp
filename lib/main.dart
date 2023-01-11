@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     initializeDateFormatting('ar_DZ');
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       locale: const Locale('ar', ''),
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
             centerTitle: true,
             color: Constants.kMainColor,
           )),
-      home: phone == null && token == null
+      home: phone == null || token == null
           ? const LoginMobileScreen()
           : const HomeScreen(),
     );

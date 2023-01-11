@@ -7,17 +7,17 @@ import 'dart:convert' as convert;
 Future<RegisterResponseModel> apiRegister({
   required String phone,
   required String yourCode,
-  required String name,
-  required String civilNumber,
-  required String email,
-  required String password,
+  required RegisterRequestModel registerRequestModel,
 }) async {
   RegisterResponseModel responseModel = RegisterResponseModel();
 
   try {
     var url = Uri.parse(
         "${Constants.url}/api/login/${OneSignalControler.osUserID}/$phone/$yourCode/reg?");
-    http.Response response = await http.post(url);
+    http.Response response = await http.post(
+      url,
+      body: registerRequestModel.toJson(),
+    );
 
     if (response.statusCode == 200) {
       var body = convert.json.decode(response.body);

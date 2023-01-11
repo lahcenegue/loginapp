@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loginapp/screens/home/home_screen.dart';
 import 'package:loginapp/screens/register/api_register.dart';
+import 'package:loginapp/screens/register/register_response_model.dart';
 import 'package:loginapp/widgets/constum_button.dart';
 import 'package:loginapp/widgets/email_validator.dart';
 import 'package:loginapp/widgets/text_form.dart';
@@ -35,17 +36,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
     print("name succes");
   }
 
+  late RegisterRequestModel registerRequestModel;
+
   bool hidePassword1 = true;
   bool hidePassword2 = true;
   bool isApiCallProcess = false;
 
-//api info
-  String? name;
-  String? civilNumber;
-  String? email;
-  String? password;
-
   String? passVerif;
+
+  @override
+  void initState() {
+    registerRequestModel = RegisterRequestModel();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +89,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     // name
                     customTextFormField(
                       onChanged: (value) {
-                        name = value.toString();
+                        registerRequestModel.name = value.toString();
                         //print(name);
                       },
                       validator: (value) {
@@ -104,7 +107,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     //civilNumber
                     customTextFormField(
                       onChanged: (value) {
-                        civilNumber = value.toString();
+                        registerRequestModel.civilNumber = value.toString();
                         //print(civilNumber);
                       },
                       validator: (value) {
@@ -122,7 +125,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     //email
                     customTextFormField(
                       onChanged: (value) {
-                        email = value.toString();
+                        registerRequestModel.email = value.toString();
                         // print(email);
                       },
                       validator: (value) {
@@ -145,7 +148,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     //password
                     customTextFormField(
                       onChanged: (value) {
-                        password = value.toString();
+                        registerRequestModel.password = value.toString();
 
                         passVerif = value.toString();
                       },
@@ -216,10 +219,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           apiRegister(
                             phone: widget.phoneNumber,
                             yourCode: widget.code,
-                            civilNumber: civilNumber!,
-                            email: email!,
-                            name: name!,
-                            password: password!,
+                            registerRequestModel: registerRequestModel,
                           ).then((value) async {
                             setState(() {
                               isApiCallProcess = false;

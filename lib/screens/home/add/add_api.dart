@@ -3,15 +3,9 @@ import 'package:loginapp/constants/constants.dart';
 import 'dart:convert' as convert;
 
 import 'package:loginapp/screens/home/add/add_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-String? token;
-getToken() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  token = prefs.getString('token');
-}
-
-Future<AddResponseModel> apiAdd(AddRequestModel addRequestModel) async {
+Future<AddResponseModel> apiAdd(
+    {required String token, required AddRequestModel addRequestModel}) async {
   try {
     var url = Uri.parse("${Constants.url}/payment/api/add?token=$token");
     http.Response response = await http.post(

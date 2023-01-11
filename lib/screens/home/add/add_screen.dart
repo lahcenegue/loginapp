@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:loginapp/constants/constants.dart';
 import 'package:loginapp/screens/home/add/add_api.dart';
 import 'package:loginapp/screens/home/add/add_model.dart';
 import 'package:loginapp/screens/home/home_screen.dart';
 import 'package:loginapp/widgets/constum_button.dart';
 import 'package:loginapp/widgets/text_form.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AddScreen extends StatefulWidget {
@@ -19,15 +21,19 @@ class _AddScreenState extends State<AddScreen> {
 
   bool isApiCallProcess = false;
 
-  // getToken() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   token = prefs.getString('token');
-  // }
+  String? name;
+  String? token;
+  getSharedValue() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    name = prefs.getString('name');
+    token = prefs.getString('token');
+  }
 
   @override
   void initState() {
     addRequestModel = AddRequestModel();
-    getToken();
+    //getToken();
+    getSharedValue();
     super.initState();
   }
 
@@ -98,10 +104,14 @@ class _AddScreenState extends State<AddScreen> {
                         setState(() {
                           isApiCallProcess = true;
                         });
-                        await apiAdd(addRequestModel).then((value) async {
+                        await apiAdd(
+                          token: token!,
+                          addRequestModel: addRequestModel,
+                        ).then((value) async {
                           setState(() {
                             isApiCallProcess = false;
                           });
+                          print(value.msg);
 
                           if (value.msg == 'ok') {
                             Navigator.pushReplacement(
@@ -110,7 +120,14 @@ class _AddScreenState extends State<AddScreen> {
                                   builder: (context) => const HomeScreen(),
                                 ));
                             //share
-
+                            Share.share(
+                              """
+                            مرحبا:${addRequestModel.name}
+                            يمكنك دفع المبلغ :${addRequestModel.amount}
+                            عبر:${Constants.url}/pay/${value.md5id}
+                                """,
+                              subject: "$nameمشاركه عنوان",
+                            );
                           }
                         });
                       }

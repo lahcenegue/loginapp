@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:loginapp/constants/constants.dart';
 import 'package:loginapp/screens/home/add/add_screen.dart';
 import 'package:loginapp/screens/home/groupe/groupe_screen.dart';
+import 'package:loginapp/screens/home/notification/notification_screen.dart';
 import 'package:loginapp/screens/home/payment/payment_screen.dart';
 import 'package:loginapp/widgets/costum_container.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -43,12 +45,25 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           actions: [
             IconButton(
-              onPressed: () {},
               icon: const Icon(Icons.share),
+              onPressed: () {
+                Share.share(
+                  """
+                          مرحبا، يمكنك الدفع لـ: $name
+                          عبر: ${Constants.url}/u/
+                                """,
+                  subject: "مشاركة الرابط",
+                );
+              },
             ),
             IconButton(
-              onPressed: () {},
               icon: const Icon(Icons.notifications),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const NotificationScreen()));
+              },
             ),
           ],
         ),

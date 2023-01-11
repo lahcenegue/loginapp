@@ -81,9 +81,10 @@ class _HomeScreenState extends State<HomeScreen> {
               gradient: LinearGradient(
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
+                tileMode: TileMode.repeated,
                 colors: [
                   Constants.kMainColor,
-                  Colors.blue.shade100,
+                  Colors.white,
                 ],
               ),
             ),
@@ -105,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          name!,
+                          name == null ? "" : name!,
                           style: const TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.bold,

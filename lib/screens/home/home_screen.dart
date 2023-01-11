@@ -5,7 +5,7 @@ import 'package:loginapp/screens/home/groupe/groupe_screen.dart';
 import 'package:loginapp/screens/home/payment/payment_screen.dart';
 import 'package:loginapp/widgets/costum_container.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   final String name;
   final String token;
 
@@ -15,6 +15,11 @@ class HomeScreen extends StatelessWidget {
     required this.token,
   });
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -108,7 +113,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      name,
+                      widget.name,
                       style: TextStyle(
                         color: Constants.textColor,
                         fontSize: 32,
@@ -141,7 +146,7 @@ class HomeScreen extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    PaymentScreen(token: token),
+                                    PaymentScreen(token: widget.token),
                               ));
                         },
                         icon: Icons.payment_outlined,

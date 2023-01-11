@@ -1,18 +1,20 @@
 class AddRequestModel {
-  String? token;
   String? name;
   String? comment;
-  double? amount;
-  int? phone;
-  AddRequestModel(
-      {this.token, this.name, this.comment, this.amount, this.phone});
+  String? amount;
+  String? phone;
+  AddRequestModel({
+    this.name,
+    this.comment,
+    this.amount,
+    this.phone,
+  });
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {
-      'token': token!.trim(),
       'name': name!.trim(),
       'comment': comment!.trim(),
-      'amount': amount!,
-      'phone': phone!,
+      'amount': amount!.trim(),
+      'phone': phone!.trim(),
     };
 
     return map;

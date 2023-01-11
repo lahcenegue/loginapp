@@ -82,6 +82,8 @@ class _MainScreenState extends State<MainScreen> {
               ),
             ],
           ),
+
+          //drawer
           drawer: Drawer(
             child: Container(
               decoration: BoxDecoration(
@@ -119,9 +121,9 @@ class _MainScreenState extends State<MainScreen> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const Text(
-                            'المجوع 5 د.ك',
-                            style: TextStyle(fontSize: 20),
+                          Text(
+                            '${hvm.mainInfo!.balance} د.ك',
+                            style: const TextStyle(fontSize: 20),
                           ),
                         ],
                       )

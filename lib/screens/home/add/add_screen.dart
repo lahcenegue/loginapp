@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loginapp/screens/home/add/add_api.dart';
 import 'package:loginapp/screens/home/add/add_model.dart';
+import 'package:loginapp/screens/home/home_screen.dart';
 import 'package:loginapp/widgets/constum_button.dart';
 import 'package:loginapp/widgets/text_form.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,12 +18,11 @@ class _AddScreenState extends State<AddScreen> {
   late AddRequestModel addRequestModel;
 
   bool isApiCallProcess = false;
-  String? token;
 
-  getToken() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    token = prefs.getString('token');
-  }
+  // getToken() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   token = prefs.getString('token');
+  // }
 
   @override
   void initState() {
@@ -65,7 +65,7 @@ class _AddScreenState extends State<AddScreen> {
                       return null;
                     },
                     onChanged: (value) {
-                      addRequestModel.amount = double.parse(value.toString());
+                      addRequestModel.amount = value.toString();
                     },
                   ),
                   customTextFormField(
@@ -76,7 +76,7 @@ class _AddScreenState extends State<AddScreen> {
                       return null;
                     },
                     onChanged: (value) {
-                      addRequestModel.phone = int.parse(value.toString());
+                      addRequestModel.phone = value.toString();
                     },
                   ),
                   customTextFormField(
@@ -94,13 +94,6 @@ class _AddScreenState extends State<AddScreen> {
                     title: 'إضافة',
                     icon: Icons.add,
                     onPressed: () async {
-                      addRequestModel.token = token;
-                      print(addRequestModel.token);
-                      print(addRequestModel.name);
-                      print(addRequestModel.amount);
-                      print(addRequestModel.comment);
-                      print(addRequestModel.phone);
-
                       if (validateAndSave()) {
                         setState(() {
                           isApiCallProcess = true;
@@ -109,11 +102,18 @@ class _AddScreenState extends State<AddScreen> {
                           setState(() {
                             isApiCallProcess = false;
                           });
+
                           if (value.msg == 'ok') {
-                            Navigator.pop(context);
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const HomeScreen(
+                                    name: '',
+                                    token: '',
+                                  ),
+                                ));
                             //share
 
-                            print('share');
                           }
                         });
                       }

@@ -4,10 +4,11 @@ Widget customTextFormField({
   Function(String)? onChanged,
   required String? Function(String?)? validator,
   required TextInputType? keyboardType,
-  Widget? suffixIcon,
-  bool obscureText = false,
   required IconData? prefixIcon,
   required String? hintText,
+  int? maxLine,
+  Widget? suffixIcon,
+  bool obscureText = false,
 }) {
   return Padding(
     padding: const EdgeInsets.only(top: 20),
@@ -15,6 +16,8 @@ Widget customTextFormField({
       onChanged: onChanged,
       validator: validator,
       keyboardType: keyboardType,
+      minLines: maxLine ?? 1,
+      maxLines: maxLine ?? 1,
       obscureText: obscureText,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.all(8),

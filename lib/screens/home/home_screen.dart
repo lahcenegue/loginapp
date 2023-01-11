@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loginapp/constants/constants.dart';
 import 'package:loginapp/screens/home/add/add_screen.dart';
+import 'package:loginapp/screens/home/contact/contact_screen.dart';
 import 'package:loginapp/screens/home/groupe/groupe_screen.dart';
 import 'package:loginapp/screens/home/notification/notification_screen.dart';
 import 'package:loginapp/screens/home/payment/payment_screen.dart';
@@ -75,95 +76,130 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         drawer: Drawer(
-          child: ListView(
-            children: [
-              DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Constants.kMainColor,
-                ),
-                child: Row(
-                  children: const [
-                    CircleAvatar(),
-                    Text('name'),
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [
+                  Constants.kMainColor,
+                  Colors.blue.shade100,
+                ],
+              ),
+            ),
+            child: ListView(
+              padding: const EdgeInsets.only(top: 100),
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      height: 100,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          name!,
+                          style: const TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const Text(
+                          'المجوع 5 د.ك',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ],
+                    )
                   ],
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: customButton(
-                  title: "الرئيسية",
-                  icon: Icons.home,
-                  topPadding: 10,
-                  onPressed: () {
-                    Navigator.pop(context);
+                const SizedBox(height: 40),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: customButton(
+                    title: "الرئيسية",
+                    icon: Icons.home,
+                    topPadding: 10,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+                const SizedBox(height: 10),
+                const Divider(
+                  indent: 20,
+                  endIndent: 20,
+                ),
+                const SizedBox(height: 10),
+                ListTile(
+                  leading: const Icon(Icons.account_balance_wallet),
+                  title: const Text("كشف الحساب"),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: const Icon(Icons.contact_mail),
+                  title: const Text("اتصل بنا"),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ContactScreen(),
+                      ),
+                    );
                   },
                 ),
-              ),
-              const SizedBox(height: 10),
-              const Divider(
-                indent: 20,
-                endIndent: 20,
-              ),
-              const SizedBox(height: 10),
-              ListTile(
-                leading: const Icon(Icons.account_balance_wallet),
-                trailing: const Icon(Icons.arrow_forward_ios),
-                title: const Text("كشف الحساب"),
-                onTap: () {},
-              ),
-              ListTile(
-                leading: const Icon(Icons.contact_mail),
-                trailing: const Icon(Icons.arrow_forward_ios),
-                title: const Text("اتصل بنا"),
-                onTap: () {},
-              ),
-              ListTile(
-                leading: const Icon(Icons.contact_support_rounded),
-                trailing: const Icon(Icons.arrow_forward_ios),
-                title: const Text("الدعم الفني"),
-                onTap: () {},
-              ),
-              ListTile(
-                leading: const Icon(Icons.share),
-                trailing: const Icon(Icons.arrow_forward_ios),
-                title: const Text("مشاركة التطبيق"),
-                onTap: () {
-                  Navigator.pop(context);
-                  Share.share(
-                    """
-                  حمل تطبيق بوابة الدفع: ${Constants.downloadLinkApp}
-                  """,
-                    subject: "تحميل التطبيق",
-                  );
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.update),
-                trailing: const Icon(Icons.arrow_forward_ios),
-                title: const Text("تحديث البيانات"),
-                onTap: () {},
-              ),
-              const SizedBox(height: 10),
-              const Divider(
-                indent: 20,
-                endIndent: 20,
-              ),
-              const SizedBox(height: 10),
-              ListTile(
-                leading: const Icon(Icons.logout),
-                trailing: const Icon(Icons.arrow_forward_ios),
-                title: const Text("تسجيل الخروج"),
-                onTap: () async {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const LoginMobileScreen(),
-                    ),
-                  );
-                  await deletePrefs();
-                },
-              ),
-            ],
+                ListTile(
+                  leading: const Icon(Icons.contact_support_rounded),
+                  title: const Text("الدعم الفني"),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: const Icon(Icons.share),
+                  title: const Text("مشاركة التطبيق"),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Share.share(
+                      """
+                    حمل تطبيق بوابة الدفع: 
+                    ${Constants.downloadLinkApp}
+                    """,
+                      subject: "تحميل التطبيق",
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.update),
+                  title: const Text("تحديث البيانات"),
+                  onTap: () {},
+                ),
+                const SizedBox(height: 10),
+                const Divider(
+                  color: Colors.black,
+                  indent: 20,
+                  endIndent: 20,
+                ),
+                const SizedBox(height: 10),
+                ListTile(
+                  leading: const Icon(Icons.logout),
+                  title: const Text("تسجيل الخروج"),
+                  onTap: () async {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginMobileScreen(),
+                      ),
+                    );
+                    await deletePrefs();
+                  },
+                ),
+              ],
+            ),
           ),
         ),
         body: name == null

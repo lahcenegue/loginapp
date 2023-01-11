@@ -4,7 +4,7 @@ class MainModel {
   String? group;
   int? not;
   String? id;
-  String? balance;
+  int? balance;
   MainModel({
     this.msg,
     this.name,

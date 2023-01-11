@@ -27,5 +27,6 @@ class HomeViewModel extends ChangeNotifier {
     MainModel json = await MainApi().loadData(token: token);
 
     mainInfo = MainViewModel(mainModel: json);
+    notifyListeners();
   }
 }

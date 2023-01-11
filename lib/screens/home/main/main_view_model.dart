@@ -24,7 +24,7 @@ class MainViewModel {
     return _mainModel.id!;
   }
 
-  String get balance {
+  int get balance {
     return _mainModel.balance!;
   }
 }

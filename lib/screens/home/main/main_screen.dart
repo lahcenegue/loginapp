@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loginapp/constants/constants.dart';
+import 'package:loginapp/home_view_model/home_view_model.dart';
+import 'package:loginapp/main.dart';
 import 'package:loginapp/screens/home/add/add_screen.dart';
 import 'package:loginapp/screens/home/contact/contact_screen.dart';
 import 'package:loginapp/screens/home/groupe/groupe_screen.dart';
@@ -21,14 +23,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  String? name;
-
-  getSharedValue() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      name = prefs.getString('name');
-    });
-  }
+  HomeViewModel hvm = HomeViewModel();
 
   deletePrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -38,7 +33,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void initState() {
-    getSharedValue();
+    hvm.fetchMainInfo(token: token!);
     super.initState();
   }
 
@@ -47,237 +42,246 @@ class _MainScreenState extends State<MainScreen> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
-        appBar: AppBar(
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.share),
-              onPressed: () {
-                Share.share(
-                  """
+    hvm.addListener(() {
+      setState(() {});
+    });
+
+    if (hvm.mainInfo == null) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    } else {
+      return Directionality(
+        textDirection: TextDirection.rtl,
+        child: Scaffold(
+          appBar: AppBar(
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.share),
+                onPressed: () {
+                  Share.share(
+                    """
                           مرحبا، يمكنك الدفع لـ: $name
                           عبر: ${Constants.url}/u/
                                 """,
-                  subject: "مشاركة الرابط",
-                );
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.notifications),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const NotificationScreen()));
-              },
-            ),
-          ],
-        ),
-        drawer: Drawer(
-          child: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                tileMode: TileMode.repeated,
-                colors: [
-                  Constants.kMainColor,
-                  Colors.white,
-                ],
+                    subject: "مشاركة الرابط",
+                  );
+                },
               ),
-            ),
-            child: ListView(
-              padding: const EdgeInsets.only(top: 100),
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Container(
-                      height: 100,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          name == null ? "" : name!,
-                          style: const TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const Text(
-                          'المجوع 5 د.ك',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                const SizedBox(height: 40),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: customButton(
-                    title: "الرئيسية",
-                    icon: Icons.home,
-                    topPadding: 10,
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ),
-                const SizedBox(height: 10),
-                const Divider(
-                  indent: 20,
-                  endIndent: 20,
-                ),
-                const SizedBox(height: 10),
-                ListTile(
-                  leading: const Icon(Icons.account_balance_wallet),
-                  title: const Text(
-                    "كشف الحساب",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                  ),
-                  onTap: () {},
-                ),
-                ListTile(
-                  leading: const Icon(Icons.contact_mail),
-                  title: const Text(
-                    "اتصل بنا",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.push(
+              IconButton(
+                icon: const Icon(Icons.notifications),
+                onPressed: () {
+                  Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const ContactScreen(),
+                          builder: (context) => const NotificationScreen()));
+                },
+              ),
+            ],
+          ),
+          drawer: Drawer(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  tileMode: TileMode.repeated,
+                  colors: [
+                    Constants.kMainColor,
+                    Colors.white,
+                  ],
+                ),
+              ),
+              child: ListView(
+                padding: const EdgeInsets.only(top: 100),
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        height: 100,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(50),
+                        ),
                       ),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.contact_support_rounded),
-                  title: const Text(
-                    "الدعم الفني",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            name = hvm.mainInfo!.name,
+                            style: const TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const Text(
+                            'المجوع 5 د.ك',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 40),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: customButton(
+                      title: "الرئيسية",
+                      icon: Icons.home,
+                      topPadding: 10,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                     ),
                   ),
-                  onTap: () {},
-                ),
-                ListTile(
-                  leading: const Icon(Icons.share),
-                  title: const Text(
-                    "مشاركة التطبيق",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
+                  const SizedBox(height: 10),
+                  const Divider(
+                    indent: 20,
+                    endIndent: 20,
                   ),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Share.share(
-                      """
+                  const SizedBox(height: 10),
+                  ListTile(
+                    leading: const Icon(Icons.account_balance_wallet),
+                    title: const Text(
+                      "كشف الحساب",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                    onTap: () {},
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.contact_mail),
+                    title: const Text(
+                      "اتصل بنا",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ContactScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.contact_support_rounded),
+                    title: const Text(
+                      "الدعم الفني",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                    onTap: () {},
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.share),
+                    title: const Text(
+                      "مشاركة التطبيق",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Share.share(
+                        """
                     حمل تطبيق بوابة الدفع: 
                     ${Constants.downloadLinkApp}
                     """,
-                      subject: "تحميل التطبيق",
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.update),
-                  title: const Text(
-                    "تحديث البيانات",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
+                        subject: "تحميل التطبيق",
+                      );
+                    },
                   ),
-                  onTap: () {},
-                ),
-                const SizedBox(height: 10),
-                const Divider(
-                  color: Colors.black,
-                  indent: 20,
-                  endIndent: 20,
-                ),
-                const SizedBox(height: 10),
-                ListTile(
-                  leading: const Icon(Icons.logout),
-                  title: const Text(
-                    "تسجيل الخروج",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                  ),
-                  onTap: () async {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LoginMobileScreen(),
+                  ListTile(
+                    leading: const Icon(Icons.update),
+                    title: const Text(
+                      "تحديث البيانات",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
                       ),
-                    );
-                    await deletePrefs();
-                  },
-                ),
-              ],
+                    ),
+                    onTap: () {},
+                  ),
+                  const SizedBox(height: 10),
+                  const Divider(
+                    color: Colors.black,
+                    indent: 20,
+                    endIndent: 20,
+                  ),
+                  const SizedBox(height: 10),
+                  ListTile(
+                    leading: const Icon(Icons.logout),
+                    title: const Text(
+                      "تسجيل الخروج",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                    onTap: () async {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginMobileScreen(),
+                        ),
+                      );
+                      await deletePrefs();
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-        body: name == null
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : SizedBox(
-                height: screenHeight,
-                width: screenWidth,
-                child: Stack(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.only(bottom: 60, top: 10),
-                      height: screenHeight * 0.25,
-                      width: screenWidth,
-                      color: Constants.kMainColor,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(
-                            'أهلا',
-                            style: TextStyle(
-                              color: Constants.textColor,
-                              fontSize: 24,
-                            ),
-                          ),
-                          Text(
-                            name!,
-                            style: TextStyle(
-                              color: Constants.textColor,
-                              fontSize: 32,
-                            ),
-                          ),
-                        ],
+          body: SizedBox(
+            height: screenHeight,
+            width: screenWidth,
+            child: Stack(
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(bottom: 60, top: 10),
+                  height: screenHeight * 0.25,
+                  width: screenWidth,
+                  color: Constants.kMainColor,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        'أهلا',
+                        style: TextStyle(
+                          color: Constants.textColor,
+                          fontSize: 24,
+                        ),
                       ),
-                    ),
-                    Positioned(
-                      top: screenHeight * 0.2,
-                      child: SizedBox(
-                        width: screenWidth,
-                        child: Row(
+                      Text(
+                        hvm.mainInfo!.name,
+                        style: TextStyle(
+                          color: Constants.textColor,
+                          fontSize: 32,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Positioned(
+                  top: screenHeight * 0.2,
+                  child: SizedBox(
+                    width: screenWidth,
+                    child: Column(
+                      children: [
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             customContainer(
@@ -317,12 +321,34 @@ class _MainScreenState extends State<MainScreen> {
                             ),
                           ],
                         ),
-                      ),
+                        SizedBox(height: screenHeight * 0.1),
+                        Text(
+                          "رصيد الحساب",
+                          style: TextStyle(
+                            color: Constants.kMainColor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        FittedBox(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "${hvm.mainInfo!.balance} د.ك",
+                            style: const TextStyle(
+                              fontSize: 38,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
-      ),
-    );
+              ],
+            ),
+          ),
+        ),
+      );
+    }
   }
 }

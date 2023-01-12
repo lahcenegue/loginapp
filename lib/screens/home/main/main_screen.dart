@@ -5,6 +5,7 @@ import 'package:loginapp/main.dart';
 import 'package:loginapp/screens/home/add/add_screen.dart';
 import 'package:loginapp/screens/home/contact/contact_screen.dart';
 import 'package:loginapp/screens/home/groupe/groupe_screen.dart';
+import 'package:loginapp/screens/home/main/account_statement/statement_screen.dart';
 import 'package:loginapp/screens/home/main/update/update_info/update_info_screen.dart';
 import 'package:loginapp/screens/home/main/update/update_password/update_pass_screen.dart';
 import 'package:loginapp/screens/home/notification/notification_screen.dart';
@@ -46,6 +47,7 @@ class _MainScreenState extends State<MainScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('token');
     prefs.remove('name');
+    prefs.remove("not");
   }
 
   @override
@@ -208,7 +210,14 @@ class _MainScreenState extends State<MainScreen> {
                         fontSize: 20,
                       ),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const StatementScreen(),
+                        ),
+                      );
+                    },
                   ),
                   ListTile(
                     leading: const Icon(Icons.contact_mail),

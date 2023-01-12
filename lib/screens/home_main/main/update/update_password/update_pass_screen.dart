@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:loginapp/screens/home/main/main_screen.dart';
-import 'package:loginapp/screens/home/main/update/update_password/update_pass_api.dart';
-import 'package:loginapp/screens/home/main/update/update_password/update_pass_model.dart';
+import 'package:loginapp/screens/home_main/main/main_screen.dart';
+import 'package:loginapp/screens/home_main/main/update/update_password/update_pass_api.dart';
+import 'package:loginapp/screens/home_main/main/update/update_password/update_pass_model.dart';
 import 'package:loginapp/widgets/constum_button.dart';
 import 'package:loginapp/widgets/text_form.dart';
 

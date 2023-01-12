@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loginapp/constants/constants.dart';
-import 'package:loginapp/screens/home/main/account_statement/statement_children.dart';
+import 'package:loginapp/screens/home_main/main/account_statement/add_statment/add_statement_screen.dart';
+import 'package:loginapp/screens/home_main/main/account_statement/statement_children.dart';
 
 class StatementScreen extends StatelessWidget {
   const StatementScreen({super.key});
@@ -62,7 +63,14 @@ class StatementScreen extends StatelessWidget {
             floatingActionButton: FloatingActionButton(
               backgroundColor: Constants.kMainColor,
               child: const Icon(Icons.upload),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AddStatementScreen(),
+                  ),
+                );
+              },
             ),
           ),
         ),

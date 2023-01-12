@@ -1,4 +1,4 @@
-import 'package:loginapp/screens/home/payment/payment_model.dart';
+import 'package:loginapp/screens/home_main/payment/payment_model.dart';
 
 class PaymentViewModel {
   final PaymentModel _paymentModel;

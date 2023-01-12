@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:loginapp/screens/home/notification/notification_view_model.dart';
+import 'package:loginapp/screens/home_main/notification/notification_view_model.dart';
 
 class NotificationScreen extends StatelessWidget {
   final List<NotificationViewModel> notInfo;

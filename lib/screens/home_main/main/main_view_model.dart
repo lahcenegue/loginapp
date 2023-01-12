@@ -1,4 +1,4 @@
-import 'package:loginapp/screens/home/main/main_model.dart';
+import 'package:loginapp/screens/home_main/main/main_model.dart';
 
 class MainViewModel {
   final MainModel _mainModel;

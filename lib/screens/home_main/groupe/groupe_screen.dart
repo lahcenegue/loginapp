@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loginapp/constants/constants.dart';
-import 'package:loginapp/screens/home/groupe/add_groupe.dart';
+import 'package:loginapp/screens/home_main/groupe/add_groupe.dart';
 
 class GroupeScreen extends StatelessWidget {
   const GroupeScreen({super.key});

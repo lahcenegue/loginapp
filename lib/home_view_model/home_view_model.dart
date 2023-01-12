@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:loginapp/screens/home/main/account_statement/statement_api.dart';
-import 'package:loginapp/screens/home/main/account_statement/statement_model.dart';
-import 'package:loginapp/screens/home/main/account_statement/statement_view_model.dart';
-import 'package:loginapp/screens/home/main/main_api.dart';
-import 'package:loginapp/screens/home/main/main_model.dart';
-import 'package:loginapp/screens/home/main/main_view_model.dart';
-import 'package:loginapp/screens/home/notification/notification_api.dart';
-import 'package:loginapp/screens/home/notification/notification_model.dart';
-import 'package:loginapp/screens/home/notification/notification_view_model.dart';
-import 'package:loginapp/screens/home/payment/payment_api.dart';
-import 'package:loginapp/screens/home/payment/payment_model.dart';
-import 'package:loginapp/screens/home/payment/payment_view_model.dart';
+import 'package:loginapp/screens/home_main/main/account_statement/statement_api.dart';
+import 'package:loginapp/screens/home_main/main/account_statement/statement_model.dart';
+import 'package:loginapp/screens/home_main/main/account_statement/statement_view_model.dart';
+import 'package:loginapp/screens/home_main/main/main_api.dart';
+import 'package:loginapp/screens/home_main/main/main_model.dart';
+import 'package:loginapp/screens/home_main/main/main_view_model.dart';
+import 'package:loginapp/screens/home_main/notification/notification_api.dart';
+import 'package:loginapp/screens/home_main/notification/notification_model.dart';
+import 'package:loginapp/screens/home_main/notification/notification_view_model.dart';
+import 'package:loginapp/screens/home_main/payment/payment_api.dart';
+import 'package:loginapp/screens/home_main/payment/payment_model.dart';
+import 'package:loginapp/screens/home_main/payment/payment_view_model.dart';
 
 class HomeViewModel extends ChangeNotifier {
   List<PaymentViewModel>? listPayment;

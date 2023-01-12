@@ -1,4 +1,4 @@
-import 'package:loginapp/screens/home/notification/notification_model.dart';
+import 'package:loginapp/screens/home_main/notification/notification_model.dart';
 
 class NotificationViewModel {
   final NotificationModel _notificationModel;

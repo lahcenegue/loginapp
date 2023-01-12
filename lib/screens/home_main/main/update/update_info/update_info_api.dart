@@ -3,7 +3,7 @@ import 'package:loginapp/constants/constants.dart';
 import 'package:loginapp/main.dart';
 import 'dart:convert' as convert;
 
-import 'package:loginapp/screens/home/main/update/update_info/update_info_model.dart';
+import 'package:loginapp/screens/home_main/main/update/update_info/update_info_model.dart';
 
 Future<UpdateInfoResponseModel> apiUpdateInfo(
     {required UpdateInfoRequestModel updateInfoRequestModel}) async {

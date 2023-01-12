@@ -1,6 +1,6 @@
 import 'package:loginapp/constants/constants.dart';
 import 'package:loginapp/main.dart';
-import 'package:loginapp/screens/home/main/account_statement/statement_model.dart';
+import 'package:loginapp/screens/home_main/main/account_statement/statement_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 

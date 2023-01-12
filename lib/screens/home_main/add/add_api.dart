@@ -3,7 +3,7 @@ import 'package:loginapp/constants/constants.dart';
 import 'package:loginapp/main.dart';
 import 'dart:convert' as convert;
 
-import 'package:loginapp/screens/home/add/add_model.dart';
+import 'package:loginapp/screens/home_main/add/add_model.dart';
 
 Future<AddResponseModel> apiAdd(
     {required AddRequestModel addRequestModel}) async {

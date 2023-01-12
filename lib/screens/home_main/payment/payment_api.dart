@@ -1,6 +1,6 @@
 import 'package:loginapp/constants/constants.dart';
 import 'package:loginapp/main.dart';
-import 'package:loginapp/screens/home/payment/payment_model.dart';
+import 'package:loginapp/screens/home_main/payment/payment_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 

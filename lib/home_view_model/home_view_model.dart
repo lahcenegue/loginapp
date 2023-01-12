@@ -13,7 +13,7 @@ class HomeViewModel extends ChangeNotifier {
   List<PaymentViewModel>? listPayment;
   List<PaymentViewModel> newListPayment = [];
   MainViewModel? mainInfo;
-  List<NotificationViewModel> listNotification = [];
+  List<NotificationViewModel>? listNotification;
 
   //list payment
   Future<void> fetchPaymentList({required String token}) async {

@@ -25,6 +25,21 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   HomeViewModel hvm = HomeViewModel();
+  int? notificationLength;
+  int? oldNotificationLength;
+  int? newNot;
+
+  saveNot(int notification) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt('not', notification);
+    print("notification succes");
+  }
+
+  getNot() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    oldNotificationLength = prefs.getInt('not');
+    print("get not succes");
+  }
 
   deletePrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -35,6 +50,8 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     hvm.fetchMainInfo(token: token!);
+    hvm.fetchListNotification();
+    getNot();
     super.initState();
   }
 
@@ -47,13 +64,16 @@ class _MainScreenState extends State<MainScreen> {
       setState(() {});
     });
 
-    if (hvm.mainInfo == null) {
+    if (hvm.mainInfo == null || hvm.listNotification == null) {
       return const Scaffold(
         body: Center(
           child: CircularProgressIndicator(),
         ),
       );
     } else {
+      notificationLength = hvm.listNotification!.length;
+      newNot = notificationLength! - oldNotificationLength!;
+      saveNot(notificationLength!);
       return Directionality(
         textDirection: TextDirection.rtl,
         child: Scaffold(
@@ -71,14 +91,45 @@ class _MainScreenState extends State<MainScreen> {
                   );
                 },
               ),
-              IconButton(
-                icon: const Icon(Icons.notifications),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const NotificationScreen()));
-                },
+              Stack(
+                children: [
+                  Center(
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.notifications,
+                        size: 35,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => NotificationScreen(
+                                      notInfo: hvm.listNotification!,
+                                    )));
+                      },
+                    ),
+                  ),
+                  Visibility(
+                    visible: newNot == 0 ? false : true,
+                    child: Positioned(
+                      top: 5,
+                      right: 0,
+                      child: Container(
+                        height: 23,
+                        width: 23,
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Center(
+                          child: Text(
+                            newNot.toString(),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

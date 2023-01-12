@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:loginapp/screens/home/notification/notification_view_model.dart';
 
-class NotificationScreen extends StatefulWidget {
-  const NotificationScreen({super.key});
+class NotificationScreen extends StatelessWidget {
+  final List<NotificationViewModel> notInfo;
+  const NotificationScreen({
+    super.key,
+    required this.notInfo,
+  });
 
-  @override
-  State<NotificationScreen> createState() => _NotificationScreenState();
-}
-
-class _NotificationScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -19,13 +19,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
           ),
           body: ListView.builder(
               padding: const EdgeInsets.all(10),
-              itemCount: 5,
+              itemCount: notInfo.length,
               itemBuilder: (context, index) {
-                return const ListTile(
-                  title: Text("عملية الدفع"),
-                  subtitle: Text("دفع لحسن 20 دينار"),
-                  leading: Icon(Icons.notifications),
-                  trailing: Text("date"),
+                return ListTile(
+                  title: const Text("تم الدفع من قبل"),
+                  subtitle: Text(
+                      "${notInfo[index].text2} - مبلغ:  ${notInfo[index].text1}"),
+                  leading: const Icon(Icons.notifications),
+                  trailing: Text(notInfo[index].dateadd),
                 );
               }),
         ),

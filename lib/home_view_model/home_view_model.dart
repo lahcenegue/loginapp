@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:loginapp/screens/home_main/main/account_statement/statement_api.dart';
-import 'package:loginapp/screens/home_main/main/account_statement/statement_model.dart';
-import 'package:loginapp/screens/home_main/main/account_statement/statement_view_model.dart';
+import 'package:loginapp/screens/home_main/drawer/account_statement/statement_api.dart';
+import 'package:loginapp/screens/home_main/drawer/account_statement/statement_model.dart';
+import 'package:loginapp/screens/home_main/drawer/account_statement/statement_view_model.dart';
 import 'package:loginapp/screens/home_main/main/main_api.dart';
 import 'package:loginapp/screens/home_main/main/main_model.dart';
 import 'package:loginapp/screens/home_main/main/main_view_model.dart';

@@ -1,4 +1,4 @@
-import 'package:loginapp/screens/home_main/main/account_statement/statement_model.dart';
+import 'package:loginapp/screens/home_main/drawer/account_statement/statement_model.dart';
 
 class StatementViewModel {
   final StatementModel _statementModel;

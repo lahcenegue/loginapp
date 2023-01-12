@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:loginapp/main.dart';
 import 'package:loginapp/screens/home_main/main/main_screen.dart';
-import 'package:loginapp/screens/home_main/main/update/update_password/update_pass_api.dart';
-import 'package:loginapp/screens/home_main/main/update/update_password/update_pass_model.dart';
+import 'package:loginapp/screens/home_main/drawer/update/update_info/update_info_api.dart';
+import 'package:loginapp/screens/home_main/drawer/update/update_info/update_info_model.dart';
 import 'package:loginapp/widgets/constum_button.dart';
 import 'package:loginapp/widgets/text_form.dart';
 
-class UpdatePassScreen extends StatefulWidget {
-  const UpdatePassScreen({super.key});
+class UpdateInfoScreen extends StatefulWidget {
+  const UpdateInfoScreen({super.key});
 
   @override
-  State<UpdatePassScreen> createState() => _UpdatePassScreenState();
+  State<UpdateInfoScreen> createState() => _UpdateInfoScreenState();
 }
 
-class _UpdatePassScreenState extends State<UpdatePassScreen> {
+class _UpdateInfoScreenState extends State<UpdateInfoScreen> {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
-  late UpdatePassRequestModel updatePassRequestModel;
+  late UpdateInfoRequestModel updateInfoRequestModel;
 
   bool isApiCallProcess = false;
 
   @override
   void initState() {
-    updatePassRequestModel = UpdatePassRequestModel();
+    updateInfoRequestModel = UpdateInfoRequestModel();
     super.initState();
   }
 
@@ -31,7 +31,7 @@ class _UpdatePassScreenState extends State<UpdatePassScreen> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('تحديق كلمة المرور'),
+          title: const Text('تحديق البيانات'),
         ),
         body: Stack(
           children: [
@@ -41,14 +41,25 @@ class _UpdatePassScreenState extends State<UpdatePassScreen> {
                 padding: const EdgeInsets.all(20),
                 children: [
                   customTextFormField(
-                    hintText: 'كلمة المرور',
-                    keyboardType: TextInputType.visiblePassword,
+                    hintText: 'الاميل',
+                    keyboardType: TextInputType.emailAddress,
                     prefixIcon: Icons.person,
                     validator: (value) {
                       return null;
                     },
                     onChanged: (value) {
-                      updatePassRequestModel.pass = value.toString();
+                      updateInfoRequestModel.email = value.toString();
+                    },
+                  ),
+                  customTextFormField(
+                    hintText: 'المعلومات',
+                    keyboardType: TextInputType.text,
+                    prefixIcon: Icons.info,
+                    validator: (value) {
+                      return null;
+                    },
+                    onChanged: (value) {
+                      updateInfoRequestModel.info = value.toString();
                     },
                   ),
                   customButton(
@@ -61,8 +72,8 @@ class _UpdatePassScreenState extends State<UpdatePassScreen> {
                           isApiCallProcess = true;
                         });
 
-                        await apiUpdatePass(
-                          updatePassRequestModel: updatePassRequestModel,
+                        await apiUpdateInfo(
+                          updateInfoRequestModel: updateInfoRequestModel,
                         ).then((value) {
                           setState(() {
                             isApiCallProcess = false;

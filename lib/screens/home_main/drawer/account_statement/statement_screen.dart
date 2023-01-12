@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loginapp/constants/constants.dart';
-import 'package:loginapp/screens/home_main/main/account_statement/add_statment/add_statement_screen.dart';
-import 'package:loginapp/screens/home_main/main/account_statement/statement_children.dart';
+import 'package:loginapp/screens/home_main/drawer/account_statement/add_statment/add_statement_screen.dart';
+import 'package:loginapp/screens/home_main/drawer/account_statement/statement_children.dart';
 
 class StatementScreen extends StatelessWidget {
   const StatementScreen({super.key});

@@ -3,7 +3,7 @@ import 'package:loginapp/constants/constants.dart';
 import 'package:loginapp/main.dart';
 import 'dart:convert' as convert;
 
-import 'package:loginapp/screens/home_main/main/update/update_password/update_pass_model.dart';
+import 'package:loginapp/screens/home_main/drawer/update/update_password/update_pass_model.dart';
 
 Future<UpdatePassResponseModel> apiUpdatePass(
     {required UpdatePassRequestModel updatePassRequestModel}) async {

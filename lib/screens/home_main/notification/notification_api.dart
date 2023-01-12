@@ -1,10 +1,10 @@
 import 'package:loginapp/constants/constants.dart';
-import 'package:loginapp/main.dart';
 import 'package:loginapp/screens/home_main/notification/notification_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
-Future<List<NotificationModel>> loadNotificationList() async {
+Future<List<NotificationModel>> loadNotificationList(
+    {required String token}) async {
   try {
     var url =
         Uri.parse("${Constants.url}/payment/api/notification?token=$token");

@@ -31,16 +31,16 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   //get main info
-  Future<void> fetchMainInfo() async {
-    MainModel json = await MainApi().loadData();
+  Future<void> fetchMainInfo({required String token}) async {
+    MainModel json = await MainApi().loadData(token: token);
 
     mainInfo = MainViewModel(mainModel: json);
     notifyListeners();
   }
 
   // get list notification
-  Future<void> fetchListNotification() async {
-    List<NotificationModel> jsonNot = await loadNotificationList();
+  Future<void> fetchListNotification({required String token}) async {
+    List<NotificationModel> jsonNot = await loadNotificationList(token: token);
 
     listNotification = jsonNot
         .map((e) => NotificationViewModel(notificationModel: e))

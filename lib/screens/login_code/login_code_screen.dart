@@ -31,16 +31,16 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
     print("phone succes");
   }
 
-  saveToken(String token) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('token', token);
-    print("token succes");
-  }
-
   saveName(String name) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('name', name);
     print("name succes");
+  }
+
+  saveToken(String token) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('token', token);
+    print("token succes");
   }
 
   @override
@@ -141,7 +141,9 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const MainScreen()),
+                                  builder: (context) => MainScreen(
+                                        token: value.token!,
+                                      )),
                             );
                             saveToken(value.token!);
                             saveName(value.name!);

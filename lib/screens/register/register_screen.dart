@@ -232,7 +232,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const MainScreen(),
+                                  builder: (context) => MainScreen(
+                                    token: value.token!,
+                                  ),
                                 ),
                               );
                               saveToken(value.token!);

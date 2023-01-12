@@ -1,12 +1,12 @@
 import 'package:http/http.dart' as http;
 import 'package:loginapp/constants/constants.dart';
-import 'package:loginapp/main.dart';
+
 import 'dart:convert' as convert;
 
 import 'package:loginapp/screens/home_main/main/main_model.dart';
 
 class MainApi {
-  Future<MainModel> loadData() async {
+  Future<MainModel> loadData({required String token}) async {
     try {
       var url = Uri.parse("${Constants.url}/payment/api/index?token=$token");
       http.Response response = await http.get(url);

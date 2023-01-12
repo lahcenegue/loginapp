@@ -17,8 +17,10 @@ import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MainScreen extends StatefulWidget {
+  final String token;
   const MainScreen({
     super.key,
+    required this.token,
   });
 
   @override
@@ -52,9 +54,9 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void initState() {
-    hvm.fetchMainInfo();
-    hvm.fetchListNotification();
-    getNot();
+    hvm.fetchMainInfo(token: widget.token);
+    hvm.fetchListNotification(token: widget.token);
+
     super.initState();
   }
 
@@ -67,16 +69,28 @@ class _MainScreenState extends State<MainScreen> {
       setState(() {});
     });
 
-    if (hvm.mainInfo == null || hvm.listNotification == null) {
+    if (hvm.mainInfo == null && hvm.listNotification == null) {
+      print("==================");
+      print(hvm.mainInfo);
+      print("==================");
+      print(hvm.listNotification);
       return const Scaffold(
         body: Center(
           child: CircularProgressIndicator(),
         ),
       );
     } else {
-      notificationLength = hvm.listNotification!.length;
-      newNot = notificationLength! - oldNotificationLength!;
-      saveNot(notificationLength!);
+      print("==========else==========");
+      print("========main info==========");
+      print(hvm.mainInfo);
+      print("==========list notification========");
+      print(hvm.listNotification);
+
+      // notificationLength = hvm.listNotification!.length;
+      // saveNot(hvm.listNotification!.length);
+      // getNot();
+      // newNot = notificationLength! - oldNotificationLength!;
+
       return Directionality(
         textDirection: TextDirection.rtl,
         child: Scaffold(
@@ -112,26 +126,26 @@ class _MainScreenState extends State<MainScreen> {
                       },
                     ),
                   ),
-                  Visibility(
-                    visible: newNot == 0 ? false : true,
-                    child: Positioned(
-                      top: 5,
-                      right: 0,
-                      child: Container(
-                        height: 23,
-                        width: 23,
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Center(
-                          child: Text(
-                            newNot.toString(),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Visibility(
+                  //   visible: newNot == 0 ? false : true,
+                  //   child: Positioned(
+                  //     top: 5,
+                  //     right: 0,
+                  //     child: Container(
+                  //       height: 23,
+                  //       width: 23,
+                  //       decoration: BoxDecoration(
+                  //         color: Colors.red,
+                  //         borderRadius: BorderRadius.circular(20),
+                  //       ),
+                  //       child: Center(
+                  //         child: Text(
+                  //           newNot.toString(),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ],

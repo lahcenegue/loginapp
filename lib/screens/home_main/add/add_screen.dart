@@ -107,7 +107,9 @@ class _AddScreenState extends State<AddScreen> {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const MainScreen(),
+                                  builder: (context) => MainScreen(
+                                    token: token!,
+                                  ),
                                 ));
                             //share
                             Share.share(

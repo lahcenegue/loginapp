@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loginapp/main.dart';
 import 'package:loginapp/screens/home_main/main/main_screen.dart';
 import 'package:loginapp/screens/home_main/main/update/update_password/update_pass_api.dart';
 import 'package:loginapp/screens/home_main/main/update/update_password/update_pass_model.dart';
@@ -70,7 +71,9 @@ class _UpdatePassScreenState extends State<UpdatePassScreen> {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const MainScreen(),
+                                  builder: (context) => MainScreen(
+                                    token: token!,
+                                  ),
                                 ));
                           }
                         });

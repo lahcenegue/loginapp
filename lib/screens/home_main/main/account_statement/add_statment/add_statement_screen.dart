@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loginapp/main.dart';
 import 'package:loginapp/screens/home_main/main/account_statement/add_statment/add_statement_api.dart';
 import 'package:loginapp/screens/home_main/main/account_statement/add_statment/add_statement_model.dart';
 import 'package:loginapp/screens/home_main/main/main_screen.dart';
@@ -114,7 +115,9 @@ class _AddStatementScreenState extends State<AddStatementScreen> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const MainScreen(),
+                                builder: (context) => MainScreen(
+                                  token: token!,
+                                ),
                               ),
                             );
                           }

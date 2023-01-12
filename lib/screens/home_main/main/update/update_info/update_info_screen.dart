@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loginapp/main.dart';
 import 'package:loginapp/screens/home_main/main/main_screen.dart';
 import 'package:loginapp/screens/home_main/main/update/update_info/update_info_api.dart';
 import 'package:loginapp/screens/home_main/main/update/update_info/update_info_model.dart';
@@ -81,7 +82,9 @@ class _UpdateInfoScreenState extends State<UpdateInfoScreen> {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const MainScreen(),
+                                  builder: (context) => MainScreen(
+                                    token: token!,
+                                  ),
                                 ));
                           }
                         });

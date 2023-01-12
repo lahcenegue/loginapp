@@ -31,5 +31,3 @@ Future<RegisterResponseModel> apiRegister({
   }
   return responseModel;
 }
-
-//${Constants.url}/api/login/${OneSignalControler.osUserID}/$phone/$yourCode/reg?name=$name&psot=$civilNumber&email=$email&password=$password"

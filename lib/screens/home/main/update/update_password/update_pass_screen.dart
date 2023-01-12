@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:loginapp/main.dart';
 import 'package:loginapp/screens/home/main/main_screen.dart';
 import 'package:loginapp/screens/home/main/update/update_password/update_pass_api.dart';
 import 'package:loginapp/screens/home/main/update/update_password/update_pass_model.dart';
@@ -62,7 +61,6 @@ class _UpdatePassScreenState extends State<UpdatePassScreen> {
                         });
 
                         await apiUpdatePass(
-                          token: token!,
                           updatePassRequestModel: updatePassRequestModel,
                         ).then((value) {
                           setState(() {

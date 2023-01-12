@@ -1,11 +1,12 @@
 import 'package:http/http.dart' as http;
 import 'package:loginapp/constants/constants.dart';
+import 'package:loginapp/main.dart';
 import 'dart:convert' as convert;
 
 import 'package:loginapp/screens/home/add/add_model.dart';
 
 Future<AddResponseModel> apiAdd(
-    {required String token, required AddRequestModel addRequestModel}) async {
+    {required AddRequestModel addRequestModel}) async {
   try {
     var url = Uri.parse("${Constants.url}/payment/api/add?token=$token");
     http.Response response = await http.post(

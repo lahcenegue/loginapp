@@ -1,12 +1,12 @@
 import 'package:http/http.dart' as http;
 import 'package:loginapp/constants/constants.dart';
+import 'package:loginapp/main.dart';
 import 'dart:convert' as convert;
 
 import 'package:loginapp/screens/home/main/update/update_info/update_info_model.dart';
 
 Future<UpdateInfoResponseModel> apiUpdateInfo(
-    {required String token,
-    required UpdateInfoRequestModel updateInfoRequestModel}) async {
+    {required UpdateInfoRequestModel updateInfoRequestModel}) async {
   try {
     var url = Uri.parse("${Constants.url}/api/profile?token=$token");
     http.Response response = await http.post(

@@ -22,5 +22,3 @@ Future<LoginCodeModel> apiLoginCode(String phone, yourCode) async {
   }
   return LoginCodeModel();
 }
-
-  //"${Constants.url}/api/login/${OneSignalControler.osUserID}/$phone/$yourCode"

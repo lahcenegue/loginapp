@@ -6,6 +6,7 @@ import 'package:loginapp/screens/home/add/add_screen.dart';
 import 'package:loginapp/screens/home/contact/contact_screen.dart';
 import 'package:loginapp/screens/home/groupe/groupe_screen.dart';
 import 'package:loginapp/screens/home/main/update/update_info/update_info_screen.dart';
+import 'package:loginapp/screens/home/main/update/update_password/update_pass_screen.dart';
 import 'package:loginapp/screens/home/notification/notification_screen.dart';
 import 'package:loginapp/screens/home/payment/payment_screen.dart';
 import 'package:loginapp/screens/login_mobile/login_mobile_screen.dart';
@@ -49,7 +50,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void initState() {
-    hvm.fetchMainInfo(token: token!);
+    hvm.fetchMainInfo();
     hvm.fetchListNotification();
     getNot();
     super.initState();
@@ -306,7 +307,15 @@ class _MainScreenState extends State<MainScreen> {
                                   icon: Icons.password,
                                   title: 'تعديل كلمة المرور',
                                   topPadding: 20,
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const UpdatePassScreen(),
+                                      ),
+                                    );
+                                  },
                                 ),
                               ],
                             ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:loginapp/main.dart';
 import 'package:loginapp/screens/home/main/main_screen.dart';
 import 'package:loginapp/screens/home/main/update/update_info/update_info_api.dart';
 import 'package:loginapp/screens/home/main/update/update_info/update_info_model.dart';
@@ -73,7 +72,6 @@ class _UpdateInfoScreenState extends State<UpdateInfoScreen> {
                         });
 
                         await apiUpdateInfo(
-                          token: token!,
                           updateInfoRequestModel: updateInfoRequestModel,
                         ).then((value) {
                           setState(() {

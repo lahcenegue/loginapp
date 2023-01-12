@@ -21,20 +21,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   List? listPayment;
   bool isLoad = false;
-  String? token;
-
-  getSharedValue() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    token = prefs.getString('token');
-  }
 
   @override
   void initState() {
     super.initState();
-    getSharedValue();
-    hvm.fetchPaymentList(
-      token: token!,
-    );
+
+    hvm.fetchPaymentList();
     dateFormat = intl.DateFormat('EEEE yyyy/MM/dd hh:mm a', "ar_DZ");
 
     controller.addListener(() {
@@ -103,7 +95,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       ),
                       child: Column(
                         children: [
-                          Text(index.toString()),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

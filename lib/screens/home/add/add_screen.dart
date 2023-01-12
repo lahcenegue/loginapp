@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loginapp/constants/constants.dart';
+import 'package:loginapp/main.dart';
 import 'package:loginapp/screens/home/add/add_api.dart';
 import 'package:loginapp/screens/home/add/add_model.dart';
 import 'package:loginapp/screens/home/main/main_screen.dart';
@@ -21,19 +22,9 @@ class _AddScreenState extends State<AddScreen> {
 
   bool isApiCallProcess = false;
 
-  String? name;
-  String? token;
-  getSharedValue() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    name = prefs.getString('name');
-    token = prefs.getString('token');
-  }
-
   @override
   void initState() {
     addRequestModel = AddRequestModel();
-    //getToken();
-    getSharedValue();
     super.initState();
   }
 
@@ -106,7 +97,6 @@ class _AddScreenState extends State<AddScreen> {
                           isApiCallProcess = true;
                         });
                         await apiAdd(
-                          token: token!,
                           addRequestModel: addRequestModel,
                         ).then((value) async {
                           setState(() {

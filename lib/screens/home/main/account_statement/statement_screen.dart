@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:loginapp/screens/home/main/account_statement/statement.dart';
+import 'package:loginapp/constants/constants.dart';
+import 'package:loginapp/screens/home/main/account_statement/statement_children.dart';
 
 class StatementScreen extends StatelessWidget {
   const StatementScreen({super.key});
@@ -32,29 +33,36 @@ class StatementScreen extends StatelessWidget {
             body: const TabBarView(
               children: [
                 //all statement
-                Statement(
+                StatementChildren(
                   pageType: 1,
                   pageNum: null,
                 ),
 
                 //cash statement
-                Statement(
+                StatementChildren(
                   pageType: 5,
                   pageNum: 1,
                 ),
 
                 //disposting statnebt
-                Statement(
+                StatementChildren(
                   pageType: 1,
                   pageNum: 1,
                 ),
 
                 //request statement
-                Statement(
+                StatementChildren(
                   pageType: 8,
                   pageNum: 1,
                 ),
               ],
+            ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.startFloat,
+            floatingActionButton: FloatingActionButton(
+              backgroundColor: Constants.kMainColor,
+              child: const Icon(Icons.upload),
+              onPressed: () {},
             ),
           ),
         ),

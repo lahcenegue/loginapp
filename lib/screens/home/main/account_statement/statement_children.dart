@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:loginapp/home_view_model/home_view_model.dart';
 import 'package:intl/intl.dart' as intl;
 
-class Statement extends StatefulWidget {
+class StatementChildren extends StatefulWidget {
   final int pageType;
   final int? pageNum;
-  const Statement({
+  const StatementChildren({
     super.key,
     required this.pageType,
     this.pageNum,
   });
 
   @override
-  State<Statement> createState() => _StatementState();
+  State<StatementChildren> createState() => _StatementChildrenState();
 }
 
-class _StatementState extends State<Statement> {
+class _StatementChildrenState extends State<StatementChildren> {
   HomeViewModel hvm = HomeViewModel();
   intl.DateFormat? dateFormat;
 

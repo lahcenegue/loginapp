@@ -13,11 +13,57 @@ class _StatementScreenState extends State<StatementScreen> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: SafeArea(
+        child: DefaultTabController(
+          length: 4,
           child: Scaffold(
-        appBar: AppBar(
-          title: const Text("كشف الحساب"),
+              appBar: AppBar(
+                title: const Text("كشف الحساب"),
+                bottom: const TabBar(tabs: [
+                  Tab(
+                    text: 'الجميع',
+                  ),
+                  Tab(
+                    text: 'السحب',
+                  ),
+                  Tab(
+                    text: 'الايداع',
+                  ),
+                  Tab(
+                    text: 'طلبات',
+                  ),
+                ]),
+              ),
+              body: TabBarView(children: [
+                ListView.builder(
+                    itemCount: 5,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        leading: Icon(Icons.payment),
+                        title: Text("name"),
+                        trailing: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("40 dinar"),
+                            Text("date"),
+                          ],
+                        ),
+                      );
+                    }),
+                Container(
+                  height: 50,
+                  color: Colors.red,
+                ),
+                Container(
+                  height: 50,
+                  color: Colors.blue,
+                ),
+                Container(
+                  height: 50,
+                  color: Colors.green,
+                ),
+              ])),
         ),
-      )),
+      ),
     );
   }
 }

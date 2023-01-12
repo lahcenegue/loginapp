@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:loginapp/home_view_model/home_view_model.dart';
+import 'package:loginapp/screens/home/main/account_statement/all_statement.dart';
 
-class StatementScreen extends StatefulWidget {
+class StatementScreen extends StatelessWidget {
   const StatementScreen({super.key});
 
-  @override
-  State<StatementScreen> createState() => _StatementScreenState();
-}
-
-class _StatementScreenState extends State<StatementScreen> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -34,21 +31,7 @@ class _StatementScreenState extends State<StatementScreen> {
                 ]),
               ),
               body: TabBarView(children: [
-                ListView.builder(
-                    itemCount: 5,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        leading: Icon(Icons.payment),
-                        title: Text("name"),
-                        trailing: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("40 dinar"),
-                            Text("date"),
-                          ],
-                        ),
-                      );
-                    }),
+                const AllStatement(),
                 Container(
                   height: 50,
                   color: Colors.red,

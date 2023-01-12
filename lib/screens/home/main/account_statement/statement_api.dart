@@ -4,9 +4,10 @@ import 'package:loginapp/screens/home/main/account_statement/statement_model.dar
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
-Future<List<StatementModel>> loadNotificationList() async {
+Future<List<StatementModel>> loadStatementList({required int typePage}) async {
   try {
-    var url = Uri.parse("${Constants.url}/payment/api/bills?token=$token");
+    var url =
+        Uri.parse("${Constants.url}/payment/api/bills/$typePage?token=$token");
     http.Response response = await http.get(url);
 
     if (response.statusCode == 200) {

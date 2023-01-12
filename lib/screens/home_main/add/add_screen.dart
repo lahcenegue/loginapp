@@ -7,7 +7,6 @@ import 'package:loginapp/screens/home_main/main/main_screen.dart';
 import 'package:loginapp/widgets/constum_button.dart';
 import 'package:loginapp/widgets/text_form.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AddScreen extends StatefulWidget {
   const AddScreen({super.key});

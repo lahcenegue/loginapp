@@ -2,33 +2,51 @@ import 'package:flutter/material.dart';
 import 'package:loginapp/home_view_model/home_view_model.dart';
 import 'package:intl/intl.dart' as intl;
 
-class AllStatement extends StatefulWidget {
-  const AllStatement({super.key});
+class Statement extends StatefulWidget {
+  final int pageType;
+  final int? pageNum;
+  const Statement({
+    super.key,
+    required this.pageType,
+    this.pageNum,
+  });
 
   @override
-  State<AllStatement> createState() => _AllStatementState();
+  State<Statement> createState() => _StatementState();
 }
 
-class _AllStatementState extends State<AllStatement> {
+class _StatementState extends State<Statement> {
   HomeViewModel hvm = HomeViewModel();
   intl.DateFormat? dateFormat;
 
   @override
   void initState() {
-    hvm.fetchListStatement(typePage: 1);
+    hvm.fetchListStatement(
+      typePage: widget.pageType,
+      pageNum: widget.pageNum,
+    );
     dateFormat = intl.DateFormat('yyyy-MM-dd hh:mm a', "ar_DZ");
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    hvm.addListener(() {
-      setState(() {});
-    });
+    if (mounted) {
+      hvm.addListener(() {
+        setState(() {});
+      });
+    }
+
     if (hvm.listStatement == null) {
       return const Scaffold(
         body: Center(
           child: CircularProgressIndicator(),
+        ),
+      );
+    } else if (hvm.listStatement!.isEmpty) {
+      return const Scaffold(
+        body: Center(
+          child: Text('لا يوجد أي عناصر أخرى'),
         ),
       );
     } else {
@@ -36,8 +54,18 @@ class _AllStatementState extends State<AllStatement> {
         textDirection: TextDirection.rtl,
         child: SafeArea(
             child: Scaffold(
-          body: ListView.builder(
+          body: ListView.separated(
               itemCount: hvm.listStatement!.length,
+              separatorBuilder: (context, index) => Column(
+                    children: const [
+                      SizedBox(height: 10),
+                      Divider(
+                        endIndent: 20,
+                        indent: 20,
+                      ),
+                      SizedBox(height: 10),
+                    ],
+                  ),
               itemBuilder: (context, index) {
                 return ListTile(
                   leading: const Icon(Icons.payment),

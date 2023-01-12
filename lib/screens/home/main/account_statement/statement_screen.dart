@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:loginapp/home_view_model/home_view_model.dart';
-import 'package:loginapp/screens/home/main/account_statement/all_statement.dart';
+import 'package:loginapp/screens/home/main/account_statement/statement.dart';
 
 class StatementScreen extends StatelessWidget {
   const StatementScreen({super.key});
@@ -13,38 +12,51 @@ class StatementScreen extends StatelessWidget {
         child: DefaultTabController(
           length: 4,
           child: Scaffold(
-              appBar: AppBar(
-                title: const Text("كشف الحساب"),
-                bottom: const TabBar(tabs: [
-                  Tab(
-                    text: 'الجميع',
-                  ),
-                  Tab(
-                    text: 'السحب',
-                  ),
-                  Tab(
-                    text: 'الايداع',
-                  ),
-                  Tab(
-                    text: 'طلبات',
-                  ),
-                ]),
-              ),
-              body: TabBarView(children: [
-                const AllStatement(),
-                Container(
-                  height: 50,
-                  color: Colors.red,
+            appBar: AppBar(
+              title: const Text("كشف الحساب"),
+              bottom: const TabBar(tabs: [
+                Tab(
+                  text: 'الجميع',
                 ),
-                Container(
-                  height: 50,
-                  color: Colors.blue,
+                Tab(
+                  text: 'السحب',
                 ),
-                Container(
-                  height: 50,
-                  color: Colors.green,
+                Tab(
+                  text: 'الايداع',
                 ),
-              ])),
+                Tab(
+                  text: 'طلبات',
+                ),
+              ]),
+            ),
+            body: const TabBarView(
+              children: [
+                //all statement
+                Statement(
+                  pageType: 1,
+                  pageNum: null,
+                ),
+
+                //cash statement
+                Statement(
+                  pageType: 5,
+                  pageNum: 1,
+                ),
+
+                //disposting statnebt
+                Statement(
+                  pageType: 1,
+                  pageNum: 1,
+                ),
+
+                //request statement
+                Statement(
+                  pageType: 8,
+                  pageNum: 1,
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

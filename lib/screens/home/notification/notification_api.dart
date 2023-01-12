@@ -6,7 +6,8 @@ import 'dart:convert' as convert;
 
 Future<List<NotificationModel>> loadNotificationList() async {
   try {
-    var url = Uri.parse("${Constants.url}/payment/api/bills?token=$token");
+    var url =
+        Uri.parse("${Constants.url}/payment/api/notification?token=$token");
     http.Response response = await http.get(url);
 
     if (response.statusCode == 200) {

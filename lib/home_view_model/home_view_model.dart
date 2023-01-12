@@ -49,8 +49,9 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   // get list Statement
-  Future<void> fetchListStatement({required int typePage}) async {
-    List<StatementModel> jsonNot = await loadStatementList(typePage: typePage);
+  Future<void> fetchListStatement({required int typePage, int? pageNum}) async {
+    List<StatementModel> jsonNot =
+        await loadStatementList(typePage: typePage, pageNum: pageNum);
 
     listStatement =
         jsonNot.map((e) => StatementViewModel(statementModel: e)).toList();

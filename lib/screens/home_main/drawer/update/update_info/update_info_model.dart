@@ -37,3 +37,23 @@ class UpdateInfoResponseModel {
     );
   }
 }
+
+class GetInfoModel {
+  String? msg;
+  String? email;
+  String? info;
+
+  GetInfoModel({
+    this.email,
+    this.info,
+    this.msg,
+  });
+
+  factory GetInfoModel.fromJson(Map<String, dynamic> json) {
+    return GetInfoModel(
+      msg: json['msg'],
+      email: json['email'],
+      info: json['info'],
+    );
+  }
+}

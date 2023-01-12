@@ -4,7 +4,11 @@ import 'package:loginapp/screens/home_main/drawer/account_statement/add_statment
 import 'package:loginapp/screens/home_main/drawer/account_statement/statement_children.dart';
 
 class StatementScreen extends StatelessWidget {
-  const StatementScreen({super.key});
+  final int balance;
+  const StatementScreen({
+    super.key,
+    required this.balance,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +71,9 @@ class StatementScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const AddStatementScreen(),
+                    builder: (context) => AddStatementScreen(
+                      balance: balance,
+                    ),
                   ),
                 );
               },

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loginapp/constants/constants.dart';
 import 'package:loginapp/main.dart';
 import 'package:loginapp/screens/home_main/drawer/account_statement/add_statment/add_statement_api.dart';
 import 'package:loginapp/screens/home_main/drawer/account_statement/add_statment/add_statement_model.dart';
@@ -7,7 +8,11 @@ import 'package:loginapp/widgets/constum_button.dart';
 import 'package:loginapp/widgets/text_form.dart';
 
 class AddStatementScreen extends StatefulWidget {
-  const AddStatementScreen({super.key});
+  final int balance;
+  const AddStatementScreen({
+    super.key,
+    required this.balance,
+  });
 
   @override
   State<AddStatementScreen> createState() => _AddStatementScreenState();
@@ -40,6 +45,23 @@ class _AddStatementScreenState extends State<AddStatementScreen> {
               child: ListView(
                 padding: const EdgeInsets.all(20),
                 children: [
+                  Text(
+                    "رصيد الحساب",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Constants.kMainColor,
+                      fontSize: 22,
+                    ),
+                  ),
+                  Text(
+                    "${widget.balance} د.ك",
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
                   customTextFormField(
                     hintText: 'المبلغ',
                     keyboardType: TextInputType.number,

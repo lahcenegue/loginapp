@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:loginapp/screens/home_main/drawer/account_statement/statement_api.dart';
 import 'package:loginapp/screens/home_main/drawer/account_statement/statement_model.dart';
 import 'package:loginapp/screens/home_main/drawer/account_statement/statement_view_model.dart';
+import 'package:loginapp/screens/home_main/drawer/update/update_info/get_info_api.dart';
+import 'package:loginapp/screens/home_main/drawer/update/update_info/get_info_view_model.dart';
+import 'package:loginapp/screens/home_main/drawer/update/update_info/update_info_model.dart';
 import 'package:loginapp/screens/home_main/main/main_api.dart';
 import 'package:loginapp/screens/home_main/main/main_model.dart';
 import 'package:loginapp/screens/home_main/main/main_view_model.dart';
@@ -16,6 +19,7 @@ class HomeViewModel extends ChangeNotifier {
   List<PaymentViewModel>? listPayment;
   List<PaymentViewModel> newListPayment = [];
   MainViewModel? mainInfo;
+  GetInfoViewModel? getInfo;
   List<NotificationViewModel>? listNotification;
   List<StatementViewModel>? listStatement;
 
@@ -35,6 +39,14 @@ class HomeViewModel extends ChangeNotifier {
     MainModel json = await MainApi().loadData(token: token);
 
     mainInfo = MainViewModel(mainModel: json);
+    notifyListeners();
+  }
+
+  // get info update
+  Future<void> fetchGetInfo() async {
+    GetInfoModel jsonInfo = await getInfoApi();
+
+    getInfo = GetInfoViewModel(getInfoModel: jsonInfo);
     notifyListeners();
   }
 

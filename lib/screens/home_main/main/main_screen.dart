@@ -70,22 +70,12 @@ class _MainScreenState extends State<MainScreen> {
     });
 
     if (hvm.mainInfo == null && hvm.listNotification == null) {
-      print("==================");
-      print(hvm.mainInfo);
-      print("==================");
-      print(hvm.listNotification);
       return const Scaffold(
         body: Center(
           child: CircularProgressIndicator(),
         ),
       );
     } else {
-      print("==========else==========");
-      print("========main info==========");
-      print(hvm.mainInfo);
-      print("==========list notification========");
-      print(hvm.listNotification);
-
       // notificationLength = hvm.listNotification!.length;
       // saveNot(hvm.listNotification!.length);
       // getNot();
@@ -102,7 +92,7 @@ class _MainScreenState extends State<MainScreen> {
                   Share.share(
                     """
                           مرحبا، يمكنك الدفع لـ: $name
-                          عبر: ${Constants.url}/u/
+                          عبر: ${Constants.url}/u/${hvm.mainInfo!.id}
                                 """,
                     subject: "مشاركة الرابط",
                   );
@@ -228,7 +218,9 @@ class _MainScreenState extends State<MainScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const StatementScreen(),
+                          builder: (context) => StatementScreen(
+                            balance: hvm.mainInfo!.balance,
+                          ),
                         ),
                       );
                     },
@@ -364,12 +356,13 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                     ),
                     onTap: () async {
-                      Navigator.push(
-                        context,
+                      Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
                           builder: (context) => const LoginMobileScreen(),
                         ),
+                        (route) => false,
                       );
+
                       await deletePrefs();
                     },
                   ),
@@ -425,7 +418,7 @@ class _MainScreenState extends State<MainScreen> {
                                     ));
                               },
                               icon: Icons.add_circle_outline,
-                              title: 'إظافة',
+                              title: 'إضافة',
                             ),
                             customContainer(
                               onTap: () {

@@ -1,11 +1,10 @@
 import 'package:loginapp/constants/constants.dart';
-import 'package:loginapp/main.dart';
 import 'package:loginapp/screens/home_main/drawer/account_statement/statement_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
 Future<List<StatementModel>> loadStatementList(
-    {required int typePage, int? pageNum}) async {
+    {required int typePage, int? pageNum, required String token}) async {
   try {
     var url = Uri.parse(pageNum == null
         ? "${Constants.url}/payment/api/bills/$typePage?token=$token"

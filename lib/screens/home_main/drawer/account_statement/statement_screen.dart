@@ -5,9 +5,11 @@ import 'package:loginapp/screens/home_main/drawer/account_statement/statement_ch
 
 class StatementScreen extends StatelessWidget {
   final int balance;
+  final String tokn;
   const StatementScreen({
     super.key,
     required this.balance,
+    required this.tokn,
   });
 
   @override
@@ -35,28 +37,32 @@ class StatementScreen extends StatelessWidget {
                 ),
               ]),
             ),
-            body: const TabBarView(
+            body: TabBarView(
               children: [
                 //all statement
                 StatementChildren(
+                  token: tokn,
                   pageType: 1,
                   pageNum: null,
                 ),
 
                 //cash statement
                 StatementChildren(
+                  token: tokn,
                   pageType: 5,
                   pageNum: 1,
                 ),
 
                 //disposting statnebt
                 StatementChildren(
+                  token: tokn,
                   pageType: 1,
                   pageNum: 1,
                 ),
 
                 //request statement
                 StatementChildren(
+                  token: tokn,
                   pageType: 8,
                   pageNum: 1,
                 ),
@@ -72,6 +78,7 @@ class StatementScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => AddStatementScreen(
+                      token: tokn,
                       balance: balance,
                     ),
                   ),

@@ -9,9 +9,11 @@ import 'package:loginapp/widgets/text_form.dart';
 
 class AddStatementScreen extends StatefulWidget {
   final int balance;
+  final String token;
   const AddStatementScreen({
     super.key,
     required this.balance,
+    required this.token,
   });
 
   @override
@@ -127,8 +129,10 @@ class _AddStatementScreenState extends State<AddStatementScreen> {
                           isApiCallProcess = true;
                         });
 
-                        apiStatmentAdd(addStatementRequest: addStatementRequest)
-                            .then((value) async {
+                        apiStatmentAdd(
+                          token: widget.token,
+                          addStatementRequest: addStatementRequest,
+                        ).then((value) async {
                           setState(() {
                             isApiCallProcess = false;
                           });

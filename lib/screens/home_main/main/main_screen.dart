@@ -219,6 +219,7 @@ class _MainScreenState extends State<MainScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => StatementScreen(
+                            tokn: widget.token,
                             balance: hvm.mainInfo!.balance,
                           ),
                         ),
@@ -312,8 +313,9 @@ class _MainScreenState extends State<MainScreen> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            const UpdateInfoScreen(),
+                                        builder: (context) => UpdateInfoScreen(
+                                          token: widget.token,
+                                        ),
                                       ),
                                     );
                                   },
@@ -326,8 +328,9 @@ class _MainScreenState extends State<MainScreen> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            const UpdatePassScreen(),
+                                        builder: (context) => UpdatePassScreen(
+                                          token: widget.token,
+                                        ),
                                       ),
                                     );
                                   },
@@ -414,7 +417,9 @@ class _MainScreenState extends State<MainScreen> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => const AddScreen(),
+                                      builder: (context) => AddScreen(
+                                        token: widget.token,
+                                      ),
                                     ));
                               },
                               icon: Icons.add_circle_outline,

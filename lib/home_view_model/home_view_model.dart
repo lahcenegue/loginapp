@@ -36,15 +36,18 @@ class HomeViewModel extends ChangeNotifier {
 
   //get main info
   Future<void> fetchMainInfo({required String token}) async {
-    MainModel json = await MainApi().loadData(token: token);
+    print('entree main info ');
+    MainModel json = await getMainInfo(token: token);
+    print('get response info ');
 
     mainInfo = MainViewModel(mainModel: json);
+    print('get main info ');
     notifyListeners();
   }
 
   // get info update
-  Future<void> fetchGetInfo() async {
-    GetInfoModel jsonInfo = await getInfoApi();
+  Future<void> fetchGetInfo({required String token}) async {
+    GetInfoModel jsonInfo = await getInfoApi(token: token);
 
     getInfo = GetInfoViewModel(getInfoModel: jsonInfo);
     notifyListeners();
@@ -61,9 +64,16 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   // get list Statement
-  Future<void> fetchListStatement({required int typePage, int? pageNum}) async {
-    List<StatementModel> jsonNot =
-        await loadStatementList(typePage: typePage, pageNum: pageNum);
+  Future<void> fetchListStatement({
+    required int typePage,
+    required String token,
+    int? pageNum,
+  }) async {
+    List<StatementModel> jsonNot = await loadStatementList(
+      typePage: typePage,
+      pageNum: pageNum,
+      token: token,
+    );
 
     listStatement =
         jsonNot.map((e) => StatementViewModel(statementModel: e)).toList();

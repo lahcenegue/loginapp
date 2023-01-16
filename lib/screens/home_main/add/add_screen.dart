@@ -9,7 +9,11 @@ import 'package:loginapp/widgets/text_form.dart';
 import 'package:share_plus/share_plus.dart';
 
 class AddScreen extends StatefulWidget {
-  const AddScreen({super.key});
+  final String token;
+  const AddScreen({
+    super.key,
+    required this.token,
+  });
 
   @override
   State<AddScreen> createState() => _AddScreenState();
@@ -96,6 +100,7 @@ class _AddScreenState extends State<AddScreen> {
                           isApiCallProcess = true;
                         });
                         await apiAdd(
+                          token: widget.token,
                           addRequestModel: addRequestModel,
                         ).then((value) async {
                           setState(() {

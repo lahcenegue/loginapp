@@ -8,7 +8,8 @@ import 'package:loginapp/widgets/constum_button.dart';
 import 'package:loginapp/widgets/text_form.dart';
 
 class UpdateInfoScreen extends StatefulWidget {
-  const UpdateInfoScreen({super.key});
+  final String token;
+  const UpdateInfoScreen({super.key, required this.token});
 
   @override
   State<UpdateInfoScreen> createState() => _UpdateInfoScreenState();
@@ -24,7 +25,7 @@ class _UpdateInfoScreenState extends State<UpdateInfoScreen> {
   @override
   void initState() {
     updateInfoRequestModel = UpdateInfoRequestModel();
-    hvm.fetchGetInfo();
+    hvm.fetchGetInfo(token: widget.token);
     super.initState();
   }
 
@@ -87,6 +88,7 @@ class _UpdateInfoScreenState extends State<UpdateInfoScreen> {
                           });
 
                           await apiUpdateInfo(
+                            token: widget.token,
                             updateInfoRequestModel: updateInfoRequestModel,
                           ).then((value) {
                             setState(() {

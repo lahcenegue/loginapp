@@ -7,7 +7,8 @@ import 'package:loginapp/widgets/constum_button.dart';
 import 'package:loginapp/widgets/text_form.dart';
 
 class UpdatePassScreen extends StatefulWidget {
-  const UpdatePassScreen({super.key});
+  final String token;
+  const UpdatePassScreen({super.key, required this.token});
 
   @override
   State<UpdatePassScreen> createState() => _UpdatePassScreenState();
@@ -62,6 +63,7 @@ class _UpdatePassScreenState extends State<UpdatePassScreen> {
                         });
 
                         await apiUpdatePass(
+                          token: widget.token,
                           updatePassRequestModel: updatePassRequestModel,
                         ).then((value) {
                           setState(() {

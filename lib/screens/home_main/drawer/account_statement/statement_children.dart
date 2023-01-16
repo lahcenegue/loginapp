@@ -5,9 +5,11 @@ import 'package:intl/intl.dart' as intl;
 class StatementChildren extends StatefulWidget {
   final int pageType;
   final int? pageNum;
+  final String token;
   const StatementChildren({
     super.key,
     required this.pageType,
+    required this.token,
     this.pageNum,
   });
 
@@ -22,6 +24,7 @@ class _StatementChildrenState extends State<StatementChildren> {
   @override
   void initState() {
     hvm.fetchListStatement(
+      token: widget.token,
       typePage: widget.pageType,
       pageNum: widget.pageNum,
     );

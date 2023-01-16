@@ -425,8 +425,9 @@ class _MainScreenState extends State<MainScreen> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          const PaymentScreen(),
+                                      builder: (context) => PaymentScreen(
+                                        token: widget.token,
+                                      ),
                                     ));
                               },
                               icon: Icons.payment_outlined,

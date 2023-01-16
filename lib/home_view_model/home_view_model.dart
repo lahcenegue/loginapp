@@ -24,8 +24,8 @@ class HomeViewModel extends ChangeNotifier {
   List<StatementViewModel>? listStatement;
 
   //list payment
-  Future<void> fetchPaymentList() async {
-    List<PaymentModel> jsonMap = await PaymentApi().loadData();
+  Future<void> fetchPaymentList({required String token}) async {
+    List<PaymentModel> jsonMap = await PaymentApi().loadData(token: token);
     listPayment =
         jsonMap.map((e) => PaymentViewModel(paymentModel: e)).toList();
 

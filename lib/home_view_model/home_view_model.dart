@@ -17,19 +17,19 @@ import 'package:loginapp/screens/home_main/payment/payment_view_model.dart';
 
 class HomeViewModel extends ChangeNotifier {
   List<PaymentViewModel>? listPayment;
-  List<PaymentViewModel> newListPayment = [];
   MainViewModel? mainInfo;
   GetInfoViewModel? getInfo;
   List<NotificationViewModel>? listNotification;
   List<StatementViewModel>? listStatement;
 
   //list payment
-  Future<void> fetchPaymentList({required String token}) async {
-    List<PaymentModel> jsonMap = await PaymentApi().loadData(token: token);
+  Future<void> fetchPaymentList(
+      {required String token, required int page}) async {
+    List<PaymentModel> jsonMap =
+        await PaymentApi().loadData(token: token, page: page);
     listPayment =
         jsonMap.map((e) => PaymentViewModel(paymentModel: e)).toList();
-
-    newListPayment.addAll(listPayment!);
+    print("called");
 
     notifyListeners();
   }
@@ -37,10 +37,10 @@ class HomeViewModel extends ChangeNotifier {
   //get main info
   Future<void> fetchMainInfo({required String token}) async {
     print('entree main info ');
-    MainModel json = await getMainInfo(token: token);
+    MainModel jsonInfo = await getMainInfo(token: token);
     print('get response info ');
 
-    mainInfo = MainViewModel(mainModel: json);
+    mainInfo = MainViewModel(mainModel: jsonInfo);
     print('get main info ');
     notifyListeners();
   }

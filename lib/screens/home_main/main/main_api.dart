@@ -7,6 +7,7 @@ import 'package:loginapp/screens/home_main/main/main_model.dart';
 
 Future<MainModel> getMainInfo({required String token}) async {
   try {
+    print("statrd get API");
     var url = Uri.parse("${Constants.url}/payment/api/index?token=$token");
     http.Response response = await http.get(url);
 

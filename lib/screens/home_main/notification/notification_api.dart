@@ -3,11 +3,13 @@ import 'package:loginapp/screens/home_main/notification/notification_model.dart'
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
+List<NotificationModel> notificationList = [];
+
 Future<List<NotificationModel>> loadNotificationList(
-    {required String token}) async {
+    {required String token, required int page}) async {
   try {
-    var url =
-        Uri.parse("${Constants.url}/payment/api/notification?token=$token");
+    var url = Uri.parse(
+        "${Constants.url}/payment/api/notification/$page?token=$token");
     http.Response response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -18,7 +20,9 @@ Future<List<NotificationModel>> loadNotificationList(
       List<NotificationModel> notificationModel =
           list.map((e) => NotificationModel.fromJson(e)).toList();
 
-      return notificationModel;
+      notificationList = notificationList + notificationModel;
+
+      return notificationList;
     }
   } catch (e) {
     throw Exception(e);

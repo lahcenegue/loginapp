@@ -54,8 +54,10 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   // get list notification
-  Future<void> fetchListNotification({required String token}) async {
-    List<NotificationModel> jsonNot = await loadNotificationList(token: token);
+  Future<void> fetchListNotification(
+      {required String token, required int page}) async {
+    List<NotificationModel> jsonNot =
+        await loadNotificationList(token: token, page: page);
 
     listNotification = jsonNot
         .map((e) => NotificationViewModel(notificationModel: e))
@@ -67,12 +69,14 @@ class HomeViewModel extends ChangeNotifier {
   Future<void> fetchListStatement({
     required int typePage,
     required String token,
+    required String type,
     int? pageNum,
   }) async {
     List<StatementModel> jsonNot = await loadStatementList(
       typePage: typePage,
       pageNum: pageNum,
       token: token,
+      type: type,
     );
 
     listStatement =

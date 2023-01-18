@@ -3,23 +3,62 @@ import 'package:loginapp/screens/home_main/drawer/account_statement/statement_mo
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
-Future<List<StatementModel>> loadStatementList(
-    {required int typePage, int? pageNum, required String token}) async {
+List<StatementModel> listStatement = [];
+String newType = 'all';
+
+Future<List<StatementModel>> loadStatementList({
+  required int typePage,
+  int? pageNum,
+  required String token,
+  required String type,
+}) async {
   try {
-    var url = Uri.parse(pageNum == null
-        ? "${Constants.url}/payment/api/bills/$typePage?token=$token"
-        : "${Constants.url}/payment/api/bills/$pageNum/$typePage?token=$token");
-    http.Response response = await http.get(url);
+    print(type);
+    print(newType);
 
-    if (response.statusCode == 200) {
-      var data = convert.jsonDecode(response.body);
+    if (newType != type) {
+      newType = type;
+      listStatement = [];
+      var url = Uri.parse(type == "all"
+          ? "${Constants.url}/payment/api/bills/$pageNum?token=$token"
+          : "${Constants.url}/payment/api/bills/$pageNum/$typePage?token=$token");
 
-      Iterable list = data;
+      print(url);
+      http.Response response = await http.get(url);
 
-      List<StatementModel> statementModel =
-          list.map((e) => StatementModel.fromJson(e)).toList();
+      if (response.statusCode == 200) {
+        var data = convert.jsonDecode(response.body);
 
-      return statementModel;
+        Iterable list = data;
+
+        List<StatementModel> statementModel =
+            list.map((e) => StatementModel.fromJson(e)).toList();
+
+        listStatement = listStatement + statementModel;
+
+        return listStatement;
+      }
+    } else {
+      newType = type;
+      var url = Uri.parse(type == "all"
+          ? "${Constants.url}/payment/api/bills/$pageNum?token=$token"
+          : "${Constants.url}/payment/api/bills/$pageNum/$typePage?token=$token");
+
+      print(url);
+      http.Response response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        var data = convert.jsonDecode(response.body);
+
+        Iterable list = data;
+
+        List<StatementModel> statementModel =
+            list.map((e) => StatementModel.fromJson(e)).toList();
+
+        listStatement = listStatement + statementModel;
+
+        return listStatement;
+      }
     }
   } catch (e) {
     throw Exception(e);

@@ -43,13 +43,15 @@ class StatementScreen extends StatelessWidget {
                 StatementChildren(
                   token: tokn,
                   pageType: 1,
-                  pageNum: null,
+                  type: "all",
+                  pageNum: 1,
                 ),
 
                 //cash statement
                 StatementChildren(
                   token: tokn,
                   pageType: 5,
+                  type: "cach",
                   pageNum: 1,
                 ),
 
@@ -57,6 +59,7 @@ class StatementScreen extends StatelessWidget {
                 StatementChildren(
                   token: tokn,
                   pageType: 1,
+                  type: "disposting",
                   pageNum: 1,
                 ),
 
@@ -64,6 +67,7 @@ class StatementScreen extends StatelessWidget {
                 StatementChildren(
                   token: tokn,
                   pageType: 8,
+                  type: "request",
                   pageNum: 1,
                 ),
               ],

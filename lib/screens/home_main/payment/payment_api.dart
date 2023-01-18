@@ -11,7 +11,7 @@ class PaymentApi {
     try {
       var url =
           Uri.parse("${Constants.url}/payment/api/all/$page?token=$token");
-      print(url);
+
       http.Response response = await http.get(url);
 
       if (response.statusCode == 200) {
@@ -23,7 +23,6 @@ class PaymentApi {
             list.map((e) => PaymentModel.fromJson(e)).toList();
 
         payment = payment + paymentModel;
-        print("payment lenght: ${payment.length}");
 
         return payment;
       }

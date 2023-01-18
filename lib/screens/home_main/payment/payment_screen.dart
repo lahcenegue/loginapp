@@ -185,11 +185,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
       });
       await Future.delayed(const Duration(seconds: 2));
       page = page + 1;
-      await hvm.fetchPaymentList(token: widget.token, page: page).then((value) {
-        setState(() {
-          isLoadingMore = false;
-        });
-      });
+      await hvm.fetchPaymentList(token: widget.token, page: page).then(
+        (value) {
+          setState(
+            () {
+              isLoadingMore = false;
+            },
+          );
+        },
+      );
     }
   }
 }

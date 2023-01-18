@@ -9,6 +9,7 @@ import 'package:loginapp/screens/home_main/drawer/account_statement/statement_sc
 import 'package:loginapp/screens/home_main/drawer/update/update_info/update_info_screen.dart';
 import 'package:loginapp/screens/home_main/drawer/update/update_password/update_pass_screen.dart';
 import 'package:loginapp/screens/home_main/notification/notification_screen.dart';
+import 'package:loginapp/screens/home_main/notification/notification_view_model.dart';
 import 'package:loginapp/screens/home_main/payment/payment_screen.dart';
 import 'package:loginapp/screens/login_mobile/login_mobile_screen.dart';
 import 'package:loginapp/widgets/constum_button.dart';
@@ -33,6 +34,11 @@ class _MainScreenState extends State<MainScreen> {
   int? oldNotificationLength;
   int? newNot;
 
+  //
+  List<NotificationViewModel> posts = [];
+  bool isLoadingMore = false;
+  int page = 1;
+
   saveNot(int notification) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setInt('not', notification);
@@ -55,7 +61,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     hvm.fetchMainInfo(token: widget.token);
-    hvm.fetchListNotification(token: widget.token);
+    hvm.fetchListNotification(token: widget.token, page: page);
 
     super.initState();
   }

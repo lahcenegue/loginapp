@@ -5,6 +5,9 @@ import 'package:loginapp/screens/home_main/drawer/account_statement/statement_vi
 import 'package:loginapp/screens/home_main/drawer/update/update_info/get_info_api.dart';
 import 'package:loginapp/screens/home_main/drawer/update/update_info/get_info_view_model.dart';
 import 'package:loginapp/screens/home_main/drawer/update/update_info/update_info_model.dart';
+import 'package:loginapp/screens/home_main/groupe/group_view_model.dart';
+import 'package:loginapp/screens/home_main/groupe/groupe_api.dart';
+import 'package:loginapp/screens/home_main/groupe/groupe_model.dart';
 import 'package:loginapp/screens/home_main/main/main_api.dart';
 import 'package:loginapp/screens/home_main/main/main_model.dart';
 import 'package:loginapp/screens/home_main/main/main_view_model.dart';
@@ -21,6 +24,7 @@ class HomeViewModel extends ChangeNotifier {
   GetInfoViewModel? getInfo;
   List<NotificationViewModel>? listNotification;
   List<StatementViewModel>? listStatement;
+  List<GroupViewModel>? listGroups;
 
   //list payment
   Future<void> fetchPaymentList(
@@ -78,6 +82,17 @@ class HomeViewModel extends ChangeNotifier {
 
     listStatement =
         jsonNot.map((e) => StatementViewModel(statementModel: e)).toList();
+    notifyListeners();
+  }
+
+  // get list groups
+  Future<void> fetchGroupsList(
+      {required String token, required int page}) async {
+    List<GroupeResponseModel> jsonMap =
+        await loadGroups(token: token, page: page);
+    listGroups =
+        jsonMap.map((e) => GroupViewModel(groupeResponseModel: e)).toList();
+
     notifyListeners();
   }
 }

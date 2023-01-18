@@ -147,10 +147,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                   onPressed: () {
                                     Share.share(
                                       """
-        مرحبا:${paymentList.name}
-        يمكنك دفع المبلغ :${paymentList.amount}
-        عبر:${Constants.url}/pay/${paymentList.md5id}
-            """,
+                                    مرحبا:${paymentList.name}
+                                    يمكنك دفع المبلغ :${paymentList.amount}
+                                    عبر:${Constants.url}/pay/${paymentList.md5id}
+                                         """,
                                       subject:
                                           "${paymentList.name}مشاركه عنوان ",
                                     );

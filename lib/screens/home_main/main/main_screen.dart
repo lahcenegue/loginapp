@@ -364,7 +364,10 @@ class _MainScreenState extends State<MainScreen> {
             child: Stack(
               children: [
                 Container(
-                  padding: const EdgeInsets.only(bottom: 60, top: 10),
+                  padding: const EdgeInsets.only(
+                    bottom: 60,
+                    top: 10,
+                  ),
                   height: screenHeight * 0.25,
                   width: screenWidth,
                   color: Constants.kMainColor,
@@ -428,8 +431,9 @@ class _MainScreenState extends State<MainScreen> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          const GroupeScreen(),
+                                      builder: (context) => GroupeScreen(
+                                        token: widget.token,
+                                      ),
                                     ));
                               },
                               icon: Icons.group,

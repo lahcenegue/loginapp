@@ -92,7 +92,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   ),
                   child: Column(
                     children: [
-                      Text(index.toString()),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

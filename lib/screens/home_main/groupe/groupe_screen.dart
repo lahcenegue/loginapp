@@ -182,7 +182,9 @@ class _GroupeScreenState extends State<GroupeScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const AddGroupeScreen(),
+                    builder: (context) => AddGroupeScreen(
+                      token: widget.token,
+                    ),
                   ),
                 );
               },

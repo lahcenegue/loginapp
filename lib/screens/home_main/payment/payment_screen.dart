@@ -25,6 +25,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   //
   List<PaymentViewModel> posts = [];
+  bool isLoadingMore = false;
   int page = 1;
 
   @override
@@ -68,7 +69,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             physics: const ScrollPhysics(),
             shrinkWrap: true,
             padding: const EdgeInsets.all(15),
-            itemCount: posts.length,
+            itemCount: isLoadingMore ? posts.length + 1 : posts.length,
             separatorBuilder: (buildContext, index) {
               return const SizedBox(height: 20);
             },
@@ -92,7 +93,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   child: Column(
                     children: [
                       Text(index.toString()),
-                      Text(paymentList.id),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -177,12 +177,19 @@ class _PaymentScreenState extends State<PaymentScreen> {
     }
   }
 
-  void _scrollListener() {
+  Future<void> _scrollListener() async {
+    if (isLoadingMore) return;
     if (controller.position.pixels == controller.position.maxScrollExtent) {
+      setState(() {
+        isLoadingMore = true;
+      });
+      await Future.delayed(const Duration(seconds: 2));
       page = page + 1;
-      hvm.fetchPaymentList(token: widget.token, page: page);
-    } else {
-      print("dont call");
+      await hvm.fetchPaymentList(token: widget.token, page: page).then((value) {
+        setState(() {
+          isLoadingMore = false;
+        });
+      });
     }
   }
 }

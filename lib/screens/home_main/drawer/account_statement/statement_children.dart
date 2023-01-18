@@ -122,9 +122,8 @@ class _StatementChildrenState extends State<StatementChildren> {
   }
 
   Future<void> _scrollListener() async {
-    //if (isLoadingMore) return;
+    if (isLoadingMore) return;
     if (controller.position.pixels == controller.position.maxScrollExtent) {
-      print('called');
       setState(() {
         isLoadingMore = true;
       });

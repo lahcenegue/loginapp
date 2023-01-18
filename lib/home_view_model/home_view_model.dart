@@ -29,19 +29,16 @@ class HomeViewModel extends ChangeNotifier {
         await PaymentApi().loadData(token: token, page: page);
     listPayment =
         jsonMap.map((e) => PaymentViewModel(paymentModel: e)).toList();
-    print("called");
 
     notifyListeners();
   }
 
   //get main info
   Future<void> fetchMainInfo({required String token}) async {
-    print('entree main info ');
     MainModel jsonInfo = await getMainInfo(token: token);
-    print('get response info ');
 
     mainInfo = MainViewModel(mainModel: jsonInfo);
-    print('get main info ');
+
     notifyListeners();
   }
 

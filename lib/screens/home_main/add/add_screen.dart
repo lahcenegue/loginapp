@@ -106,7 +106,6 @@ class _AddScreenState extends State<AddScreen> {
                           setState(() {
                             isApiCallProcess = false;
                           });
-                          print(value.msg);
 
                           if (value.msg == 'ok') {
                             Navigator.pushReplacement(

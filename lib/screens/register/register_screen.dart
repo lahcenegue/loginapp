@@ -27,13 +27,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   saveToken(String token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('token', token);
-    print("token succes");
   }
 
   saveName(String name) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('name', name);
-    print("name succes");
   }
 
   late RegisterRequestModel registerRequestModel;

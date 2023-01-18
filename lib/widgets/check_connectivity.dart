@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -35,9 +34,25 @@ class _ChechConnectivityState extends State<ChechConnectivity> {
     if (connectivity == true) {
       return widget.child;
     } else {
-      return const Scaffold(
+      return Scaffold(
+        backgroundColor: Colors.grey.shade300,
         body: Center(
-          child: Text('data'),
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.3,
+            width: MediaQuery.of(context).size.width * 0.8,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: const Center(
+              child: Text(
+                'لا يوجد إتصال بالانترنت، ... \n الرجاء الاتصال بالانترنت لتشغيل التطبيق',
+                textAlign: TextAlign.center,
+                textDirection: TextDirection.rtl,
+                style: TextStyle(fontSize: 24),
+              ),
+            ),
+          ),
         ),
       );
     }

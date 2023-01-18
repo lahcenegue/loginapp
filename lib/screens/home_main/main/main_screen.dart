@@ -9,7 +9,6 @@ import 'package:loginapp/screens/home_main/drawer/account_statement/statement_sc
 import 'package:loginapp/screens/home_main/drawer/update/update_info/update_info_screen.dart';
 import 'package:loginapp/screens/home_main/drawer/update/update_password/update_pass_screen.dart';
 import 'package:loginapp/screens/home_main/notification/notification_screen.dart';
-import 'package:loginapp/screens/home_main/notification/notification_view_model.dart';
 import 'package:loginapp/screens/home_main/payment/payment_screen.dart';
 import 'package:loginapp/screens/login_mobile/login_mobile_screen.dart';
 import 'package:loginapp/widgets/constum_button.dart';

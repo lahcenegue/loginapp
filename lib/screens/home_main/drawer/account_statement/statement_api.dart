@@ -13,9 +13,6 @@ Future<List<StatementModel>> loadStatementList({
   required String type,
 }) async {
   try {
-    print(type);
-    print(newType);
-
     if (newType != type) {
       newType = type;
       listStatement = [];
@@ -23,7 +20,6 @@ Future<List<StatementModel>> loadStatementList({
           ? "${Constants.url}/payment/api/bills/$pageNum?token=$token"
           : "${Constants.url}/payment/api/bills/$pageNum/$typePage?token=$token");
 
-      print(url);
       http.Response response = await http.get(url);
 
       if (response.statusCode == 200) {
@@ -44,7 +40,6 @@ Future<List<StatementModel>> loadStatementList({
           ? "${Constants.url}/payment/api/bills/$pageNum?token=$token"
           : "${Constants.url}/payment/api/bills/$pageNum/$typePage?token=$token");
 
-      print(url);
       http.Response response = await http.get(url);
 
       if (response.statusCode == 200) {

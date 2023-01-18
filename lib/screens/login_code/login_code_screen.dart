@@ -28,19 +28,16 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
   savePhone(String phone) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('phone', phone);
-    print("phone succes");
   }
 
   saveName(String name) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('name', name);
-    print("name succes");
   }
 
   saveToken(String token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('token', token);
-    print("token succes");
   }
 
   @override

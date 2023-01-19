@@ -56,3 +56,22 @@ class GroupeResponseModel {
     );
   }
 }
+
+class AddGroupModel {
+  String? msg;
+  String? md5id;
+  String? add;
+  AddGroupModel({
+    this.add,
+    this.md5id,
+    this.msg,
+  });
+
+  factory AddGroupModel.fromJson(Map<String, dynamic> json) {
+    return AddGroupModel(
+      add: json['add'],
+      md5id: json['md5id'],
+      msg: json['msg'],
+    );
+  }
+}

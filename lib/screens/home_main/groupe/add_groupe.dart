@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:loginapp/constants/constants.dart';
 import 'package:loginapp/screens/home_main/groupe/add_group_api.dart';
 import 'package:loginapp/screens/home_main/groupe/groupe_model.dart';
+import 'package:loginapp/screens/home_main/main/main_screen.dart';
 import 'package:loginapp/widgets/constum_button.dart';
 import 'package:loginapp/widgets/text_form.dart';
+import 'package:share_plus/share_plus.dart';
 
 class AddGroupeScreen extends StatefulWidget {
   final String token;
@@ -101,6 +104,26 @@ class _AddGroupeScreenState extends State<AddGroupeScreen> {
                           setState(() {
                             isApiCallProcess = false;
                           });
+
+                          if (value.add == 'ok') {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MainScreen(
+                                    token: widget.token,
+                                  ),
+                                ));
+                            //share
+                            Share.share(
+                              """
+                            مرحبا:
+                            يمكنك دفع المبلغ :${groupRequestModel.amount}
+                            عبر:${Constants.url}/pay/${value.md5id}
+                                """,
+                              subject:
+                                  "${groupRequestModel.name} مشاركة المجموعة",
+                            );
+                          }
                         });
                       }
                     },

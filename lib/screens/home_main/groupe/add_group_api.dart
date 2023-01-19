@@ -1,11 +1,9 @@
-import 'package:http/http.dart' as http;
 import 'package:loginapp/constants/constants.dart';
-import 'dart:convert' as convert;
-
-import 'package:loginapp/screens/home_main/add/add_model.dart';
 import 'package:loginapp/screens/home_main/groupe/groupe_model.dart';
+import 'dart:convert' as convert;
+import 'package:http/http.dart' as http;
 
-Future<AddResponseModel> apiAddGroup(
+Future<AddGroupModel> apiAddGroup(
     {required GroupRequestModel groupRequestModel,
     required String token}) async {
   try {
@@ -18,12 +16,12 @@ Future<AddResponseModel> apiAddGroup(
     if (response.statusCode == 200) {
       var body = convert.jsonDecode(response.body);
 
-      AddResponseModel loginCodeModel = AddResponseModel.fromJson(body);
+      AddGroupModel addGroupModel = AddGroupModel.fromJson(body);
 
-      return loginCodeModel;
+      return addGroupModel;
     }
   } catch (e) {
     throw Exception(e);
   }
-  return AddResponseModel();
+  return AddGroupModel();
 }

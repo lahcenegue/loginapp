@@ -16,72 +16,69 @@ class _ContactScreenState extends State<ContactScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('تواصل معنا'),
-        ),
-        body: Stack(
-          children: [
-            Form(
-              key: globalKey,
-              child: ListView(
-                padding: const EdgeInsets.all(20),
-                children: [
-                  customTextFormField(
-                    hintText: 'الاسم',
-                    keyboardType: TextInputType.text,
-                    prefixIcon: Icons.person,
-                    validator: (value) {
-                      return null;
-                    },
-                    onChanged: (value) {},
-                  ),
-                  customTextFormField(
-                    hintText: 'الاميل',
-                    keyboardType: TextInputType.emailAddress,
-                    prefixIcon: Icons.email,
-                    validator: (value) {
-                      return null;
-                    },
-                    onChanged: (value) {},
-                  ),
-                  customTextFormField(
-                    hintText: 'الرسالة',
-                    keyboardType: TextInputType.multiline,
-                    maxLine: 10,
-                    prefixIcon: Icons.subject,
-                    validator: (value) {
-                      return null;
-                    },
-                    onChanged: (value) {},
-                  ),
-                  customButton(
-                    title: 'إرسال',
-                    icon: Icons.send_rounded,
-                    topPadding: 40,
-                    onPressed: () async {},
-                  ),
-                ],
-              ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('تواصل معنا'),
+      ),
+      body: Stack(
+        children: [
+          Form(
+            key: globalKey,
+            child: ListView(
+              padding: const EdgeInsets.all(20),
+              children: [
+                customTextFormField(
+                  hintText: 'الاسم',
+                  keyboardType: TextInputType.text,
+                  prefixIcon: Icons.person,
+                  validator: (value) {
+                    return null;
+                  },
+                  onChanged: (value) {},
+                ),
+                customTextFormField(
+                  hintText: 'الاميل',
+                  keyboardType: TextInputType.emailAddress,
+                  prefixIcon: Icons.email,
+                  validator: (value) {
+                    return null;
+                  },
+                  onChanged: (value) {},
+                ),
+                customTextFormField(
+                  hintText: 'الرسالة',
+                  keyboardType: TextInputType.multiline,
+                  maxLine: 10,
+                  prefixIcon: Icons.subject,
+                  validator: (value) {
+                    return null;
+                  },
+                  onChanged: (value) {},
+                ),
+                customButton(
+                  title: 'إرسال',
+                  icon: Icons.send_rounded,
+                  topPadding: 40,
+                  onPressed: () async {},
+                ),
+              ],
             ),
-            Visibility(
-              visible: isApiCallProcess ? true : false,
-              child: Stack(
-                children: [
-                  ModalBarrier(
-                    color: Colors.white.withOpacity(0.6),
-                    dismissible: true,
-                  ),
-                  const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                ],
-              ),
+          ),
+          Visibility(
+            visible: isApiCallProcess ? true : false,
+            child: Stack(
+              children: [
+                ModalBarrier(
+                  color: Colors.white.withOpacity(0.6),
+                  dismissible: true,
+                ),
+                const Center(
+                  child: CircularProgressIndicator(),
+                )
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

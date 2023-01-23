@@ -9,6 +9,9 @@ import 'package:intl/intl.dart' as intl;
 
 class MySearchDelegate extends SearchDelegate {
   @override
+  String get searchFieldLabel => 'أدخل كلمة البحث أو رقم الهاتف';
+
+  @override
   Widget? buildLeading(BuildContext context) => IconButton(
         onPressed: () => close(context, null),
         icon: const Icon(Icons.arrow_back),

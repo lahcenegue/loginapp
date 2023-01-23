@@ -4,8 +4,8 @@ import 'package:loginapp/widgets/check_connectivity.dart';
 import 'constants/constants.dart';
 import 'screens/login_mobile/login_mobile_screen.dart';
 import 'widgets/one_signal_controller.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 String? phone;
 String? token;
@@ -28,11 +28,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    initializeDateFormatting('ar_DZ');
+    //initializeDateFormatting('ar_DZ');
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      locale: const Locale('ar', ''),
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale("ar", 'DZ'),
+      ],
+      locale: const Locale('ar', 'DZ'),
       theme: ThemeData(
           primarySwatch: Colors.blue,
           appBarTheme: AppBarTheme(

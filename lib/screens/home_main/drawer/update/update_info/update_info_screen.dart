@@ -42,90 +42,87 @@ class _UpdateInfoScreenState extends State<UpdateInfoScreen> {
         ),
       );
     } else {
-      return Directionality(
-        textDirection: TextDirection.rtl,
-        child: Scaffold(
-          appBar: AppBar(
-            title: const Text('تحديث البيانات'),
-          ),
-          body: Stack(
-            children: [
-              Form(
-                key: globalKey,
-                child: ListView(
-                  padding: const EdgeInsets.all(20),
-                  children: [
-                    customTextFormField(
-                      hintText: hvm.getInfo!.email,
-                      keyboardType: TextInputType.emailAddress,
-                      prefixIcon: Icons.person,
-                      validator: (value) {
-                        return null;
-                      },
-                      onChanged: (value) {
-                        updateInfoRequestModel.email = value.toString();
-                      },
-                    ),
-                    customTextFormField(
-                      hintText: 'المعلومات',
-                      keyboardType: TextInputType.text,
-                      prefixIcon: Icons.info,
-                      validator: (value) {
-                        return null;
-                      },
-                      onChanged: (value) {
-                        updateInfoRequestModel.info = value.toString();
-                      },
-                    ),
-                    customButton(
-                      title: 'تأكيد',
-                      icon: Icons.add,
-                      topPadding: 40,
-                      onPressed: () async {
-                        if (validateAndSave()) {
-                          setState(() {
-                            isApiCallProcess = true;
-                          });
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('تحديث البيانات'),
+        ),
+        body: Stack(
+          children: [
+            Form(
+              key: globalKey,
+              child: ListView(
+                padding: const EdgeInsets.all(20),
+                children: [
+                  customTextFormField(
+                    hintText: hvm.getInfo!.email,
+                    keyboardType: TextInputType.emailAddress,
+                    prefixIcon: Icons.person,
+                    validator: (value) {
+                      return null;
+                    },
+                    onChanged: (value) {
+                      updateInfoRequestModel.email = value.toString();
+                    },
+                  ),
+                  customTextFormField(
+                    hintText: 'المعلومات',
+                    keyboardType: TextInputType.text,
+                    prefixIcon: Icons.info,
+                    validator: (value) {
+                      return null;
+                    },
+                    onChanged: (value) {
+                      updateInfoRequestModel.info = value.toString();
+                    },
+                  ),
+                  customButton(
+                    title: 'تأكيد',
+                    icon: Icons.add,
+                    topPadding: 40,
+                    onPressed: () async {
+                      if (validateAndSave()) {
+                        setState(() {
+                          isApiCallProcess = true;
+                        });
 
-                          await apiUpdateInfo(
-                            token: widget.token,
-                            updateInfoRequestModel: updateInfoRequestModel,
-                          ).then((value) {
-                            setState(() {
-                              isApiCallProcess = false;
-                            });
-                            if (value.edit == "ok") {
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => MainScreen(
-                                      token: token!,
-                                    ),
-                                  ));
-                            }
+                        await apiUpdateInfo(
+                          token: widget.token,
+                          updateInfoRequestModel: updateInfoRequestModel,
+                        ).then((value) {
+                          setState(() {
+                            isApiCallProcess = false;
                           });
-                        }
-                      },
-                    ),
-                  ],
-                ),
+                          if (value.edit == "ok") {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MainScreen(
+                                    token: token!,
+                                  ),
+                                ));
+                          }
+                        });
+                      }
+                    },
+                  ),
+                ],
               ),
-              Visibility(
-                visible: isApiCallProcess ? true : false,
-                child: Stack(
-                  children: [
-                    ModalBarrier(
-                      color: Colors.white.withOpacity(0.6),
-                      dismissible: true,
-                    ),
-                    const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  ],
-                ),
+            ),
+            Visibility(
+              visible: isApiCallProcess ? true : false,
+              child: Stack(
+                children: [
+                  ModalBarrier(
+                    color: Colors.white.withOpacity(0.6),
+                    dismissible: true,
+                  ),
+                  const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       );
     }

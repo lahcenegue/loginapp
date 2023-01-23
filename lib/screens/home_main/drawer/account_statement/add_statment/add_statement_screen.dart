@@ -34,142 +34,139 @@ class _AddStatementScreenState extends State<AddStatementScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('السحب'),
-        ),
-        body: Stack(
-          children: [
-            Form(
-              key: globalKey,
-              child: ListView(
-                padding: const EdgeInsets.all(20),
-                children: [
-                  Text(
-                    "رصيد الحساب",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Constants.kMainColor,
-                      fontSize: 22,
-                    ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('السحب'),
+      ),
+      body: Stack(
+        children: [
+          Form(
+            key: globalKey,
+            child: ListView(
+              padding: const EdgeInsets.all(20),
+              children: [
+                Text(
+                  "رصيد الحساب",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Constants.kMainColor,
+                    fontSize: 22,
                   ),
-                  Text(
-                    "${widget.balance} د.ك",
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                    ),
+                ),
+                Text(
+                  "${widget.balance} د.ك",
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
                   ),
-                  const SizedBox(height: 10),
-                  customTextFormField(
-                    hintText: 'المبلغ',
-                    keyboardType: TextInputType.number,
-                    prefixIcon: Icons.monetization_on,
-                    validator: (value) {
-                      return null;
-                    },
-                    onChanged: (value) {
-                      addStatementRequest.amout = value.toString();
-                    },
-                  ),
-                  customTextFormField(
-                    hintText: 'البنك',
-                    keyboardType: TextInputType.text,
-                    prefixIcon: Icons.account_balance_rounded,
-                    validator: (value) {
-                      return null;
-                    },
-                    onChanged: (value) {
-                      addStatementRequest.banq = value.toString();
-                    },
-                  ),
-                  customTextFormField(
-                    hintText: 'اسم صاحب الحساب',
-                    keyboardType: TextInputType.text,
-                    prefixIcon: Icons.person,
-                    validator: (value) {
-                      return null;
-                    },
-                    onChanged: (value) {
-                      addStatementRequest.name = value.toString();
-                    },
-                  ),
-                  customTextFormField(
-                    hintText: 'IBAN Number',
-                    keyboardType: TextInputType.text,
-                    prefixIcon: Icons.numbers,
-                    validator: (value) {
-                      return null;
-                    },
-                    onChanged: (value) {
-                      addStatementRequest.iban = value.toString();
-                    },
-                  ),
-                  customTextFormField(
-                    hintText: 'ملاحظات',
-                    keyboardType: TextInputType.text,
-                    prefixIcon: Icons.subject,
-                    validator: (value) {
-                      return null;
-                    },
-                    onChanged: (value) {
-                      addStatementRequest.comment = value.toString();
-                    },
-                  ),
-                  customButton(
-                    title: 'سحب',
-                    icon: Icons.add,
-                    topPadding: 40,
-                    onPressed: () async {
-                      if (validateAndSave()) {
+                ),
+                const SizedBox(height: 10),
+                customTextFormField(
+                  hintText: 'المبلغ',
+                  keyboardType: TextInputType.number,
+                  prefixIcon: Icons.monetization_on,
+                  validator: (value) {
+                    return null;
+                  },
+                  onChanged: (value) {
+                    addStatementRequest.amout = value.toString();
+                  },
+                ),
+                customTextFormField(
+                  hintText: 'البنك',
+                  keyboardType: TextInputType.text,
+                  prefixIcon: Icons.account_balance_rounded,
+                  validator: (value) {
+                    return null;
+                  },
+                  onChanged: (value) {
+                    addStatementRequest.banq = value.toString();
+                  },
+                ),
+                customTextFormField(
+                  hintText: 'اسم صاحب الحساب',
+                  keyboardType: TextInputType.text,
+                  prefixIcon: Icons.person,
+                  validator: (value) {
+                    return null;
+                  },
+                  onChanged: (value) {
+                    addStatementRequest.name = value.toString();
+                  },
+                ),
+                customTextFormField(
+                  hintText: 'IBAN Number',
+                  keyboardType: TextInputType.text,
+                  prefixIcon: Icons.numbers,
+                  validator: (value) {
+                    return null;
+                  },
+                  onChanged: (value) {
+                    addStatementRequest.iban = value.toString();
+                  },
+                ),
+                customTextFormField(
+                  hintText: 'ملاحظات',
+                  keyboardType: TextInputType.text,
+                  prefixIcon: Icons.subject,
+                  validator: (value) {
+                    return null;
+                  },
+                  onChanged: (value) {
+                    addStatementRequest.comment = value.toString();
+                  },
+                ),
+                customButton(
+                  title: 'سحب',
+                  icon: Icons.add,
+                  topPadding: 40,
+                  onPressed: () async {
+                    if (validateAndSave()) {
+                      setState(() {
+                        isApiCallProcess = true;
+                      });
+
+                      apiStatmentAdd(
+                        token: widget.token,
+                        addStatementRequest: addStatementRequest,
+                      ).then((value) async {
                         setState(() {
-                          isApiCallProcess = true;
+                          isApiCallProcess = false;
                         });
 
-                        apiStatmentAdd(
-                          token: widget.token,
-                          addStatementRequest: addStatementRequest,
-                        ).then((value) async {
-                          setState(() {
-                            isApiCallProcess = false;
-                          });
-
-                          if (value.add == "ok") {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => MainScreen(
-                                  token: token!,
-                                ),
+                        if (value.add == "ok") {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MainScreen(
+                                token: token!,
                               ),
-                            );
-                          }
-                        });
-                      }
-                    },
-                  ),
-                ],
-              ),
+                            ),
+                          );
+                        }
+                      });
+                    }
+                  },
+                ),
+              ],
             ),
-            Visibility(
-              visible: isApiCallProcess ? true : false,
-              child: Stack(
-                children: [
-                  ModalBarrier(
-                    color: Colors.white.withOpacity(0.6),
-                    dismissible: true,
-                  ),
-                  const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                ],
-              ),
+          ),
+          Visibility(
+            visible: isApiCallProcess ? true : false,
+            child: Stack(
+              children: [
+                ModalBarrier(
+                  color: Colors.white.withOpacity(0.6),
+                  dismissible: true,
+                ),
+                const Center(
+                  child: CircularProgressIndicator(),
+                )
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -47,128 +47,125 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: SafeArea(
-        child: Scaffold(
-            body: Stack(
-          children: [
-            Form(
-              key: globalKey,
-              child: ListView(
-                padding: const EdgeInsets.only(
-                  left: 50,
-                  right: 50,
+    return SafeArea(
+      child: Scaffold(
+          body: Stack(
+        children: [
+          Form(
+            key: globalKey,
+            child: ListView(
+              padding: const EdgeInsets.only(
+                left: 50,
+                right: 50,
+              ),
+              children: [
+                const SizedBox(height: 120),
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Constants.kMainColor,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Image.asset(Constants.logo),
                 ),
-                children: [
-                  const SizedBox(height: 120),
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Constants.kMainColor,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Image.asset(Constants.logo),
+
+                const SizedBox(height: 30),
+
+                const Text(
+                  'مرحبا',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
                   ),
+                ),
 
-                  const SizedBox(height: 30),
-
-                  const Text(
-                    'مرحبا',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                    ),
+                const Text(
+                  'ادخل الكود الخاص بك',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 22,
                   ),
+                ),
 
-                  const Text(
-                    'ادخل الكود الخاص بك',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 22,
-                    ),
-                  ),
+                const SizedBox(height: 30),
+                customTextFormField(
+                  onChanged: (value) {
+                    yourCode = value.toString();
+                  },
+                  validator: (value) {
+                    if (value.toString().isEmpty) {
+                      return 'ادخل الكود الخاص بك';
+                    } else if (value.toString().length != 4) {
+                      return 'يجب ان يكون طول الرقم 4 ارقام';
+                    }
+                    return null;
+                  },
+                  hintText: 'الكود',
+                  keyboardType: TextInputType.phone,
+                  prefixIcon: Icons.phone,
+                ),
 
-                  const SizedBox(height: 30),
-                  customTextFormField(
-                    onChanged: (value) {
-                      yourCode = value.toString();
-                    },
-                    validator: (value) {
-                      if (value.toString().isEmpty) {
-                        return 'ادخل الكود الخاص بك';
-                      } else if (value.toString().length != 4) {
-                        return 'يجب ان يكون طول الرقم 4 ارقام';
-                      }
-                      return null;
-                    },
-                    hintText: 'الكود',
-                    keyboardType: TextInputType.phone,
-                    prefixIcon: Icons.phone,
-                  ),
-
-                  const SizedBox(height: 20),
-                  // login button
-                  customButton(
-                    title: 'تسجيل الدخول',
-                    icon: Icons.login,
-                    topPadding: 40,
-                    onPressed: () {
-                      if (validateAndSave()) {
+                const SizedBox(height: 20),
+                // login button
+                customButton(
+                  title: 'تسجيل الدخول',
+                  icon: Icons.login,
+                  topPadding: 40,
+                  onPressed: () {
+                    if (validateAndSave()) {
+                      setState(() {
+                        isApiCallProcess = true;
+                      });
+                      apiLoginCode(widget.phoneNumber, yourCode)
+                          .then((value) async {
                         setState(() {
-                          isApiCallProcess = true;
+                          isApiCallProcess = false;
                         });
-                        apiLoginCode(widget.phoneNumber, yourCode)
-                            .then((value) async {
-                          setState(() {
-                            isApiCallProcess = false;
-                          });
-                          savePhone(widget.phoneNumber);
-                          if (value.user == "new") {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => RegisterScreen(
-                                        phoneNumber: widget.phoneNumber,
-                                        code: yourCode!,
-                                      )),
-                            );
-                          } else if (value.user == "old") {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => MainScreen(
-                                        token: value.token!,
-                                      )),
-                            );
-                            saveToken(value.token!);
-                            saveName(value.name!);
-                          }
-                        });
-                      }
-                    },
-                  ),
-                ],
-              ),
+                        savePhone(widget.phoneNumber);
+                        if (value.user == "new") {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => RegisterScreen(
+                                      phoneNumber: widget.phoneNumber,
+                                      code: yourCode!,
+                                    )),
+                          );
+                        } else if (value.user == "old") {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MainScreen(
+                                      token: value.token!,
+                                    )),
+                          );
+                          saveToken(value.token!);
+                          saveName(value.name!);
+                        }
+                      });
+                    }
+                  },
+                ),
+              ],
             ),
-            Visibility(
-              visible: isApiCallProcess ? true : false,
-              child: Stack(
-                children: [
-                  ModalBarrier(
-                    color: Colors.white.withOpacity(0.6),
-                    dismissible: true,
-                  ),
-                  const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                ],
-              ),
+          ),
+          Visibility(
+            visible: isApiCallProcess ? true : false,
+            child: Stack(
+              children: [
+                ModalBarrier(
+                  color: Colors.white.withOpacity(0.6),
+                  dismissible: true,
+                ),
+                const Center(
+                  child: CircularProgressIndicator(),
+                )
+              ],
             ),
-          ],
-        )),
-      ),
+          ),
+        ],
+      )),
     );
   }
 

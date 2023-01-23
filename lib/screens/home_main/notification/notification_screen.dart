@@ -43,35 +43,32 @@ class _NotificationScreenState extends State<NotificationScreen> {
       );
     } else {
       posts = hvm.listNotification!;
-      return Directionality(
-        textDirection: TextDirection.rtl,
-        child: SafeArea(
-          child: Scaffold(
-            appBar: AppBar(
-              title: const Text("الاشعارات"),
-            ),
-            body: ListView.builder(
-                controller: controller,
-                padding: const EdgeInsets.all(10),
-                itemCount: isLoadingMore ? posts.length + 1 : posts.length,
-                itemBuilder: (context, index) {
-                  if (index < posts.length) {
-                    return ListTile(
-                      title: Text(posts[index].title),
-                      subtitle: Text(posts[index].comment),
-                      leading: const Icon(Icons.notifications),
-                      trailing: Text(posts[index].time),
-                    );
-                  } else {
-                    return const Padding(
-                      padding: EdgeInsets.only(bottom: 30),
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    );
-                  }
-                }),
+      return SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text("الاشعارات"),
           ),
+          body: ListView.builder(
+              controller: controller,
+              padding: const EdgeInsets.all(10),
+              itemCount: isLoadingMore ? posts.length + 1 : posts.length,
+              itemBuilder: (context, index) {
+                if (index < posts.length) {
+                  return ListTile(
+                    title: Text(posts[index].title),
+                    subtitle: Text(posts[index].comment),
+                    leading: const Icon(Icons.notifications),
+                    trailing: Text(posts[index].time),
+                  );
+                } else {
+                  return const Padding(
+                    padding: EdgeInsets.only(bottom: 30),
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                }
+              }),
         ),
       );
     }

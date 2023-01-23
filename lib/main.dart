@@ -20,6 +20,7 @@ void main() async {
 
   runApp(const MyApp());
 
+  //permiNot();
   OneSignalControler.inite();
 }
 

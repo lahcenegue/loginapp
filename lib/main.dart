@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loginapp/screens/splash/splash_screen.dart';
 import 'constants/constants.dart';
-import 'widgets/one_signal_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -15,10 +14,7 @@ void main() async {
   phone = prefs.getString("phone");
   token = prefs.getString("token");
   name = prefs.getString("name");
-
   runApp(const MyApp());
-
-  OneSignalControler.inite();
 }
 
 class MyApp extends StatelessWidget {

@@ -11,12 +11,9 @@ class OneSignalControler {
     OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
       if (accepted) {
         print("=========================");
-
         print("Accepted permission: true");
       } else {
         openAppSettings();
-
-        print("Accepted permission: false");
       }
     });
 
@@ -24,15 +21,3 @@ class OneSignalControler {
     osUserID = status?.userId;
   }
 }
-
-// Future permiNot() async {
-//   PermissionStatus notificationPermission =
-//       await Permission.notification.request();
-
-//   if (notificationPermission == PermissionStatus.granted) {
-//     print('permision granted');
-//   } else if (notificationPermission == PermissionStatus.denied) {
-//     openAppSettings();
-//     print("notification diened");
-//   } else if (notificationPermission == PermissionStatus.permanentlyDenied) {}
-// }

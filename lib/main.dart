@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:loginapp/screens/home_main/main/main_screen.dart';
-import 'package:loginapp/widgets/check_connectivity.dart';
+import 'package:loginapp/screens/splash/splash_screen.dart';
 import 'constants/constants.dart';
-import 'screens/login_mobile/login_mobile_screen.dart';
 import 'widgets/one_signal_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -20,7 +18,6 @@ void main() async {
 
   runApp(const MyApp());
 
-  //permiNot();
   OneSignalControler.inite();
 }
 
@@ -29,8 +26,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //initializeDateFormatting('ar_DZ');
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       localizationsDelegates: const [
@@ -48,13 +43,14 @@ class MyApp extends StatelessWidget {
             centerTitle: true,
             color: Constants.kMainColor,
           )),
-      home: phone == null || token == null
-          ? const LoginMobileScreen()
-          : ChechConnectivity(
-              child: MainScreen(
-                token: token!,
-              ),
-            ),
+      home: const SplashScreen(),
+      // home: phone == null || token == null
+      //     ? const LoginMobileScreen()
+      //     : ChechConnectivity(
+      //         child: MainScreen(
+      //           token: token!,
+      //         ),
+      //       ),
     );
   }
 }

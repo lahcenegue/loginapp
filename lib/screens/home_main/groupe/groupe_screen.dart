@@ -3,6 +3,7 @@ import 'package:loginapp/constants/constants.dart';
 import 'package:loginapp/home_view_model/home_view_model.dart';
 import 'package:loginapp/screens/home_main/groupe/add_groupe.dart';
 import 'package:loginapp/screens/home_main/groupe/group_view_model.dart';
+import 'package:loginapp/widgets/icon_piker.dart';
 import 'package:loginapp/widgets/text_row.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:intl/intl.dart' as intl;
@@ -101,7 +102,7 @@ class _GroupeScreenState extends State<GroupeScreen> {
                             ),
                           ),
                           const Expanded(child: SizedBox()),
-                          _iconPiker(posts[index].show1),
+                          iconPiker(posts[index].show1),
                         ],
                       ),
                       const SizedBox(height: 20),
@@ -225,25 +226,4 @@ Color _colorPiker(String show1) {
     throw {"err"};
   }
   return pickedColor;
-}
-
-Icon _iconPiker(String show1) {
-  Color pickedColor;
-  IconData iconData;
-  if (show1 == "0") {
-    pickedColor = Colors.blue;
-    iconData = Icons.new_releases;
-  } else if (show1 == "2") {
-    pickedColor = Colors.red;
-    iconData = Icons.sms_failed_outlined;
-  } else if (show1 == "3") {
-    pickedColor = Colors.orange;
-    iconData = Icons.timelapse;
-  } else if (show1 == "4") {
-    pickedColor = Colors.green;
-    iconData = Icons.check_circle_sharp;
-  } else {
-    throw {"err"};
-  }
-  return Icon(iconData, color: pickedColor, size: 20);
 }

@@ -3,6 +3,7 @@ import 'package:loginapp/constants/constants.dart';
 import 'package:loginapp/home_view_model/home_view_model.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:loginapp/screens/home_main/payment/payment_view_model.dart';
+import 'package:loginapp/screens/home_main/search/seach_delegate.dart';
 import 'package:loginapp/widgets/text_row.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -63,6 +64,17 @@ class _PaymentScreenState extends State<PaymentScreen> {
         child: Scaffold(
           appBar: AppBar(
             title: const Text('عمليات الدفع'),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  showSearch(
+                    context: context,
+                    delegate: MySearchDelegate(),
+                  );
+                },
+                icon: const Icon(Icons.search),
+              ),
+            ],
           ),
           body: ListView.separated(
             controller: controller,

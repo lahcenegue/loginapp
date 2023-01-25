@@ -10,9 +10,11 @@ import 'package:share_plus/share_plus.dart';
 
 class PaymentChildren extends StatefulWidget {
   final String token;
+  final String type;
   const PaymentChildren({
     super.key,
     required this.token,
+    required this.type,
   });
 
   @override
@@ -37,7 +39,7 @@ class _PaymentChildrenState extends State<PaymentChildren> {
 
     controller.addListener(_scrollListener);
 
-    hvm.fetchPaymentList(token: widget.token, page: page);
+    hvm.fetchPaymentList(token: widget.token, type: widget.type, page: page);
   }
 
   @override
@@ -48,9 +50,11 @@ class _PaymentChildrenState extends State<PaymentChildren> {
 
   @override
   Widget build(BuildContext context) {
-    hvm.addListener(() {
-      setState(() {});
-    });
+    if (mounted) {
+      hvm.addListener(() {
+        setState(() {});
+      });
+    }
 
     if (hvm.listPayment == null) {
       return const Scaffold(
@@ -179,7 +183,9 @@ class _PaymentChildrenState extends State<PaymentChildren> {
       });
       await Future.delayed(const Duration(seconds: 2));
       page = page + 1;
-      await hvm.fetchPaymentList(token: widget.token, page: page).then(
+      await hvm
+          .fetchPaymentList(token: widget.token, type: widget.type, page: page)
+          .then(
         (value) {
           setState(
             () {

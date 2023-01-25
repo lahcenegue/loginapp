@@ -1,6 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:loginapp/constants/constants.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class OneSignalControler {
   static String? osUserID = "";
@@ -9,12 +9,7 @@ class OneSignalControler {
     OneSignal.shared.setAppId(Constants.onSignalID);
 
     OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
-      if (accepted) {
-        print("=========================");
-        print("Accepted permission: true");
-      } else {
-        openAppSettings();
-      }
+      debugPrint("Accepted permission: $accepted");
     });
 
     final status = await OneSignal.shared.getDeviceState();

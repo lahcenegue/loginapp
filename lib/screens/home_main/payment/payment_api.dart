@@ -7,10 +7,12 @@ List<PaymentModel> payment = [];
 
 class PaymentApi {
   Future<List<PaymentModel>> loadData(
-      {required String token, required int page}) async {
+      {required String token, required int page, required String type}) async {
     try {
-      var url =
-          Uri.parse("${Constants.url}/payment/api/all/$page?token=$token");
+      var url = Uri.parse(type == "1"
+          ? "${Constants.url}/payment/api/all/$page?token=$token"
+          : "${Constants.url}/payment/api/all/$page/4?token=$token");
+      print(url);
 
       http.Response response = await http.get(url);
 

@@ -29,9 +29,11 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   HomeViewModel hvm = HomeViewModel();
+  //late Timer timer;
   int? notificationLength;
   int? oldNotificationLength;
   int? newNot;
+  //bool connected = true;
 
   deletePrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -42,6 +44,8 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     hvm.fetchMainInfo(token: widget.token);
+    // timer =
+    //     Timer.periodic(const Duration(seconds: 1), (Timer t) => isConnected());
 
     super.initState();
   }
@@ -356,116 +360,175 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ),
         ),
-        body: SizedBox(
-          height: screenHeight,
-          width: screenWidth,
-          child: Stack(
-            children: [
-              Container(
-                padding: const EdgeInsets.only(
-                  bottom: 60,
-                  top: 10,
-                ),
-                height: screenHeight * 0.25,
-                width: screenWidth,
-                color: Constants.kMainColor,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(
-                      'أهلا',
-                      style: TextStyle(
-                        color: Constants.textColor,
-                        fontSize: 24,
-                      ),
+        body: Stack(
+          children: [
+            SizedBox(
+              height: screenHeight,
+              width: screenWidth,
+              child: Stack(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(
+                      bottom: 60,
+                      top: 10,
                     ),
-                    Text(
-                      hvm.mainInfo!.name,
-                      style: TextStyle(
-                        color: Constants.textColor,
-                        fontSize: 32,
-                      ),
+                    height: screenHeight * 0.25,
+                    width: screenWidth,
+                    color: Constants.kMainColor,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          'أهلا',
+                          style: TextStyle(
+                            color: Constants.textColor,
+                            fontSize: 24,
+                          ),
+                        ),
+                        Text(
+                          hvm.mainInfo!.name,
+                          style: TextStyle(
+                            color: Constants.textColor,
+                            fontSize: 32,
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-              Positioned(
-                top: screenHeight * 0.2,
-                child: SizedBox(
-                  width: screenWidth,
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  ),
+                  Positioned(
+                    top: screenHeight * 0.2,
+                    child: SizedBox(
+                      width: screenWidth,
+                      child: Column(
                         children: [
-                          customContainer(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => AddScreen(
-                                      token: widget.token,
-                                    ),
-                                  ));
-                            },
-                            icon: Icons.add_circle_outline,
-                            title: 'إضافة',
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              customContainer(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => AddScreen(
+                                          token: widget.token,
+                                        ),
+                                      ));
+                                },
+                                icon: Icons.add_circle_outline,
+                                title: 'إضافة',
+                              ),
+                              customContainer(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => PaymentScreen(
+                                          token: widget.token,
+                                        ),
+                                      ));
+                                },
+                                icon: Icons.payment_outlined,
+                                title: 'عمليات الدفع',
+                              ),
+                              customContainer(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => GroupeScreen(
+                                          token: widget.token,
+                                        ),
+                                      ));
+                                },
+                                icon: Icons.group,
+                                title: 'المجموعات',
+                              ),
+                            ],
                           ),
-                          customContainer(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => PaymentScreen(
-                                      token: widget.token,
-                                    ),
-                                  ));
-                            },
-                            icon: Icons.payment_outlined,
-                            title: 'عمليات الدفع',
+                          SizedBox(height: screenHeight * 0.08),
+                          Text(
+                            "رصيد الحساب",
+                            style: TextStyle(
+                              color: Constants.kMainColor,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                          customContainer(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => GroupeScreen(
-                                      token: widget.token,
-                                    ),
-                                  ));
-                            },
-                            icon: Icons.group,
-                            title: 'المجموعات',
+                          const SizedBox(height: 10),
+                          FittedBox(
+                            alignment: Alignment.center,
+                            child: Text(
+                              "${hvm.mainInfo!.balance} د.ك",
+                              style: const TextStyle(
+                                fontSize: 38,
+                              ),
+                            ),
                           ),
                         ],
                       ),
-                      SizedBox(height: screenHeight * 0.08),
-                      Text(
-                        "رصيد الحساب",
-                        style: TextStyle(
-                          color: Constants.kMainColor,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      FittedBox(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "${hvm.mainInfo!.balance} د.ك",
-                          style: const TextStyle(
-                            fontSize: 38,
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            ),
+            // Visibility(
+            //   visible: connected ? false : true,
+            //   child: Stack(
+            //     children: [
+            //       ModalBarrier(
+            //         color: Colors.grey.withOpacity(0.6),
+            //         dismissible: true,
+            //       ),
+            //       Center(
+            //         child: Container(
+            //           height: MediaQuery.of(context).size.height * 0.3,
+            //           width: MediaQuery.of(context).size.width * 0.8,
+            //           decoration: BoxDecoration(
+            //             color: Colors.white,
+            //             borderRadius: BorderRadius.circular(20),
+            //           ),
+            //           child: const Center(
+            //             child: Text(
+            //               'لا يوجد إتصال بالانترنت، ... \n الرجاء الاتصال بالانترنت لتشغيل التطبيق',
+            //               textAlign: TextAlign.center,
+            //               textDirection: TextDirection.rtl,
+            //               style: TextStyle(fontSize: 24),
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+          ],
         ),
       );
     }
   }
+
+  // Future<bool> isConnected() async {
+  //   if (!kIsWeb) {
+  //     try {
+  //       final result = await InternetAddress.lookup('google.com');
+  //       print('+++++++++++++++++++');
+  //       print(result);
+  //       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+  //         print('+++++++++++++++++++');
+  //         print(true);
+  //         setState(() {
+  //           connected = true;
+  //         });
+  //         return connected;
+  //       }
+  //     } on SocketException catch (_) {
+  //       print('+++++++++++++++++++');
+  //       print(false);
+  //       setState(() {
+  //         connected = false;
+  //       });
+  //       return connected;
+  //     }
+  //   }
+  //   return false;
+  // }
 }

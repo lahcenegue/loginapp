@@ -4,7 +4,6 @@ import 'package:loginapp/main.dart';
 import 'package:loginapp/screens/home_main/main/main_screen.dart';
 import 'package:loginapp/screens/login_mobile/login_mobile_screen.dart';
 import 'package:loginapp/widgets/check_connectivity.dart';
-import 'package:loginapp/widgets/one_signal_controller.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -18,7 +17,6 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    OneSignalControler.inite();
     goToNextView();
   }
 

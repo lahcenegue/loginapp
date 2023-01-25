@@ -37,8 +37,14 @@ class PaymentScreen extends StatelessWidget {
           ]),
         ),
         body: TabBarView(children: [
-          PaymentChildren(token: token),
-          PaymentChildren(token: token),
+          PaymentChildren(
+            token: token,
+            type: '1',
+          ),
+          PaymentChildren(
+            token: token,
+            type: '4',
+          ),
         ]),
       ),
     );

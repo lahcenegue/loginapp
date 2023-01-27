@@ -406,98 +406,98 @@ class _MainScreenState extends State<MainScreen> {
               ),
               Positioned(
                 top: screenHeight * 0.3,
+                child: SizedBox(
+                  width: screenWidth,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      customContainer(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AddScreen(
+                                  token: widget.token,
+                                ),
+                              ));
+                        },
+                        icon: Icons.add_circle_outline,
+                        title: 'إضافة',
+                      ),
+                      customContainer(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PaymentScreen(
+                                  token: widget.token,
+                                ),
+                              ));
+                        },
+                        icon: Icons.payment_outlined,
+                        title: 'عمليات الدفع',
+                      ),
+                      customContainer(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => GroupeScreen(
+                                  token: widget.token,
+                                ),
+                              ));
+                        },
+                        icon: Icons.group,
+                        title: 'المجموعات',
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                top: screenHeight * 0.45,
                 left: 0,
                 right: 0,
                 bottom: 0,
                 child: SizedBox(
                   //width: screenWidth,
-                  child: ListView(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          customContainer(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => AddScreen(
-                                      token: widget.token,
-                                    ),
-                                  ));
-                            },
-                            icon: Icons.add_circle_outline,
-                            title: 'إضافة',
-                          ),
-                          customContainer(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => PaymentScreen(
-                                      token: widget.token,
-                                    ),
-                                  ));
-                            },
-                            icon: Icons.payment_outlined,
-                            title: 'عمليات الدفع',
-                          ),
-                          customContainer(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => GroupeScreen(
-                                      token: widget.token,
-                                    ),
-                                  ));
-                            },
-                            icon: Icons.group,
-                            title: 'المجموعات',
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      ListView.separated(
-                        padding: const EdgeInsets.all(20),
-                        physics: const ScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: hvm.listStatement == null ? 1 : 10,
-                        separatorBuilder: (context, index) => Column(
-                          children: const [
-                            SizedBox(height: 10),
-                            Divider(
-                              endIndent: 20,
-                              indent: 20,
-                            ),
-                            SizedBox(height: 10),
-                          ],
+                  child: ListView.separated(
+                    padding: const EdgeInsets.all(20),
+                    physics: const ScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: hvm.listStatement == null ? 1 : 10,
+                    separatorBuilder: (context, index) => Column(
+                      children: const [
+                        SizedBox(height: 10),
+                        Divider(
+                          endIndent: 20,
+                          indent: 20,
                         ),
-                        itemBuilder: (BuildContext context, int index) {
-                          return hvm.listStatement == null
-                              ? const CircularProgressIndicator()
-                              : ListTile(
-                                  leading: const Icon(Icons.payment),
-                                  title: Text(hvm.listStatement![index].text2),
-                                  trailing: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                          "${hvm.listStatement![index].text1} د.ك"),
-                                      Text(
-                                        dateFormat!.format(
-                                            DateTime.fromMicrosecondsSinceEpoch(
-                                                int.parse(hvm
-                                                        .listStatement![index]
-                                                        .dateadd) *
-                                                    1000000)),
-                                      ),
-                                    ],
+                        SizedBox(height: 10),
+                      ],
+                    ),
+                    itemBuilder: (BuildContext context, int index) {
+                      return hvm.listStatement == null
+                          ? const CircularProgressIndicator()
+                          : ListTile(
+                              leading: const Icon(Icons.payment),
+                              title: Text(hvm.listStatement![index].text2),
+                              trailing: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                      "${hvm.listStatement![index].text1} د.ك"),
+                                  Text(
+                                    dateFormat!.format(
+                                        DateTime.fromMicrosecondsSinceEpoch(
+                                            int.parse(hvm.listStatement![index]
+                                                    .dateadd) *
+                                                1000000)),
                                   ),
-                                );
-                        },
-                      ),
-                    ],
+                                ],
+                              ),
+                            );
+                    },
                   ),
                 ),
               ),

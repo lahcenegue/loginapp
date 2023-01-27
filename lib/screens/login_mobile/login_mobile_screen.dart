@@ -88,7 +88,7 @@ class _LoginMobileScreenState extends State<LoginMobileScreen> {
                         setState(() {
                           isApiCallProcess = false;
                         });
-                        if (value.msg == "ok") {
+                        if (value.msg == 'ok') {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(

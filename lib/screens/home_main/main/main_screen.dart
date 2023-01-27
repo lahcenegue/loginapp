@@ -5,6 +5,7 @@ import 'package:loginapp/main.dart';
 import 'package:loginapp/screens/home_main/add/add_screen.dart';
 import 'package:loginapp/screens/home_main/drawer/account_statement/statement_children.dart';
 import 'package:loginapp/screens/home_main/drawer/contact/contact_screen.dart';
+import 'package:loginapp/screens/home_main/drawer/logout/logout_api.dart';
 import 'package:loginapp/screens/home_main/groupe/groupe_screen.dart';
 import 'package:loginapp/screens/home_main/drawer/account_statement/statement_screen.dart';
 import 'package:loginapp/screens/home_main/drawer/update/update_info/update_info_screen.dart';
@@ -39,6 +40,7 @@ class _MainScreenState extends State<MainScreen> {
   intl.DateFormat? dateFormat;
 
   bool isPermi = true;
+  bool isApiCallProcess = false;
 
   deletePrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -144,208 +146,235 @@ class _MainScreenState extends State<MainScreen> {
 
         //drawer
         drawer: Drawer(
-          child: ListView(
+          child: Stack(
             children: [
-              Stack(
+              ListView(
                 children: [
-                  Container(
-                    height: 100,
-                    color: Constants.kMainColor,
-                  ),
-                  Center(
-                    child: Container(
-                      margin: const EdgeInsets.only(top: 50),
-                      height: 120,
-                      width: 120,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.withOpacity(0.5),
-                        borderRadius: BorderRadius.circular(60),
+                  Stack(
+                    children: [
+                      Container(
+                        height: 100,
+                        color: Constants.kMainColor,
                       ),
-                      child: Center(
+                      Center(
                         child: Container(
-                          height: 100,
-                          width: 100,
+                          margin: const EdgeInsets.only(top: 50),
+                          height: 120,
+                          width: 120,
                           decoration: BoxDecoration(
+                            color: Colors.grey.withOpacity(0.5),
                             borderRadius: BorderRadius.circular(60),
-                            image: DecorationImage(
-                              image: AssetImage(Constants.icon),
-                              fit: BoxFit.fill,
+                          ),
+                          child: Center(
+                            child: Container(
+                              height: 100,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(60),
+                                image: DecorationImage(
+                                  image: AssetImage(Constants.icon),
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
-              Center(
-                child: Text(
-                  name = hvm.mainInfo!.name,
-                  style: const TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              const Divider(
-                indent: 20,
-                endIndent: 20,
-              ),
-              ListTile(
-                leading: const Icon(Icons.monetization_on_rounded),
-                title: Text(
-                  '${hvm.mainInfo!.balance} د.ك',
-                  style: const TextStyle(fontSize: 20),
-                ),
-              ),
-              ListTile(
-                leading: const Icon(Icons.account_balance_wallet),
-                title: const Text(
-                  "كشف الحساب",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => StatementScreen(
-                        tokn: widget.token,
-                        balance: hvm.mainInfo!.balance,
+                  Center(
+                    child: Text(
+                      name = hvm.mainInfo!.name,
+                      style: const TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  );
-                },
-              ),
-              const Divider(
-                indent: 20,
-                endIndent: 20,
-              ),
-              ListTile(
-                leading: const Icon(Icons.contact_mail),
-                title: const Text(
-                  "اتصل بنا",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
                   ),
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ContactScreen(),
+                  const SizedBox(height: 10),
+                  const Divider(
+                    indent: 20,
+                    endIndent: 20,
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.monetization_on_rounded),
+                    title: Text(
+                      '${hvm.mainInfo!.balance} د.ك',
+                      style: const TextStyle(fontSize: 20),
                     ),
-                  );
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.contact_support_rounded),
-                title: const Text(
-                  "الدعم الفني",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
                   ),
-                ),
-                onTap: () {},
-              ),
-              ExpansionTile(
-                leading: const Icon(Icons.settings),
-                title: const Text(
-                  'الإعدادات',
-                  style: TextStyle(fontSize: 20),
-                ),
-                children: [
                   ListTile(
-                    leading: const Icon(Icons.person_pin),
-                    title: const Text('تعديل الملف الشخصي'),
+                    leading: const Icon(Icons.account_balance_wallet),
+                    title: const Text(
+                      "كشف الحساب",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => UpdateInfoScreen(
-                            token: widget.token,
+                          builder: (context) => StatementScreen(
+                            tokn: widget.token,
+                            balance: hvm.mainInfo!.balance,
                           ),
                         ),
                       );
                     },
                   ),
+                  const Divider(
+                    indent: 20,
+                    endIndent: 20,
+                  ),
                   ListTile(
-                    leading: const Icon(Icons.key),
-                    title: const Text('تغيير كلمة المرور'),
+                    leading: const Icon(Icons.contact_mail),
+                    title: const Text(
+                      "اتصل بنا",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => UpdatePassScreen(
-                            token: widget.token,
-                          ),
+                          builder: (context) => const ContactScreen(),
                         ),
                       );
                     },
                   ),
-                  SwitchListTile(
-                    title: const Text('تفعيل الاشعارات'),
-                    secondary: const Icon(Icons.notifications_active),
-                    value: isPermi,
-                    onChanged: (value) async {
-                      await openAppSettings();
-                      if (await Permission.notification.isGranted) {
+                  ListTile(
+                    leading: const Icon(Icons.contact_support_rounded),
+                    title: const Text(
+                      "الدعم الفني",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                    onTap: () {},
+                  ),
+                  ExpansionTile(
+                    leading: const Icon(Icons.settings),
+                    title: const Text(
+                      'الإعدادات',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    children: [
+                      ListTile(
+                        leading: const Icon(Icons.person_pin),
+                        title: const Text('تعديل الملف الشخصي'),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => UpdateInfoScreen(
+                                token: widget.token,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.key),
+                        title: const Text('تغيير كلمة المرور'),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => UpdatePassScreen(
+                                token: widget.token,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      SwitchListTile(
+                        title: const Text('تفعيل الاشعارات'),
+                        secondary: const Icon(Icons.notifications_active),
+                        value: isPermi,
+                        onChanged: (value) async {
+                          await openAppSettings();
+                          if (await Permission.notification.isGranted) {
+                            setState(() {
+                              isPermi = true;
+                            });
+                          } else {
+                            setState(() {
+                              isPermi = false;
+                            });
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.share),
+                    title: const Text(
+                      "مشاركة التطبيق",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Share.share(
+                        """
+                    حمل تطبيق بوابة الدفع: 
+                    ${Constants.downloadLinkApp}
+                    """,
+                        subject: "تحميل التطبيق",
+                      );
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.logout),
+                    title: const Text(
+                      "تسجيل الخروج",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                    onTap: () {
+                      setState(() {
+                        isApiCallProcess = true;
+                      });
+                      logoutApi(token: widget.token).then((value) async {
                         setState(() {
-                          isPermi = true;
+                          isApiCallProcess = false;
                         });
-                      } else {
-                        setState(() {
-                          isPermi = false;
-                        });
-                      }
+                        if (value.logout == 'ok') {
+                          Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                              builder: (context) => const LoginMobileScreen(),
+                            ),
+                            (route) => false,
+                          );
+                          await deletePrefs();
+                        }
+                      });
                     },
                   ),
                 ],
               ),
-              ListTile(
-                leading: const Icon(Icons.share),
-                title: const Text(
-                  "مشاركة التطبيق",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                  Share.share(
-                    """
-                حمل تطبيق بوابة الدفع: 
-                ${Constants.downloadLinkApp}
-                """,
-                    subject: "تحميل التطبيق",
-                  );
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.logout),
-                title: const Text(
-                  "تسجيل الخروج",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-                onTap: () async {
-                  Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                      builder: (context) => const LoginMobileScreen(),
+              Visibility(
+                visible: isApiCallProcess ? true : false,
+                child: Stack(
+                  children: [
+                    ModalBarrier(
+                      color: Colors.white.withOpacity(0.6),
+                      dismissible: true,
                     ),
-                    (route) => false,
-                  );
-
-                  await deletePrefs();
-                },
+                    const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  ],
+                ),
               ),
             ],
           ),

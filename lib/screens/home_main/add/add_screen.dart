@@ -49,6 +49,9 @@ class _AddScreenState extends State<AddScreen> {
                   keyboardType: TextInputType.text,
                   prefixIcon: Icons.person,
                   validator: (value) {
+                    if (value.toString().isEmpty) {
+                      return 'أدخل الاسم';
+                    }
                     return null;
                   },
                   onChanged: (value) {
@@ -60,6 +63,9 @@ class _AddScreenState extends State<AddScreen> {
                   keyboardType: TextInputType.number,
                   prefixIcon: Icons.monetization_on,
                   validator: (value) {
+                    if (value.toString().isEmpty) {
+                      return 'أدخل المبلغ';
+                    }
                     return null;
                   },
                   onChanged: (value) {
@@ -71,6 +77,11 @@ class _AddScreenState extends State<AddScreen> {
                   keyboardType: TextInputType.phone,
                   prefixIcon: Icons.phone,
                   validator: (value) {
+                    if (value.toString().isEmpty) {
+                      return 'أدخل رقم الهاتف';
+                    } else if (value!.length < 8) {
+                      return 'رقم الهاتف يجب ان لا يقل على 8 ارقام';
+                    }
                     return null;
                   },
                   onChanged: (value) {
@@ -82,6 +93,9 @@ class _AddScreenState extends State<AddScreen> {
                   keyboardType: TextInputType.text,
                   prefixIcon: Icons.subject,
                   validator: (value) {
+                    if (value.toString().isEmpty) {
+                      return 'أدخل الهدف';
+                    }
                     return null;
                   },
                   onChanged: (value) {

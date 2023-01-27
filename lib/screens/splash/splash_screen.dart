@@ -40,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void goToNextView() {
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(milliseconds: 1200), () {
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (BuildContext context) {
         if (phone == null || token == null) {

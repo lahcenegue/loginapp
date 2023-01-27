@@ -10,6 +10,7 @@ class Constants {
 
   //images
   static String logo = 'assets/images/logo.png';
+  static String icon = 'assets/images/icon.png';
 
   //colors'
   static Color kMainColor = const Color(0xff39b3e6);

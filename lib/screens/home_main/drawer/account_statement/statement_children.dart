@@ -76,6 +76,7 @@ class _StatementChildrenState extends State<StatementChildren> {
         child: SafeArea(
           child: Scaffold(
             body: ListView.separated(
+              shrinkWrap: true,
               controller: controller,
               itemCount: isLoadingMore ? items.length + 1 : items.length,
               separatorBuilder: (context, index) => Column(

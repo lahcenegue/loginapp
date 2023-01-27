@@ -15,7 +15,7 @@ class GroupRequestModel {
       'name': name!.trim(),
       'comment': comment!.trim(),
       'amountall': amountall!.trim(),
-      'amout': amount!.trim(),
+      'amount': amount!.trim(),
     };
 
     return map;

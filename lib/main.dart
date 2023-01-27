@@ -43,13 +43,6 @@ class MyApp extends StatelessWidget {
             color: Constants.kMainColor,
           )),
       home: const SplashScreen(),
-      // home: phone == null || token == null
-      //     ? const LoginMobileScreen()
-      //     : ChechConnectivity(
-      //         child: MainScreen(
-      //           token: token!,
-      //         ),
-      //       ),
     );
   }
 }

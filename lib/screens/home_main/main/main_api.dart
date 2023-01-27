@@ -5,7 +5,8 @@ import 'dart:convert' as convert;
 
 Future<MainModel> getMainInfo({required String token}) async {
   try {
-    var url = Uri.parse("${Constants.url}/payment/api/index?token=$token");
+    var url = Uri.parse(
+        "${Constants.url}/payment/api/index?time=functions_time&token=$token");
     http.Response response = await http.get(url);
 
     if (response.statusCode == 200) {

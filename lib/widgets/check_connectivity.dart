@@ -20,7 +20,7 @@ class _ChechConnectivityState extends State<ChechConnectivity> {
     super.initState();
     checkConnectivity();
     timer = Timer.periodic(
-        const Duration(seconds: 1), (Timer t) => checkConnectivity());
+        const Duration(seconds: 2), (Timer t) => checkConnectivity());
   }
 
   @override
@@ -31,31 +31,48 @@ class _ChechConnectivityState extends State<ChechConnectivity> {
 
   @override
   Widget build(BuildContext context) {
-    if (connectivity == true) {
-      return widget.child;
-    } else {
-      return Scaffold(
-        backgroundColor: Colors.grey.shade300,
-        body: Center(
-          child: Container(
-            height: MediaQuery.of(context).size.height * 0.3,
-            width: MediaQuery.of(context).size.width * 0.8,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: const Center(
-              child: Text(
-                'لا يوجد إتصال بالانترنت، ... \n الرجاء الاتصال بالانترنت لتشغيل التطبيق',
-                textAlign: TextAlign.center,
-                textDirection: TextDirection.rtl,
-                style: TextStyle(fontSize: 24),
+    return Scaffold(
+      backgroundColor: Colors.grey.shade300,
+      body: Stack(
+        children: [
+          widget.child,
+          Visibility(
+            visible: connectivity ? false : true,
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              color: Colors.grey.withOpacity(0.6),
+              child: Center(
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  height: MediaQuery.of(context).size.height * 0.3,
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Column(
+                    children: const [
+                      Icon(
+                        Icons.signal_wifi_connected_no_internet_4_rounded,
+                        size: 60,
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        'لا يوجد إتصال بالانترنت، ... \n الرجاء الاتصال بالانترنت لتشغيل التطبيق',
+                        textAlign: TextAlign.center,
+                        textDirection: TextDirection.rtl,
+                        style: TextStyle(fontSize: 24),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
-        ),
-      );
-    }
+        ],
+      ),
+    );
   }
 
   Future<void> checkConnectivity() async {

@@ -49,6 +49,9 @@ class _AddGroupeScreenState extends State<AddGroupeScreen> {
                     keyboardType: TextInputType.text,
                     prefixIcon: Icons.person,
                     validator: (value) {
+                      if (value.toString().isEmpty) {
+                        return 'أدخل الاسم';
+                      }
                       return null;
                     },
                     onChanged: (value) {
@@ -60,6 +63,9 @@ class _AddGroupeScreenState extends State<AddGroupeScreen> {
                     keyboardType: TextInputType.number,
                     prefixIcon: Icons.monetization_on,
                     validator: (value) {
+                      if (value.toString().isEmpty) {
+                        return 'أدخل المبلغ الكلي';
+                      }
                       return null;
                     },
                     onChanged: (value) {
@@ -71,6 +77,9 @@ class _AddGroupeScreenState extends State<AddGroupeScreen> {
                     keyboardType: TextInputType.number,
                     prefixIcon: Icons.monetization_on,
                     validator: (value) {
+                      if (value.toString().isEmpty) {
+                        return 'أدخل أقل مبلغ';
+                      }
                       return null;
                     },
                     onChanged: (value) {
@@ -82,6 +91,9 @@ class _AddGroupeScreenState extends State<AddGroupeScreen> {
                     keyboardType: TextInputType.text,
                     prefixIcon: Icons.subject,
                     validator: (value) {
+                      if (value.toString().isEmpty) {
+                        return 'أدخل الهدف';
+                      }
                       return null;
                     },
                     onChanged: (value) {

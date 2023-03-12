@@ -386,14 +386,14 @@ class _MainScreenState extends State<MainScreen> {
             children: [
               Container(
                 padding: const EdgeInsets.only(
-                  top: 10,
-                  bottom: 50,
+                  top: 5,
+                  bottom: 40,
                 ),
                 height: screenHeight * 0.23,
                 width: screenWidth,
                 color: Constants.kMainColor,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
                       'أهلا',
@@ -407,6 +407,17 @@ class _MainScreenState extends State<MainScreen> {
                       style: TextStyle(
                         color: Constants.textColor,
                         fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Visibility(
+                      visible: hvm.mainInfo!.group == '2' ? false : true,
+                      child: const Text(
+                        '(عضويتك غير مفعلة)',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ],
@@ -421,6 +432,8 @@ class _MainScreenState extends State<MainScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
+                          // إظافة
+
                           customContainer(
                             onTap: () {
                               if (hvm.mainInfo!.group == '2') {
@@ -431,11 +444,44 @@ class _MainScreenState extends State<MainScreen> {
                                         token: widget.token,
                                       ),
                                     ));
+                              } else {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      AlertDialog(
+                                    title: const Text(
+                                      'خطـأ',
+                                    ),
+                                    content: const Text(
+                                      'عضويتك غير مفعلة',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 24,
+                                      ),
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text(
+                                          'حسنا',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                );
                               }
                             },
                             icon: Icons.add_circle_outline,
                             title: 'إضافة',
                           ),
+
+                          //عمليات الدفع
                           customContainer(
                             onTap: () {
                               if (hvm.mainInfo!.group == '2') {
@@ -446,14 +492,47 @@ class _MainScreenState extends State<MainScreen> {
                                         token: widget.token,
                                       ),
                                     ));
+                              } else {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      AlertDialog(
+                                    title: const Text(
+                                      'خطـأ',
+                                    ),
+                                    content: const Text(
+                                      'عضويتك غير مفعلة',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 24,
+                                      ),
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text(
+                                          'حسنا',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                );
                               }
                             },
                             icon: Icons.payment_outlined,
                             title: 'عمليات الدفع',
                           ),
+
+                          //المجموعات
                           customContainer(
                             onTap: () {
-                              if (hvm.mainInfo!.group == '3') {
+                              if (hvm.mainInfo!.group == '2') {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -466,18 +545,28 @@ class _MainScreenState extends State<MainScreen> {
                                   context: context,
                                   builder: (BuildContext context) =>
                                       AlertDialog(
-                                    title: const Text('عضويتك غير مفعلة'),
-                                    content: Image.asset(
-                                      'assets/images/user.png',
-                                      height: 100,
-                                      color: Colors.red,
+                                    title: const Text(
+                                      'خطـأ',
+                                    ),
+                                    content: const Text(
+                                      'عضويتك غير مفعلة',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 24,
+                                      ),
                                     ),
                                     actions: [
                                       TextButton(
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                         },
-                                        child: const Text('حسنا'),
+                                        child: const Text(
+                                          'حسنا',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                          ),
+                                        ),
                                       )
                                     ],
                                   ),

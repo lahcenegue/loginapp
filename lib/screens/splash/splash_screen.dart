@@ -3,7 +3,6 @@ import 'package:loginapp/constants/constants.dart';
 import 'package:loginapp/main.dart';
 import 'package:loginapp/screens/home_main/main/main_screen.dart';
 import 'package:loginapp/screens/login_mobile/login_mobile_screen.dart';
-import 'package:loginapp/widgets/check_connectivity.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);

@@ -423,39 +423,66 @@ class _MainScreenState extends State<MainScreen> {
                         children: [
                           customContainer(
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => AddScreen(
-                                      token: widget.token,
-                                    ),
-                                  ));
+                              if (hvm.mainInfo!.group == '2') {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => AddScreen(
+                                        token: widget.token,
+                                      ),
+                                    ));
+                              }
                             },
                             icon: Icons.add_circle_outline,
                             title: 'إضافة',
                           ),
                           customContainer(
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => PaymentScreen(
-                                      token: widget.token,
-                                    ),
-                                  ));
+                              if (hvm.mainInfo!.group == '2') {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => PaymentScreen(
+                                        token: widget.token,
+                                      ),
+                                    ));
+                              }
                             },
                             icon: Icons.payment_outlined,
                             title: 'عمليات الدفع',
                           ),
                           customContainer(
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => GroupeScreen(
-                                      token: widget.token,
+                              if (hvm.mainInfo!.group == '3') {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => GroupeScreen(
+                                        token: widget.token,
+                                      ),
+                                    ));
+                              } else {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      AlertDialog(
+                                    title: const Text('عضويتك غير مفعلة'),
+                                    content: Image.asset(
+                                      'assets/images/user.png',
+                                      height: 100,
+                                      color: Colors.red,
                                     ),
-                                  ));
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text('حسنا'),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              }
                             },
                             icon: Icons.group,
                             title: 'المجموعات',

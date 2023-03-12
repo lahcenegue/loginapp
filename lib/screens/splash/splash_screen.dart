@@ -32,7 +32,10 @@ class _SplashScreenState extends State<SplashScreen> {
               color: Constants.kMainColor,
               borderRadius: BorderRadius.circular(20),
             ),
-            child: Image.asset(Constants.logo),
+            child: Image.asset(
+              Constants.logo,
+              width: MediaQuery.of(context).size.width * 0.6,
+            ),
           ),
         ),
       ),
@@ -40,18 +43,14 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void goToNextView() {
-    Future.delayed(const Duration(milliseconds: 1200), () {
+    Future.delayed(const Duration(milliseconds: 1500), () {
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (BuildContext context) {
         if (phone == null || token == null) {
-          return const ChechConnectivity(
-            child: LoginMobileScreen(),
-          );
+          return const LoginMobileScreen();
         } else {
-          return ChechConnectivity(
-            child: MainScreen(
-              token: token!,
-            ),
+          return MainScreen(
+            token: token!,
           );
         }
       }));

@@ -12,11 +12,7 @@ Future<void> checkNotification() async {
     statusess = await Permission.notification.request();
     print('statuse : $statusess');
     OneSignalControler.inite();
-
-    // if (statusess == PermissionStatus.granted) {
-    //   OneSignalControler.inite();
-    // } else {
-    //   print('statuse : false');
-    // }
+  } else {
+    OneSignalControler.inite();
   }
 }

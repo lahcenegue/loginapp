@@ -151,8 +151,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     validator: (value) {
                       if (value.toString().isEmpty) {
                         return 'أرجوا ادخال كلمة المرور';
-                      } else if (value.toString().length < 8) {
-                        return 'كلمة المرور تحتوي على اقل من 8 احرف';
+                      } else if (value.toString().length < 6) {
+                        return 'كلمة المرور تحتوي على اقل من 6 احرف';
                       }
 
                       return null;

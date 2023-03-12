@@ -3,7 +3,6 @@ import 'package:loginapp/constants/constants.dart';
 import 'package:loginapp/home_view_model/home_view_model.dart';
 import 'package:loginapp/main.dart';
 import 'package:loginapp/screens/home_main/add/add_screen.dart';
-import 'package:loginapp/screens/home_main/drawer/account_statement/statement_children.dart';
 import 'package:loginapp/screens/home_main/drawer/contact/contact_screen.dart';
 import 'package:loginapp/screens/home_main/drawer/logout/logout_api.dart';
 import 'package:loginapp/screens/home_main/groupe/groupe_screen.dart';
@@ -21,6 +20,7 @@ import 'package:intl/intl.dart' as intl;
 
 class MainScreen extends StatefulWidget {
   final String token;
+
   const MainScreen({
     super.key,
     required this.token,
@@ -387,12 +387,13 @@ class _MainScreenState extends State<MainScreen> {
               Container(
                 padding: const EdgeInsets.only(
                   top: 10,
+                  bottom: 50,
                 ),
-                height: screenHeight * 0.25,
+                height: screenHeight * 0.23,
                 width: screenWidth,
                 color: Constants.kMainColor,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
                       'أهلا',
@@ -408,83 +409,88 @@ class _MainScreenState extends State<MainScreen> {
                         fontSize: 30,
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          "رصيدك:",
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        FittedBox(
-                          alignment: Alignment.center,
-                          child: Text(
-                            "${hvm.mainInfo!.balance} د.ك",
-                            style: const TextStyle(
-                              fontSize: 30,
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
                   ],
                 ),
               ),
               Positioned(
-                top: screenHeight * 0.3,
+                top: screenHeight * 0.18,
                 child: SizedBox(
                   width: screenWidth,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  child: Column(
                     children: [
-                      customContainer(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => AddScreen(
-                                  token: widget.token,
-                                ),
-                              ));
-                        },
-                        icon: Icons.add_circle_outline,
-                        title: 'إضافة',
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          customContainer(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => AddScreen(
+                                      token: widget.token,
+                                    ),
+                                  ));
+                            },
+                            icon: Icons.add_circle_outline,
+                            title: 'إضافة',
+                          ),
+                          customContainer(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => PaymentScreen(
+                                      token: widget.token,
+                                    ),
+                                  ));
+                            },
+                            icon: Icons.payment_outlined,
+                            title: 'عمليات الدفع',
+                          ),
+                          customContainer(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => GroupeScreen(
+                                      token: widget.token,
+                                    ),
+                                  ));
+                            },
+                            icon: Icons.group,
+                            title: 'المجموعات',
+                          ),
+                        ],
                       ),
-                      customContainer(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => PaymentScreen(
-                                  token: widget.token,
-                                ),
-                              ));
-                        },
-                        icon: Icons.payment_outlined,
-                        title: 'عمليات الدفع',
-                      ),
-                      customContainer(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => GroupeScreen(
-                                  token: widget.token,
-                                ),
-                              ));
-                        },
-                        icon: Icons.group,
-                        title: 'المجموعات',
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "رصيدك:",
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          FittedBox(
+                            alignment: Alignment.center,
+                            child: Text(
+                              "${hvm.mainInfo!.balance} د.ك",
+                              style: const TextStyle(
+                                fontSize: 30,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ),
               ),
               Positioned(
-                top: screenHeight * 0.45,
+                top: screenHeight * 0.40,
                 left: 0,
                 right: 0,
                 bottom: 0,
@@ -494,7 +500,11 @@ class _MainScreenState extends State<MainScreen> {
                     padding: const EdgeInsets.all(20),
                     physics: const ScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: hvm.listStatement == null ? 1 : 10,
+                    itemCount: hvm.listStatement == null
+                        ? 1
+                        : hvm.listStatement!.length < 10
+                            ? hvm.listStatement!.length
+                            : 10,
                     separatorBuilder: (context, index) => Column(
                       children: const [
                         SizedBox(height: 10),
@@ -509,22 +519,13 @@ class _MainScreenState extends State<MainScreen> {
                       return hvm.listStatement == null
                           ? const CircularProgressIndicator()
                           : ListTile(
-                              leading: const Icon(Icons.payment),
-                              title: Text(hvm.listStatement![index].text2),
-                              trailing: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                      "${hvm.listStatement![index].text1} د.ك"),
-                                  Text(
-                                    dateFormat!.format(
-                                        DateTime.fromMicrosecondsSinceEpoch(
-                                            int.parse(hvm.listStatement![index]
-                                                    .dateadd) *
-                                                1000000)),
-                                  ),
-                                ],
+                              leading: const Icon(
+                                Icons.payment,
+                                color: Colors.green,
                               ),
+                              title: Text(hvm.listStatement![index].text2),
+                              trailing: Text(
+                                  "${hvm.listStatement![index].text1} د.ك"),
                             );
                     },
                   ),

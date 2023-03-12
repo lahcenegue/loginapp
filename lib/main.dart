@@ -17,6 +17,7 @@ void main() async {
   name = prefs.getString("name");
 
   checkNotification();
+
   runApp(const MyApp());
 }
 

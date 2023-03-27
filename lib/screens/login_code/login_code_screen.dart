@@ -100,11 +100,35 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
     await validateOtp(smsCode, widget.verificationId);
     loading = true;
     setState(() {});
-    Navigator.of(context).pop();
-    print('=============================');
-    print(FirebaseAuth.instance.currentUser!.uid);
 
-    print("Vérification éfectué avec succès");
+    apiLoginCode(widget.phoneNumber, yourCode).then((value) async {
+      setState(() {
+        isApiCallProcess = false;
+      });
+      savePhone(widget.phoneNumber);
+      if (value.user == "new") {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => RegisterScreen(
+                    phoneNumber: widget.phoneNumber,
+                    code: yourCode!,
+                  )),
+        );
+      } else if (value.user == "old") {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => MainScreen(
+                    token: value.token!,
+                  )),
+        );
+        saveToken(value.token!);
+        saveName(value.name!);
+      }
+    });
+
+    debugPrint("Vérification éfectué avec succès");
   }
 
   @override
@@ -159,30 +183,43 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
                 const SizedBox(height: 30),
                 Directionality(
                   textDirection: TextDirection.ltr,
-                  child: Pinput(
-                    length: 6,
-                    onChanged: (value) {
-                      smsCode = value;
-                      setState(() {});
-                    },
+                  child: Column(
+                    children: [
+                      Pinput(
+                        length: 6,
+                        onChanged: (value) {
+                          smsCode = value;
+                          setState(() {});
+                        },
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: TextButton(
+                          onPressed: !resend ? null : onResendSmsCode,
+                          child: Text(!resend
+                              ? "00:${count.toString().padLeft(2, "0")}"
+                              : "resend code"),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                customTextFormField(
-                  onChanged: (value) {
-                    smsCode = value.toString();
-                  },
-                  validator: (value) {
-                    if (value.toString().isEmpty) {
-                      return 'ادخل الكود الخاص بك';
-                    } else if (value.toString().length != 4) {
-                      return 'يجب ان يكون طول الرقم 4 ارقام';
-                    }
-                    return null;
-                  },
-                  hintText: 'الكود',
-                  keyboardType: TextInputType.phone,
-                  prefixIcon: Icons.phone,
-                ),
+                // customTextFormField(
+                //   onChanged: (value) {
+                //     smsCode = value.toString();
+                //   },
+                //   validator: (value) {
+                //     if (value.toString().isEmpty) {
+                //       return 'ادخل الكود الخاص بك';
+                //     } else if (value.toString().length != 4) {
+                //       return 'يجب ان يكون طول الرقم 4 ارقام';
+                //     }
+                //     return null;
+                //   },
+                //   hintText: 'الكود',
+                //   keyboardType: TextInputType.phone,
+                //   prefixIcon: Icons.phone,
+                // ),
 
                 const SizedBox(height: 20),
                 // login button
@@ -195,33 +232,7 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
                       setState(() {
                         isApiCallProcess = true;
                       });
-                      apiLoginCode(widget.phoneNumber, yourCode)
-                          .then((value) async {
-                        setState(() {
-                          isApiCallProcess = false;
-                        });
-                        savePhone(widget.phoneNumber);
-                        if (value.user == "new") {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => RegisterScreen(
-                                      phoneNumber: widget.phoneNumber,
-                                      code: yourCode!,
-                                    )),
-                          );
-                        } else if (value.user == "old") {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MainScreen(
-                                      token: value.token!,
-                                    )),
-                          );
-                          saveToken(value.token!);
-                          saveName(value.name!);
-                        }
-                      });
+                      smsCode.length < 6 || loading ? null : onVerifySmsCode();
                     }
                   },
                 ),

@@ -52,15 +52,12 @@ class MyApp extends StatelessWidget {
         ),
       ),
 
+      home: phone == null || token == null
+          ? const LoginMobileScreen()
+          : MainScreen(
+              token: token!,
+            ),
       //home: const SplashScreen(),
-      home: StreamBuilder<User?>(
-        stream: _auth.authStateChanges(),
-        builder: (context, snapshot) {
-          return snapshot.data == null
-              ? const LoginMobileScreen()
-              : MainScreen(token: token!);
-        },
-      ),
     );
   }
 }

@@ -39,8 +39,10 @@ dependencies:
     sdk: flutter
   http: ^0.13.5
   intl: ^0.17.0
+  intl_phone_field: ^3.1.0
   onesignal_flutter: ^3.5.0
   permission_handler: ^10.2.0
+  pinput: ^2.2.31
   share_plus: ^6.3.0
   shared_preferences: ^2.0.15
 

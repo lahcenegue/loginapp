@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:loginapp/firebase_options.dart';
+import 'package:loginapp/screens/home_main/main/main_screen.dart';
+import 'package:loginapp/screens/login_mobile/login_mobile_screen.dart';
 import 'package:loginapp/screens/splash/splash_screen.dart';
 import 'package:loginapp/widgets/check_notification.dart';
 import 'constants/constants.dart';
@@ -21,11 +24,12 @@ Future<void> main() async {
 
   checkNotification();
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+  final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +45,22 @@ class MyApp extends StatelessWidget {
       ],
       locale: const Locale('ar', 'DZ'),
       theme: ThemeData(
-          primarySwatch: Colors.blue,
-          appBarTheme: AppBarTheme(
-            centerTitle: true,
-            color: Constants.kMainColor,
-          )),
-      home: const SplashScreen(),
+        primarySwatch: Colors.blue,
+        appBarTheme: AppBarTheme(
+          centerTitle: true,
+          color: Constants.kMainColor,
+        ),
+      ),
+
+      //home: const SplashScreen(),
+      home: StreamBuilder<User?>(
+        stream: _auth.authStateChanges(),
+        builder: (context, snapshot) {
+          return snapshot.data == null
+              ? const LoginMobileScreen()
+              : MainScreen(token: token!);
+        },
+      ),
     );
   }
 }

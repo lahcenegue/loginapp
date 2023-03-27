@@ -1,17 +1,24 @@
+import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:loginapp/firebase/function.dart';
 import 'package:loginapp/screens/home_main/main/main_screen.dart';
 import 'package:loginapp/screens/login_code/api_login_code.dart';
 import 'package:loginapp/screens/register/register_screen.dart';
 import 'package:loginapp/widgets/constum_button.dart';
 import 'package:loginapp/widgets/text_form.dart';
+import 'package:pinput/pinput.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants/constants.dart';
 
 class LoginCodeScreen extends StatefulWidget {
   final String phoneNumber;
+  final String verificationId;
   const LoginCodeScreen({
     super.key,
     required this.phoneNumber,
+    required this.verificationId,
   });
 
   @override
@@ -21,9 +28,16 @@ class LoginCodeScreen extends StatefulWidget {
 class _LoginCodeScreenState extends State<LoginCodeScreen> {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
 
-  String? yourCode;
+  String yourCode = '6677';
+  String smsCode = '';
+
+  bool loading = false;
+  bool resend = false;
+  int count = 20;
 
   bool isApiCallProcess = false;
+
+  final _auth = FirebaseAuth.instance;
 
   savePhone(String phone) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -40,9 +54,63 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
     prefs.setString('token', token);
   }
 
+  //OTP
+  late Timer timer;
+
+  void decompte() {
+    timer = Timer.periodic(const Duration(seconds: 1), (t) {
+      if (count < 1) {
+        timer.cancel();
+        count = 20;
+        resend = true;
+        setState(() {});
+        return;
+      }
+      count--;
+      setState(() {});
+    });
+  }
+
+  void onResendSmsCode() {
+    resend = false;
+    setState(() {});
+    authWithPhoneNumber(
+      widget.phoneNumber,
+      onCodeSend: (verificationId, v) {
+        loading = false;
+
+        decompte();
+        setState(() {});
+      },
+      onAutoVerify: (v) async {
+        await _auth.signInWithCredential(v);
+      },
+      onFailed: (e) {
+        loading = false;
+        setState(() {});
+        print("Le code est erroné");
+      },
+      autoRetrieval: (v) {},
+    );
+  }
+
+  void onVerifySmsCode() async {
+    loading = true;
+    setState(() {});
+    await validateOtp(smsCode, widget.verificationId);
+    loading = true;
+    setState(() {});
+    Navigator.of(context).pop();
+    print('=============================');
+    print(FirebaseAuth.instance.currentUser!.uid);
+
+    print("Vérification éfectué avec succès");
+  }
+
   @override
   void initState() {
     super.initState();
+    decompte();
   }
 
   @override
@@ -89,9 +157,19 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
                 ),
 
                 const SizedBox(height: 30),
+                Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Pinput(
+                    length: 6,
+                    onChanged: (value) {
+                      smsCode = value;
+                      setState(() {});
+                    },
+                  ),
+                ),
                 customTextFormField(
                   onChanged: (value) {
-                    yourCode = value.toString();
+                    smsCode = value.toString();
                   },
                   validator: (value) {
                     if (value.toString().isEmpty) {

@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:loginapp/firebase/function.dart';
 import 'package:loginapp/screens/login_code/login_code_screen.dart';
 import 'package:loginapp/screens/login_mobile/api_login_mobile.dart';
 import 'package:loginapp/widgets/constum_button.dart';
@@ -15,8 +18,55 @@ class LoginMobileScreen extends StatefulWidget {
 class _LoginMobileScreenState extends State<LoginMobileScreen> {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
 
-  String? phoneNumber;
+  String phoneNumber = '';
+  String? verification;
+  bool loading = false;
   bool isApiCallProcess = false;
+
+  void sendOtpCode({required String newPhone}) {
+    loading = true;
+    setState(() {});
+    final auth = FirebaseAuth.instance;
+    if (phoneNumber.isNotEmpty) {
+      authWithPhoneNumber(
+        phoneNumber,
+        onCodeSend: (verificationId, v) {
+          loading = false;
+
+          verification = verificationId;
+          setState(() {});
+
+          apiLoginMobile(newPhone).then(
+            (value) {
+              setState(() {
+                isApiCallProcess = false;
+              });
+              if (value.msg == 'ok') {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LoginCodeScreen(
+                      phoneNumber: newPhone,
+                      verificationId: verification!,
+                    ),
+                  ),
+                );
+              }
+            },
+          );
+        },
+        onAutoVerify: (v) async {
+          await auth.signInWithCredential(v);
+          Navigator.of(context).pop();
+        },
+        onFailed: (e) {
+          loading = false;
+          setState(() {});
+        },
+        autoRetrieval: (v) {},
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,21 +106,24 @@ class _LoginMobileScreenState extends State<LoginMobileScreen> {
                   ),
                 ),
                 const SizedBox(height: 30),
-                customTextFormField(
+
+                //
+                IntlPhoneField(
+                  countries: const ['KW'],
+                  textAlign: TextAlign.right,
                   onChanged: (value) {
-                    phoneNumber = value.toString();
+                    phoneNumber = value.completeNumber;
                   },
-                  validator: (value) {
-                    if (value.toString().isEmpty) {
-                      return 'ادخل رقم الهاتف';
-                    } else if (value.toString().length != 8) {
-                      return 'يجب ان يكون طول الرقم 8 ارقام';
-                    }
-                    return null;
-                  },
-                  hintText: 'رقم الهاتف',
-                  keyboardType: TextInputType.phone,
-                  prefixIcon: Icons.phone,
+                  decoration: const InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    contentPadding: EdgeInsets.all(5),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(30),
+                      ),
+                    ),
+                  ),
                 ),
 
                 const SizedBox(height: 20),
@@ -80,25 +133,13 @@ class _LoginMobileScreenState extends State<LoginMobileScreen> {
                   icon: Icons.login,
                   topPadding: 40,
                   onPressed: () {
+                    String newphone = phoneNumber.replaceAll('+965', '');
                     if (validateAndSave()) {
                       setState(() {
                         isApiCallProcess = true;
                       });
-                      apiLoginMobile(phoneNumber!).then((value) {
-                        setState(() {
-                          isApiCallProcess = false;
-                        });
-                        if (value.msg == 'ok') {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LoginCodeScreen(
-                                phoneNumber: phoneNumber!,
-                              ),
-                            ),
-                          );
-                        }
-                      });
+
+                      loading ? null : sendOtpCode(newPhone: newphone);
                     }
                   },
                 ),

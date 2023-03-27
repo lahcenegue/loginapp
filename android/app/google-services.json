@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "777227857742",
+    "project_id": "online-payment-getaway",
+    "storage_bucket": "online-payment-getaway.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:777227857742:android:564e9fd04c3fb94251781f",
+        "android_client_info": {
+          "package_name": "net.paykw.mobapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "777227857742-7al93ie3mude8vkm39bu54863un1caia.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYSq8CUWR2HKNHPDzu6QFriTu8AwGPBU4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "777227857742-7al93ie3mude8vkm39bu54863un1caia.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

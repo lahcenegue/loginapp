@@ -1,4 +1,6 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:loginapp/firebase_options.dart';
 import 'package:loginapp/screens/splash/splash_screen.dart';
 import 'package:loginapp/widgets/check_notification.dart';
 import 'constants/constants.dart';
@@ -9,8 +11,9 @@ String? phone;
 String? token;
 String? name;
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   SharedPreferences prefs = await SharedPreferences.getInstance();
   phone = prefs.getString("phone");
   token = prefs.getString("token");

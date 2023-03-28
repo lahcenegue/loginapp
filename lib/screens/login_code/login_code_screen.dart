@@ -7,7 +7,6 @@ import 'package:loginapp/screens/home_main/main/main_screen.dart';
 import 'package:loginapp/screens/login_code/api_login_code.dart';
 import 'package:loginapp/screens/register/register_screen.dart';
 import 'package:loginapp/widgets/constum_button.dart';
-import 'package:loginapp/widgets/text_form.dart';
 import 'package:pinput/pinput.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants/constants.dart';
@@ -88,7 +87,7 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
       onFailed: (e) {
         loading = false;
         setState(() {});
-        print("Le code est erroné");
+        debugPrint("Le code est erroné");
       },
       autoRetrieval: (v) {},
     );
@@ -112,7 +111,7 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
           MaterialPageRoute(
               builder: (context) => RegisterScreen(
                     phoneNumber: widget.phoneNumber,
-                    code: yourCode!,
+                    code: yourCode,
                   )),
         );
       } else if (value.user == "old") {
@@ -196,30 +195,19 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
                         alignment: Alignment.centerLeft,
                         child: TextButton(
                           onPressed: !resend ? null : onResendSmsCode,
-                          child: Text(!resend
-                              ? "00:${count.toString().padLeft(2, "0")}"
-                              : "resend code"),
+                          child: Text(
+                            !resend
+                                ? "00:${count.toString().padLeft(2, "0")}"
+                                : "إعادة ارسال الكود",
+                            style: TextStyle(
+                              color: Constants.kMainColor,
+                            ),
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
-                // customTextFormField(
-                //   onChanged: (value) {
-                //     smsCode = value.toString();
-                //   },
-                //   validator: (value) {
-                //     if (value.toString().isEmpty) {
-                //       return 'ادخل الكود الخاص بك';
-                //     } else if (value.toString().length != 4) {
-                //       return 'يجب ان يكون طول الرقم 4 ارقام';
-                //     }
-                //     return null;
-                //   },
-                //   hintText: 'الكود',
-                //   keyboardType: TextInputType.phone,
-                //   prefixIcon: Icons.phone,
-                // ),
 
                 const SizedBox(height: 20),
                 // login button

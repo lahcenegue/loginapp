@@ -5,7 +5,6 @@ import 'package:loginapp/firebase/function.dart';
 import 'package:loginapp/screens/login_code/login_code_screen.dart';
 import 'package:loginapp/screens/login_mobile/api_login_mobile.dart';
 import 'package:loginapp/widgets/constum_button.dart';
-import 'package:loginapp/widgets/text_form.dart';
 import '../../constants/constants.dart';
 
 class LoginMobileScreen extends StatefulWidget {
@@ -56,8 +55,9 @@ class _LoginMobileScreenState extends State<LoginMobileScreen> {
           );
         },
         onAutoVerify: (v) async {
-          await auth.signInWithCredential(v);
-          Navigator.of(context).pop();
+          // await auth
+          //     .signInWithCredential(v)
+          //     .then((value) => Navigator.of(context).pop());
         },
         onFailed: (e) {
           loading = false;
@@ -108,19 +108,23 @@ class _LoginMobileScreenState extends State<LoginMobileScreen> {
                 const SizedBox(height: 30),
 
                 //
-                IntlPhoneField(
-                  countries: const ['KW'],
-                  textAlign: TextAlign.right,
-                  onChanged: (value) {
-                    phoneNumber = value.completeNumber;
-                  },
-                  decoration: const InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    contentPadding: EdgeInsets.all(5),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(30),
+                Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: IntlPhoneField(
+                    countries: const ['KW'],
+                    textAlign: TextAlign.left,
+                    invalidNumberMessage: 'قمت بإدخال رقم خاطئ',
+                    onChanged: (value) {
+                      phoneNumber = value.completeNumber;
+                    },
+                    decoration: const InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding: EdgeInsets.all(5),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(30),
+                        ),
                       ),
                     ),
                   ),

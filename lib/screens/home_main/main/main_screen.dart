@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loginapp/constants/constants.dart';
+import 'package:loginapp/firebase/function.dart';
 import 'package:loginapp/home_view_model/home_view_model.dart';
 import 'package:loginapp/main.dart';
 import 'package:loginapp/screens/home_main/add/add_screen.dart';
@@ -356,6 +357,7 @@ class _MainScreenState extends State<MainScreen> {
                             (route) => false,
                           );
                           await deletePrefs();
+                          await disconnect();
                         }
                       });
                     },

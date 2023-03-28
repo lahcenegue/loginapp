@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:loginapp/firebase_options.dart';
@@ -24,12 +23,11 @@ Future<void> main() async {
 
   checkNotification();
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
-  final _auth = FirebaseAuth.instance;
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {

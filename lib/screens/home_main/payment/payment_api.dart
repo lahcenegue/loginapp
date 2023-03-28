@@ -16,7 +16,6 @@ class PaymentApi {
         var url = Uri.parse(type == "1"
             ? "${Constants.url}/payment/api/all/$page?token=$token&time=functions_time"
             : "${Constants.url}/payment/api/all/$page/4?token=$token&time=functions_time");
-        print(url);
 
         http.Response response = await http.get(url);
 
@@ -37,7 +36,6 @@ class PaymentApi {
         var url = Uri.parse(type == "1"
             ? "${Constants.url}/payment/api/all/$page?token=$token&time=functions_time"
             : "${Constants.url}/payment/api/all/$page/4?token=$token&time=functions_time");
-        print(url);
 
         http.Response response = await http.get(url);
 

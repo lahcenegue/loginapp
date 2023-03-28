@@ -7,8 +7,6 @@ Future<void> checkNotification() async {
   late final PermissionStatus statusess;
 
   if (androidInfo.version.sdkInt == 33) {
-    print("=============================");
-    print(androidInfo.version.sdkInt);
     statusess = await Permission.notification.request();
     print('statuse : $statusess');
     OneSignalControler.inite();

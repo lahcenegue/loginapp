@@ -14,8 +14,8 @@ class PaymentApi {
         newType = type;
         payment = [];
         var url = Uri.parse(type == "1"
-            ? "${Constants.url}/payment/api/all/$page?token=$token&time=functions_time"
-            : "${Constants.url}/payment/api/all/$page/4?token=$token&time=functions_time");
+            ? "${Constants.paymentLink}/all/$page?token=$token&time=functions_time"
+            : "${Constants.paymentLink}/all/$page/4?token=$token&time=functions_time");
 
         http.Response response = await http.get(url);
 
@@ -34,8 +34,8 @@ class PaymentApi {
       } else {
         newType = type;
         var url = Uri.parse(type == "1"
-            ? "${Constants.url}/payment/api/all/$page?token=$token&time=functions_time"
-            : "${Constants.url}/payment/api/all/$page/4?token=$token&time=functions_time");
+            ? "${Constants.paymentLink}/all/$page?token=$token&time=functions_time"
+            : "${Constants.paymentLink}/all/$page/4?token=$token&time=functions_time");
 
         http.Response response = await http.get(url);
 

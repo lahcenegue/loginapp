@@ -13,7 +13,7 @@ Future<RegisterResponseModel> apiRegister({
 
   try {
     var url = Uri.parse(
-        "${Constants.url}/api/login/${OneSignalControler.osUserID}/$phone/$yourCode/reg?");
+        "${Constants.loginLink}/${OneSignalControler.osUserID}/$phone/$yourCode/reg?");
     http.Response response = await http.post(
       url,
       body: registerRequestModel.toJson(),

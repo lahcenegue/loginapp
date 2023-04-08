@@ -107,12 +107,17 @@ class _MainScreenState extends State<MainScreen> {
                       size: 35,
                     ),
                     onPressed: () {
+                      setState(() {
+                        hvm.fetchMainInfo(token: widget.token);
+                      });
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => NotificationScreen(
-                                    token: widget.token,
-                                  )));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => NotificationScreen(
+                            token: widget.token,
+                          ),
+                        ),
+                      );
                     },
                   ),
                 ),

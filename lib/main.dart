@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:loginapp/firebase_options.dart';
 import 'package:loginapp/screens/home_main/main/main_screen.dart';
 import 'package:loginapp/screens/login_mobile/login_mobile_screen.dart';
-import 'package:loginapp/screens/splash/splash_screen.dart';
 import 'package:loginapp/widgets/check_notification.dart';
 import 'constants/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';

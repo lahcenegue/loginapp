@@ -8,7 +8,7 @@ Future<AddGroupModel> apiAddGroup(
     required String token}) async {
   try {
     var url = Uri.parse(
-        "${Constants.url}/payment/api/addgroup?time=functions_time&token=$token");
+        "${Constants.paymentLink}/addgroup?time=functions_time&token=$token");
     http.Response response = await http.post(
       url,
       body: groupRequestModel.toJson(),

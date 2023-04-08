@@ -6,7 +6,7 @@ import 'dart:convert' as convert;
 Future<List<PaymentModel>> apiSearch(
     {required String token, required String query}) async {
   try {
-    var url = Uri.parse("${Constants.url}/payment/api/search?token=$token");
+    var url = Uri.parse("${Constants.paymentLink}/search?token=$token");
 
     http.Response response = await http.post(
       url,

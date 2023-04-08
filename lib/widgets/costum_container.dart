@@ -13,7 +13,7 @@ Widget customContainer({
       height: 100,
       width: 100,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(12),
         color: Constants.boxColor,
         boxShadow: [
           BoxShadow(

@@ -17,8 +17,8 @@ Future<List<StatementModel>> loadStatementList({
       newType = type;
       listStatement = [];
       var url = Uri.parse(type == "all"
-          ? "${Constants.url}/payment/api/bills/$pageNum?token=$token"
-          : "${Constants.url}/payment/api/bills/$pageNum/$typePage?token=$token");
+          ? "${Constants.paymentLink}/bills/$pageNum?token=$token"
+          : "${Constants.paymentLink}/bills/$pageNum/$typePage?token=$token");
 
       http.Response response = await http.get(url);
 
@@ -37,8 +37,8 @@ Future<List<StatementModel>> loadStatementList({
     } else {
       newType = type;
       var url = Uri.parse(type == "all"
-          ? "${Constants.url}/payment/api/bills/$pageNum?token=$token"
-          : "${Constants.url}/payment/api/bills/$pageNum/$typePage?token=$token");
+          ? "${Constants.paymentLink}/bills/$pageNum?token=$token"
+          : "${Constants.paymentLink}/bills/$pageNum/$typePage?token=$token");
 
       http.Response response = await http.get(url);
 

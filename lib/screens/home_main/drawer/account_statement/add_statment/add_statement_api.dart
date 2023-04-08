@@ -8,7 +8,7 @@ Future<AddStatementResponse> apiStatmentAdd(
     {required AddStatementRequest addStatementRequest,
     required String token}) async {
   try {
-    var url = Uri.parse("${Constants.url}/payment/api/billsadd?token=$token");
+    var url = Uri.parse("${Constants.paymentLink}/billsadd?token=$token");
     http.Response response = await http.post(
       url,
       body: addStatementRequest.toJson(),

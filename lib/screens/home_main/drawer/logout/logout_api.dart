@@ -7,7 +7,7 @@ import 'package:loginapp/screens/home_main/drawer/logout/logout_model.dart';
 
 Future<LogoutModel> logoutApi({required String token}) async {
   try {
-    var url = Uri.parse("${Constants.url}/api/logout?token=$token");
+    var url = Uri.parse("${Constants.logoutLink}?token=$token");
     http.Response response = await http.get(url);
 
     if (response.statusCode == 200) {

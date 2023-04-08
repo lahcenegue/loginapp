@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:loginapp/firebase/function.dart';
@@ -25,7 +24,6 @@ class _LoginMobileScreenState extends State<LoginMobileScreen> {
   void sendOtpCode({required String newPhone}) {
     loading = true;
     setState(() {});
-    final auth = FirebaseAuth.instance;
     if (phoneNumber.isNotEmpty) {
       authWithPhoneNumber(
         phoneNumber,

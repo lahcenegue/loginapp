@@ -6,7 +6,7 @@ import 'package:loginapp/screens/home_main/drawer/update/update_info/update_info
 
 Future<GetInfoModel> getInfoApi({required String token}) async {
   try {
-    var url = Uri.parse("${Constants.url}/api/profile?token=$token");
+    var url = Uri.parse("${Constants.profileLink}?token=$token");
     http.Response response = await http.get(url);
 
     if (response.statusCode == 200) {

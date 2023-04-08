@@ -7,7 +7,7 @@ Future<UpdateInfoResponseModel> apiUpdateInfo(
     {required UpdateInfoRequestModel updateInfoRequestModel,
     required String token}) async {
   try {
-    var url = Uri.parse("${Constants.url}/api/profile?token=$token");
+    var url = Uri.parse("${Constants.profileLink}?token=$token");
     http.Response response = await http.post(
       url,
       body: updateInfoRequestModel.toJson(),

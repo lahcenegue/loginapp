@@ -9,8 +9,7 @@ List<GroupeResponseModel> listGroups = [];
 Future<List<GroupeResponseModel>> loadGroups(
     {required String token, required int page}) async {
   try {
-    var url =
-        Uri.parse("${Constants.url}/payment/api/group/$page?token=$token");
+    var url = Uri.parse("${Constants.paymentLink}/group/$page?token=$token");
 
     http.Response response = await http.get(url);
 

@@ -72,25 +72,22 @@ class _PaymentChildrenState extends State<PaymentChildren> {
           padding: const EdgeInsets.all(15),
           itemCount: isLoadingMore ? posts.length + 1 : posts.length,
           separatorBuilder: (buildContext, index) {
-            return const SizedBox(height: 20);
+            return Column(
+              children: const [
+                SizedBox(height: 08),
+                Divider(
+                  endIndent: 50,
+                  indent: 50,
+                ),
+                SizedBox(height: 08),
+              ],
+            );
           },
           itemBuilder: (buildContext, index) {
             if (index < hvm.listPayment!.length) {
               var paymentList = posts[index];
-              return Container(
+              return Padding(
                 padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Constants.boxColor,
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: colorPiker(paymentList.show1)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Constants.boxShadow,
-                      offset: const Offset(3, 3),
-                      blurRadius: 5,
-                    ),
-                  ],
-                ),
                 child: Column(
                   children: [
                     Row(

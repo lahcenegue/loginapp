@@ -8,8 +8,8 @@ List<NotificationModel> notificationList = [];
 Future<List<NotificationModel>> loadNotificationList(
     {required String token, required int page}) async {
   try {
-    var url = Uri.parse(
-        "${Constants.url}/payment/api/notification/$page?token=$token");
+    var url =
+        Uri.parse("${Constants.paymentLink}/notification/$page?token=$token");
     http.Response response = await http.get(url);
 
     if (response.statusCode == 200) {

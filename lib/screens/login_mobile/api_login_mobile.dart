@@ -7,7 +7,7 @@ import 'dart:convert' as convert;
 Future<LoginMobileModel> apiLoginMobile(String phone) async {
   try {
     var url = Uri.parse(
-        "${Constants.url}/api/login/${OneSignalControler.osUserID}/$phone");
+        "${Constants.loginLink}/${OneSignalControler.osUserID}/$phone");
 
     http.Response response = await http.get(url);
 

@@ -138,7 +138,7 @@ class _GroupeScreenState extends State<GroupeScreen> {
                                       """
                                   مرحبا:${posts[index].name}
                                   يمكنك دفع المبلغ :${posts[index].amount}
-                                  عبر:${Constants.url}/pay/${posts[index].md5id}
+                                  عبر:${Constants.url}/g/${posts[index].md5id}
                                        """,
                                       subject:
                                           "${posts[index].name}مشاركه المجموعة ",

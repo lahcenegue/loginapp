@@ -65,25 +65,21 @@ class _GroupeScreenState extends State<GroupeScreen> {
             controller: controller,
             itemCount: isLoadingMore ? posts.length + 1 : posts.length,
             separatorBuilder: (buildContext, index) {
-              return const SizedBox(height: 5);
+              return Column(
+                children: const [
+                  SizedBox(height: 08),
+                  Divider(
+                    endIndent: 50,
+                    indent: 50,
+                  ),
+                  SizedBox(height: 08),
+                ],
+              );
             },
             itemBuilder: (buildContext, index) {
               if (index < posts.length) {
-                return Container(
+                return Padding(
                   padding: const EdgeInsets.all(10),
-                  margin: const EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                    color: Constants.boxColor,
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: _colorPiker(posts[index].show1)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Constants.boxShadow,
-                        offset: const Offset(3, 3),
-                        blurRadius: 5,
-                      ),
-                    ],
-                  ),
                   child: Column(
                     children: [
                       Row(

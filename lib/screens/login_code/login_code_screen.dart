@@ -1,8 +1,4 @@
-import 'dart:async';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:loginapp/firebase/function.dart';
 import 'package:loginapp/screens/home_main/main/main_screen.dart';
 import 'package:loginapp/screens/login_code/api_login_code.dart';
 import 'package:loginapp/screens/register/register_screen.dart';
@@ -13,11 +9,10 @@ import '../../constants/constants.dart';
 
 class LoginCodeScreen extends StatefulWidget {
   final String phoneNumber;
-  final String verificationId;
+
   const LoginCodeScreen({
     super.key,
     required this.phoneNumber,
-    required this.verificationId,
   });
 
   @override
@@ -27,16 +22,11 @@ class LoginCodeScreen extends StatefulWidget {
 class _LoginCodeScreenState extends State<LoginCodeScreen> {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
 
-  String yourCode = '6677';
   String smsCode = '';
 
   bool loading = false;
-  bool resend = false;
-  int count = 20;
 
   bool isApiCallProcess = false;
-
-  final _auth = FirebaseAuth.instance;
 
   savePhone(String phone) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -53,87 +43,9 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
     prefs.setString('token', token);
   }
 
-  //OTP
-  late Timer timer;
-
-  void decompte() {
-    timer = Timer.periodic(const Duration(seconds: 1), (t) {
-      if (count < 1) {
-        timer.cancel();
-        count = 20;
-        resend = true;
-        setState(() {});
-        return;
-      }
-      count--;
-      setState(() {});
-    });
-  }
-
-  void onResendSmsCode() {
-    resend = false;
-    setState(() {});
-    authWithPhoneNumber(
-      widget.phoneNumber,
-      onCodeSend: (verificationId, v) {
-        loading = false;
-
-        decompte();
-        setState(() {});
-      },
-      onAutoVerify: (v) async {
-        await _auth.signInWithCredential(v);
-      },
-      onFailed: (e) {
-        loading = false;
-        setState(() {});
-        debugPrint("Le code est erroné");
-      },
-      autoRetrieval: (v) {},
-    );
-  }
-
-  void onVerifySmsCode() async {
-    loading = true;
-    setState(() {});
-    await validateOtp(smsCode, widget.verificationId);
-    loading = true;
-    setState(() {});
-
-    apiLoginCode(widget.phoneNumber, yourCode).then((value) async {
-      setState(() {
-        isApiCallProcess = false;
-      });
-      savePhone(widget.phoneNumber);
-      if (value.user == "new") {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => RegisterScreen(
-                    phoneNumber: widget.phoneNumber,
-                    code: yourCode,
-                  )),
-        );
-      } else if (value.user == "old") {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => MainScreen(
-                    token: value.token!,
-                  )),
-        );
-        saveToken(value.token!);
-        saveName(value.name!);
-      }
-    });
-
-    debugPrint("Vérification éfectué avec succès");
-  }
-
   @override
   void initState() {
     super.initState();
-    decompte();
   }
 
   @override
@@ -185,25 +97,12 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
                   child: Column(
                     children: [
                       Pinput(
-                        length: 6,
+                        length: 4,
                         onChanged: (value) {
-                          smsCode = value;
-                          setState(() {});
+                          setState(() {
+                            smsCode = value;
+                          });
                         },
-                      ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: TextButton(
-                          onPressed: !resend ? null : onResendSmsCode,
-                          child: Text(
-                            !resend
-                                ? "00:${count.toString().padLeft(2, "0")}"
-                                : "إعادة ارسال الكود",
-                            style: TextStyle(
-                              color: Constants.kMainColor,
-                            ),
-                          ),
-                        ),
                       ),
                     ],
                   ),
@@ -220,7 +119,34 @@ class _LoginCodeScreenState extends State<LoginCodeScreen> {
                       setState(() {
                         isApiCallProcess = true;
                       });
-                      smsCode.length < 6 || loading ? null : onVerifySmsCode();
+
+                      apiLoginCode(widget.phoneNumber, smsCode)
+                          .then((value) async {
+                        setState(() {
+                          isApiCallProcess = false;
+                        });
+                        savePhone(widget.phoneNumber);
+                        if (value.user == "new") {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => RegisterScreen(
+                                      phoneNumber: widget.phoneNumber,
+                                      code: smsCode,
+                                    )),
+                          );
+                        } else if (value.user == "old") {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MainScreen(
+                                      token: value.token!,
+                                    )),
+                          );
+                          saveToken(value.token!);
+                          saveName(value.name!);
+                        }
+                      });
                     }
                   },
                 ),

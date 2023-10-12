@@ -72,8 +72,8 @@ class _PaymentChildrenState extends State<PaymentChildren> {
           padding: const EdgeInsets.all(15),
           itemCount: isLoadingMore ? posts.length + 1 : posts.length,
           separatorBuilder: (buildContext, index) {
-            return Column(
-              children: const [
+            return const Column(
+              children: [
                 SizedBox(height: 08),
                 Divider(
                   endIndent: 50,

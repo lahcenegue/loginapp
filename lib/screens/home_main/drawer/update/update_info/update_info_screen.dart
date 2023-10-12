@@ -94,12 +94,13 @@ class _UpdateInfoScreenState extends State<UpdateInfoScreen> {
                           });
                           if (value.edit == "ok") {
                             Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => MainScreen(
-                                    token: token!,
-                                  ),
-                                ));
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MainScreen(
+                                  token: token!,
+                                ),
+                              ),
+                            );
                           }
                         });
                       }

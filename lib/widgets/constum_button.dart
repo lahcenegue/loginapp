@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:loginapp/constants/constants.dart';
+import '../constants/constants.dart';
 
 Widget customButton({
   required Function()? onPressed,
